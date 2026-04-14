@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis Causa Raíz — VP Servicio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--bg2:#f8f9fa;--bg-card:#ffffff;--accent:#1a73e8;--text-primary:#202124;--text-secondary:#5f6368;--border:#dadce0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.container{max-width:1440px;margin:0 auto;padding:2rem}
+.report-title{font-size:1.5rem;font-weight:700;margin-bottom:.25rem}.report-subtitle{font-size:.85rem;color:var(--text-secondary)}.report-meta{font-size:.8rem;color:var(--text-secondary)}
+.tabs{display:flex;gap:.5rem;margin-bottom:2rem;border-bottom:2px solid var(--border);padding-bottom:.5rem;flex-wrap:wrap}
+.tab-btn{background:none;border:none;color:var(--text-secondary);font-family:inherit;font-size:.95rem;padding:.5rem 1.2rem;cursor:pointer;border-radius:6px 6px 0 0;transition:all .2s;font-weight:500}
+.tab-btn:hover{color:var(--text-primary);background:var(--bg2)}
+.tab-btn.active{color:var(--accent);background:#fff;border-bottom:3px solid var(--accent);font-weight:600}
+.tab-content{display:none}.tab-content.active{display:block}
+.filters{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:nowrap;align-items:flex-end;background:var(--bg2);padding:1rem 1.2rem;border-radius:10px;border:1px solid var(--border)}
+.filter-group{display:flex;flex-direction:column;gap:.3rem;flex:1;min-width:0}
+.filters label{color:var(--text-secondary);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.filters select{background:#fff;border:1.5px solid var(--border);border-radius:8px;color:var(--text-primary);padding:.5rem .75rem;font-family:inherit;font-size:.85rem;cursor:pointer;width:100%;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.filters select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(26,115,232,.15)}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.kpi-value{font-size:1.8rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.kpi-label{font-size:.72rem;color:var(--text-secondary);margin-top:.2rem}
+.kpi-card.dt .kpi-value{color:#F44336}.kpi-card.fc .kpi-value{color:#FFC107}.kpi-card.ii .kpi-value{color:#FF9800}.kpi-card.doc .kpi-value{color:#4CAF50}
+.chart-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:2rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.chart-box h3{font-size:1rem;font-weight:600;margin-bottom:1rem;color:var(--text-primary)}
+.donut-row{display:flex;gap:2rem;align-items:center;justify-content:center;flex-wrap:wrap}
+.donut-svg{width:200px;height:200px}
+.donut-legend{display:flex;flex-direction:column;gap:.6rem}
+.donut-legend-item{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text-secondary)}
+.donut-legend-dot{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+.bar-h{display:flex;flex-direction:column;gap:.6rem}
+.bar-h-row{display:flex;align-items:center;gap:.75rem}
+.bar-h-label{width:200px;font-size:.78rem;color:var(--text-secondary);text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-h-track{flex:1;height:24px;background:var(--bg2);border-radius:6px;overflow:hidden;position:relative}
+.bar-h-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:.5rem;font-size:.7rem;color:#fff;font-family:'JetBrains Mono',monospace;transition:width .4s}
+.bar-h-val{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);font-size:.65rem;color:var(--text-secondary);font-family:'JetBrains Mono',monospace}
+.s-table{width:100%;border-collapse:collapse}
+.s-table th,.s-table td{padding:.6rem .75rem;text-align:center;border-bottom:1px solid var(--border);font-size:.8rem}
+.s-table th{background:var(--bg2);color:var(--text-secondary);text-transform:uppercase;font-size:.7rem;letter-spacing:.04em;position:sticky;top:0;z-index:2}
+.s-table td{color:var(--text-primary)}.s-table td:first-child{text-align:left;font-weight:600;color:var(--accent)}
+.s-table tr:hover td{background:rgba(26,115,232,.04)}
+.badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.68rem;font-weight:500}
+.badge.dt{background:rgba(244,67,54,.12);color:#D32F2F}.badge.fc{background:rgba(255,193,7,.15);color:#F57F17}
+.badge.ii{background:rgba(255,152,0,.12);color:#E65100}.badge.doc{background:rgba(76,175,80,.12);color:#2E7D32}
+.cr-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.cr-table th{background:var(--accent);color:#fff;padding:.6rem .75rem;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;font-weight:600;white-space:nowrap}
+.cr-table td{padding:.6rem .75rem;border-bottom:1px solid var(--border);color:var(--text-primary);vertical-align:top}
+.cr-table tr:hover td{background:rgba(26,115,232,.04)}
+.cr-table td:first-child{font-weight:700;color:var(--text-secondary);text-align:center;width:30px}
+.cr-table .cr-causa{font-weight:600;min-width:180px}.cr-table .cr-component{color:var(--text-secondary);font-size:.78rem;min-width:120px}
+.cr-table .cr-cases{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);line-height:1.6;max-width:400px}
+.cr-table .cr-cases a{color:var(--accent)}.cr-table .cr-cases a:hover{text-decoration:underline}
+.cr-table .cr-count{text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.9rem}
+.cr-table .cr-rec{font-size:.78rem;color:var(--text-secondary);line-height:1.5;max-width:350px}
+@media(max-width:768px){.kpi-row{grid-template-columns:repeat(2,1fr)}.filters{flex-direction:column}.bar-h-label{width:120px}}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="reportes.html" style="display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1rem;color:var(--accent);font-size:.9rem">← Índice de Reportes</a>
+<a href="reporte-incidentes-vp-servicio.html" style="display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;margin-left:1.5rem;color:var(--text-secondary);font-size:.85rem">📊 Reporte Operativo</a>
+<header><h1 class="report-title">🔍 Análisis de Causa Raíz — VP Servicio</h1><p class="report-subtitle">Clasificación de incidentes por Tribu y Squad · 2026</p><span class="report-meta" id="rDate"></span></header>
+<div class="filters">
+<div class="filter-group"><label>Tribu</label><select id="fTribu"><option value="">Todas</option></select></div>
+<div class="filter-group"><label>Squad</label><select id="fSquad"><option value="">Todos</option></select></div>
+<div class="filter-group"><label>Causa Raíz</label><select id="fCausa"><option value="">Todas</option></select></div>
+</div>
+<div class="tabs">
+<button class="tab-btn active" data-tab="t1">Resumen Ejecutivo</button>
+<button class="tab-btn" data-tab="t2">Por Squad</button>
+<button class="tab-btn" data-tab="t3">Causas Raíz Agrupadas</button>
+</div>
+<div id="t1" class="tab-content active">
+<div class="kpi-row" id="kpis"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+<div class="chart-box"><h3>Distribución por Causa Raíz</h3><div class="donut-row"><svg class="donut-svg" id="donut" viewBox="0 0 200 200"></svg><div class="donut-legend" id="donutLeg"></div></div></div>
+<div class="chart-box"><h3>Causa Raíz por Tribu</h3><div id="tribuChart"></div></div>
+</div>
+<div class="chart-box"><h3>Causa Raíz por Squad</h3><div class="bar-h" id="squadBars"></div></div>
+</div>
+<div id="t2" class="tab-content"><div class="chart-box"><h3>Resumen por Squad</h3><div style="overflow-x:auto"><table class="s-table" id="sqTable"></table></div></div></div>
+<div id="t3" class="tab-content"><div class="chart-box"><h3>Tabla de Causas Raíz Agrupadas</h3><div style="overflow-x:auto"><table class="cr-table" id="crTable"></table></div></div></div>
+<footer style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--text-secondary);text-align:center">Generado con IA · Squad Agentes IA · <span id="fDate"></span></footer>
+</div>
+<script>
+const Q=s=>document.querySelector(s),QA=s=>document.querySelectorAll(s);
+const CATS=['Deuda Técnica','Falta de Capacitación','Inestabilidad de Infraestructura','Documentación'];
+const CAT_CLS=['dt','fc','ii','doc'];const CAT_COLORS=['#F44336','#FFC107','#FF9800','#4CAF50'];
+const today=new Date();Q('#rDate').textContent='Fecha: '+today.toLocaleDateString('es-CO');Q('#fDate').textContent=today.toLocaleDateString('es-CO');
+let DATA=[];
+async function init(){try{const r=await fetch('data/analisis-causa-raiz.json');DATA=(await r.json()).tickets||[];}catch(e){console.error(e);return;}initFilters();render();}
+function unique(arr){return[...new Set(arr)].filter(Boolean).sort();}
+function fillSel(sel,opts){const el=Q(sel),lbl=el.options[0]?el.options[0].textContent:'';el.innerHTML='';const d=document.createElement('option');d.value='';d.textContent=lbl;el.appendChild(d);opts.forEach(o=>{const op=document.createElement('option');op.value=o;op.textContent=o;el.appendChild(op);});}
+function initFilters(){fillSel('#fTribu',unique(DATA.map(t=>t.tribu)));fillSel('#fSquad',unique(DATA.map(t=>t.squad)));fillSel('#fCausa',CATS);}
+Q('#fTribu').addEventListener('change',()=>{const t=Q('#fTribu').value;fillSel('#fSquad',unique((t?DATA.filter(d=>d.tribu===t):DATA).map(d=>d.squad)));render();});
+Q('#fSquad').addEventListener('change',render);Q('#fCausa').addEventListener('change',render);
+function getFiltered(){let d=DATA;const t=Q('#fTribu').value,s=Q('#fSquad').value,c=Q('#fCausa').value;if(t)d=d.filter(r=>r.tribu===t);if(s)d=d.filter(r=>r.squad===s);if(c)d=d.filter(r=>r.causaRaiz===c);return d;}
+QA('.tab-btn').forEach(b=>b.addEventListener('click',()=>{QA('.tab-btn').forEach(x=>x.classList.remove('active'));QA('.tab-content').forEach(x=>x.classList.remove('active'));b.classList.add('active');Q('#'+b.dataset.tab).classList.add('active');}));
+function catCls(c){const i=CATS.indexOf(c);return i>=0?CAT_CLS[i]:'dt';}
+function render(){const data=getFiltered();renderKPIs(data);renderDonut(data);renderTribuChart(data);renderSquadBars(data);renderSquadTable(data);renderGroupedTable(data);}
+function renderKPIs(data){const t=data.length,counts=CATS.map(c=>data.filter(d=>d.causaRaiz===c).length);Q('#kpis').innerHTML=`<div class="kpi-card"><div class="kpi-value">${t}</div><div class="kpi-label">Total Analizados</div></div>`+CATS.map((c,i)=>`<div class="kpi-card ${CAT_CLS[i]}"><div class="kpi-value">${counts[i]}</div><div class="kpi-label">${c}</div></div>`).join('');}
+function renderDonut(data){const t=data.length||1,counts=CATS.map(c=>data.filter(d=>d.causaRaiz===c).length);const svg=Q('#donut');let cum=0,paths='';counts.forEach((c,i)=>{if(c===0)return;const pct=c/t,a1=cum*2*Math.PI-Math.PI/2;cum+=pct;const a2=cum*2*Math.PI-Math.PI/2,la=pct>.5?1:0,x1=100+80*Math.cos(a1),y1=100+80*Math.sin(a1),x2=100+80*Math.cos(a2),y2=100+80*Math.sin(a2);paths+=`<path d="M100,100 L${x1},${y1} A80,80 0 ${la},1 ${x2},${y2} Z" fill="${CAT_COLORS[i]}" opacity="0.85"><title>${CATS[i]}: ${c} (${(pct*100).toFixed(0)}%)</title></path>`;});paths+='<circle cx="100" cy="100" r="45" fill="var(--bg-card)"/><text x="100" y="105" text-anchor="middle" fill="var(--text-primary)" font-size="18" font-weight="700" font-family="JetBrains Mono">'+t+'</text>';svg.innerHTML=paths;Q('#donutLeg').innerHTML=CATS.map((c,i)=>`<div class="donut-legend-item"><div class="donut-legend-dot" style="background:${CAT_COLORS[i]}"></div>${c}: ${counts[i]} (${((counts[i]/t)*100).toFixed(0)}%)</div>`).join('');}
+function renderTribuChart(data){const tribus=unique(data.map(d=>d.tribu));Q('#tribuChart').innerHTML=tribus.map(tr=>{const sub=data.filter(d=>d.tribu===tr),t=sub.length;const segs=CATS.map((c,i)=>{const n=sub.filter(d=>d.causaRaiz===c).length,p=(n/t)*100;return p>0?`<div style="width:${p}%;background:${CAT_COLORS[i]};height:24px;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#fff;font-family:'JetBrains Mono',monospace">${p>=15?n:''}</div>`:'';}).join('');return`<div style="margin-bottom:.8rem"><div style="font-size:.78rem;color:var(--text-secondary);margin-bottom:.3rem">${tr} (${t})</div><div style="display:flex;border-radius:6px;overflow:hidden">${segs}</div></div>`;}).join('');}
+function renderSquadBars(data){const squads=unique(data.map(d=>d.squad)),mx=Math.max(...squads.map(s=>data.filter(d=>d.squad===s).length),1);Q('#squadBars').innerHTML=squads.map(sq=>{const sub=data.filter(d=>d.squad===sq),t=sub.length,w=(t/mx)*100;const segs=CATS.map((c,i)=>{const n=sub.filter(d=>d.causaRaiz===c).length,p=t>0?(n/t)*100:0;return p>0?`<div style="width:${p}%;background:${CAT_COLORS[i]};height:100%;display:inline-flex;align-items:center;justify-content:center;font-size:.6rem;color:#fff">${n>0?n:''}</div>`:'';}).join('');return`<div class="bar-h-row"><div class="bar-h-label">${sq}</div><div class="bar-h-track"><div class="bar-h-fill" style="width:${w}%;display:flex;padding:0">${segs}</div><span class="bar-h-val">${t}</span></div></div>`;}).join('');}
+function renderSquadTable(data){const squads=unique(data.map(d=>d.squad));const rows=squads.map(sq=>{const sub=data.filter(d=>d.squad===sq),t=sub.length,counts=CATS.map(c=>sub.filter(d=>d.causaRaiz===c).length),top=CATS[counts.indexOf(Math.max(...counts))];return{sq,t,...Object.fromEntries(CATS.map((c,i)=>[c,counts[i]])),top};}).sort((a,b)=>b.t-a.t);Q('#sqTable').innerHTML='<thead><tr><th>Squad</th><th>Total</th>'+CATS.map(c=>'<th>'+c.split(' ').slice(0,2).join(' ')+'</th>').join('')+'<th>Causa Principal</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r.sq+'</td><td>'+r.t+'</td>'+CATS.map(c=>'<td>'+r[c]+'</td>').join('')+'<td><span class="badge '+catCls(r.top)+'">'+r.top+'</span></td></tr>').join('')+'</tbody>';}
+function renderGroupedTable(data){const groups={};data.forEach(d=>{const key=d.causaRaiz+'|||'+d.componenteAfectado;if(!groups[key])groups[key]={causa:d.causaRaiz,component:d.componenteAfectado,tickets:[],recs:new Set()};groups[key].tickets.push(d);if(d.recomendacion)groups[key].recs.add(d.recomendacion);});const rows=Object.values(groups).sort((a,b)=>b.tickets.length-a.tickets.length);const baseUrl='https://jirasegurosbolivar.atlassian.net/browse/';Q('#crTable').innerHTML='<thead><tr><th>#</th><th>Causa Raíz</th><th>Componente</th><th>Casos MDSB representativos</th><th>Cant.</th><th>Qué hacer para que no se repita</th></tr></thead><tbody>'+rows.map((r,i)=>{const cases=r.tickets.slice(0,10).map(t=>`<a href="${baseUrl}${t.clave}" target="_blank">${t.clave}</a>`).join(', ')+(r.tickets.length>10?', ...':'');const rec=[...r.recs].join(' ');return`<tr><td>${i+1}</td><td class="cr-causa">${r.causa}</td><td class="cr-component">${r.component}</td><td class="cr-cases">${cases}</td><td class="cr-count">~${r.tickets.length}</td><td class="cr-rec">${rec}</td></tr>`;}).join('')+'</tbody>';}
+init();
+</script>
+</body>
+</html>
