@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-13T22:47:50.870Z",
-  "totalAnalyzed": 523,
-  "method": "heuristic-csv-2026",
+  "generatedAt": "2026-04-16T17:04:59.392Z",
+  "totalAnalyzed": 526,
+  "method": "heuristic-json-2026",
   "tickets": [
     {
       "clave": "MDSB-1016995",
@@ -2072,6 +2072,20 @@
       "componenteAfectado": "Firma Electrónica",
       "recomendacion": "Crear guía de autoservicio para Firma Electrónica.",
       "descripcionResumida": "INC-SOFTWARE- IMPRESIONPDFPHP",
+      "comentariosCount": 0,
+      "prioridad": "Medium / Media"
+    },
+    {
+      "clave": "MDSB-995536",
+      "resumen": "INC-SOFTWARE-Póliza Digital",
+      "squad": "Impresión y Firma Electrónica",
+      "tribu": "Operaciones",
+      "estado": "Resuelto",
+      "causaRaiz": "Falta de Capacitación",
+      "justificacion": "Clasificado por heurística.",
+      "componenteAfectado": "Póliza Digital",
+      "recomendacion": "Crear guía de autoservicio para Póliza Digital.",
+      "descripcionResumida": "INC-SOFTWARE-Póliza Digital",
       "comentariosCount": 0,
       "prioridad": "Medium / Media"
     },
@@ -4316,6 +4330,20 @@
       "prioridad": "Medium / Media"
     },
     {
+      "clave": "MDSB-972488",
+      "resumen": "INC-SOFTWARE-Bolivar Conmigo",
+      "squad": "Bolivar Conmigo",
+      "tribu": "Servicio",
+      "estado": "Resuelto",
+      "causaRaiz": "Falta de Capacitación",
+      "justificacion": "Clasificado por heurística.",
+      "componenteAfectado": "Bolívar Conmigo",
+      "recomendacion": "Crear guía de autoservicio para Bolívar Conmigo.",
+      "descripcionResumida": "INC-SOFTWARE-Bolivar Conmigo",
+      "comentariosCount": 0,
+      "prioridad": "Medium / Media"
+    },
+    {
       "clave": "MDSB-972393",
       "resumen": "INC-SOFTWARE-Mi Compañía Antigua (Intranet Bolnet)",
       "squad": "Apoyo Comercial",
@@ -5236,6 +5264,20 @@
       "componenteAfectado": "IMPRESIONPDFPHP",
       "recomendacion": "Crear guía de autoservicio para IMPRESIONPDFPHP.",
       "descripcionResumida": "INC-SOFTWARE- IMPRESIONPDFPHP",
+      "comentariosCount": 0,
+      "prioridad": "Medium / Media"
+    },
+    {
+      "clave": "MDSB-965608",
+      "resumen": "INC-SOFTWARE-Bolivar Conmigo",
+      "squad": "Bolivar Conmigo",
+      "tribu": "Servicio",
+      "estado": "Resuelto",
+      "causaRaiz": "Falta de Capacitación",
+      "justificacion": "Clasificado por heurística.",
+      "componenteAfectado": "Bolívar Conmigo",
+      "recomendacion": "Crear guía de autoservicio para Bolívar Conmigo.",
+      "descripcionResumida": "INC-SOFTWARE-Bolivar Conmigo",
       "comentariosCount": 0,
       "prioridad": "Medium / Media"
     },
@@ -6165,7 +6207,7 @@
     },
     {
       "clave": "MDSB-960921",
-      "resumen": "INC-SOFTWARE-Portal Web Asistencia Bolívar  - descargar certificado de rete IVA,",
+      "resumen": "INC-SOFTWARE-Portal Web Asistencia Bolívar  - descargar certificado de rete IVA;",
       "squad": "Asistencia",
       "tribu": "Asistencia",
       "estado": "Resuelto",
@@ -6173,13 +6215,13 @@
       "justificacion": "Keywords de infraestructura.",
       "componenteAfectado": "Portal Web Asistencia Bolívar",
       "recomendacion": "Monitoreo proactivo para Portal Web Asistencia Bolívar.",
-      "descripcionResumida": "INC-SOFTWARE-Portal Web Asistencia Bolívar  - descargar certificado de rete IVA,",
+      "descripcionResumida": "INC-SOFTWARE-Portal Web Asistencia Bolívar  - descargar certificado de rete IVA;",
       "comentariosCount": 0,
       "prioridad": "Medium / Media"
     },
     {
       "clave": "MDSB-960808",
-      "resumen": "Descarga la póliza, pero no puede abrir el archivo, parece como dañado.",
+      "resumen": "Descarga la póliza; pero no puede abrir el archivo; parece como dañado.",
       "squad": "Impresión y Firma Electrónica",
       "tribu": "Operaciones",
       "estado": "Resuelto",
@@ -6187,7 +6229,7 @@
       "justificacion": "Clasificado por heurística.",
       "componenteAfectado": "Póliza Digital",
       "recomendacion": "Crear guía de autoservicio para Póliza Digital.",
-      "descripcionResumida": "Descarga la póliza, pero no puede abrir el archivo, parece como dañado.",
+      "descripcionResumida": "Descarga la póliza; pero no puede abrir el archivo; parece como dañado.",
       "comentariosCount": 0,
       "prioridad": "Medium / Media"
     },
