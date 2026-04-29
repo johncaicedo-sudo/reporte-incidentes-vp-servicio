@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Bizagi — VP TI</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6}
+.tab-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;background:#0a0f2a;border-bottom:1px solid #1a2040;padding:0 24px;height:48px;align-items:stretch}
+.tab-btn{background:none;border:none;color:#8899bb;font-family:inherit;font-size:14px;font-weight:500;padding:0 24px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+.tab-btn:hover{color:#b0c4de;background:rgba(100,181,246,.06)}
+.tab-btn.active{color:#64b5f6;border-bottom-color:#64b5f6}
+.tab-content{display:none;position:absolute;top:48px;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden}
+.tab-content.active{display:block}
+.tab-content::-webkit-scrollbar{width:6px}
+.tab-content::-webkit-scrollbar-track{background:#0a0f2a}
+.tab-content::-webkit-scrollbar-thumb{background:#2a3560;border-radius:3px}
+.informe{max-width:960px;margin:0 auto;padding:40px 32px 80px}
+.informe h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:.3px}
+.informe .subtitle{font-size:13px;color:#7a8bb5;margin-bottom:36px}
+.informe h2{font-size:17px;font-weight:600;color:#64b5f6;margin:32px 0 14px;padding-bottom:6px;border-bottom:1px solid #1a2550}
+.informe h3{font-size:14px;font-weight:600;color:#90caf9;margin:20px 0 8px}
+.informe p{margin-bottom:10px;color:#c0cce0}
+.informe ul{margin:8px 0 14px 20px}
+.informe ul li{margin-bottom:4px;color:#b0bdd0}
+.informe ul li strong{color:#e0e8f0}
+.informe code{background:#111940;padding:2px 6px;border-radius:3px;font-size:12px;color:#90caf9}
+.highlight{color:#ffd54f;font-weight:600}
+.info-table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13px}
+.info-table th{background:#111940;color:#90caf9;text-align:left;padding:10px 14px;font-weight:600;border-bottom:2px solid #1a2a60}
+.info-table td{padding:9px 14px;border-bottom:1px solid #151e40;color:#c0cce0}
+.info-table tr:hover td{background:rgba(100,181,246,.04)}
+.alert-card{border-left:4px solid;border-radius:6px;padding:14px 18px;margin:10px 0;background:rgba(255,255,255,.03)}
+.alert-card.yellow{border-color:#ffa726;background:rgba(255,167,38,.06)}
+.alert-card.red{border-color:#ef5350;background:rgba(239,83,80,.08)}
+.alert-card .alert-title{font-weight:600;font-size:13px;margin-bottom:4px}
+.alert-card.yellow .alert-title{color:#ffa726}
+.alert-card.red .alert-title{color:#ef5350}
+.alert-card p{font-size:13px;color:#b0bdd0;margin:0}
+.risk-card{background:rgba(255,255,255,.03);border:1px solid #1a2550;border-radius:8px;padding:16px 20px;margin:10px 0}
+.risk-card .risk-title{font-weight:600;color:#e0e8f0;font-size:14px;margin-bottom:6px}
+.risk-card p{font-size:13px;color:#a0b0c8;margin:0}
+.rec-list{list-style:none;margin:14px 0;padding:0}
+.rec-list li{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;margin:8px 0;background:rgba(100,181,246,.04);border:1px solid #1a2550;border-radius:8px;font-size:13px;color:#c0cce0}
+.rec-list li .rec-num{flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#1a3060;color:#64b5f6;border-radius:50%;font-weight:700;font-size:12px}
+.svg-container{width:100%;height:100%;position:relative}
+.svg-container svg{width:100%;height:100%}
+.kpi-bar{position:absolute;top:16px;right:20px;display:flex;gap:10px;z-index:10}
+.kpi-card{background:rgba(10,15,42,.9);border:1px solid #1a2550;border-radius:8px;padding:8px 14px;text-align:center;backdrop-filter:blur(8px)}
+.kpi-card .kpi-val{font-size:18px;font-weight:700;color:#fff}
+.kpi-card .kpi-label{font-size:10px;color:#7a8bb5;text-transform:uppercase;letter-spacing:.5px}
+.legend-bar{position:absolute;top:50%;right:12px;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;background:rgba(10,15,42,.92);border:1px solid #1a2550;border-radius:8px;padding:12px 14px;z-index:10;backdrop-filter:blur(8px)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#8899bb}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.legend-ring{width:10px;height:10px;border-radius:50%;flex-shrink:0;border:2px solid;background:transparent}
+.svg-tooltip{position:fixed;pointer-events:none;background:rgba(10,15,42,.95);border:1px solid #2a3a70;border-radius:8px;padding:12px 16px;font-size:12px;color:#c0cce0;max-width:320px;z-index:200;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.5);display:none;line-height:1.5}
+.svg-tooltip .tt-title{font-weight:700;color:#fff;font-size:13px;margin-bottom:4px}
+.svg-tooltip .tt-sub{color:#7a8bb5;font-size:11px}
+.svg-tooltip .tt-line{color:#a0b0c8}
+</style>
+</head>
+<body>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('informe')">Informe Maestro</button>
+  <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura</button>
+  <button class="tab-btn" onclick="switchTab('dependencias')">Dependencias APIs por Squad</button>
+  <button class="tab-btn" onclick="switchTab('rutacritica')">Ruta Cr&#237;tica</button>
+</div>
+
+<!-- TAB 1: INFORME MAESTRO -->
+<div id="tab-informe" class="tab-content active">
+<div class="informe">
+<h1>INFORME MAESTRO DE PROYECTO: GESTIÓN AUTOMATIZADA DE INDEMNIZACIONES</h1>
+<p class="subtitle">Proyecto Jira: GD-1136 | Migración e Implementación Bizagi — Flujos de Trabajo (BPMS)</p>
+
+<h2>1. Resumen Ejecutivo</h2>
+<ul>
+  <li><strong>Objetivo:</strong> Implementar plataforma BPMS (Bizagi Cloud) para centralizar y automatizar flujos de trabajo.</li>
+  <li><strong>Reemplaza:</strong> Oracle IPM Stellent, IBM Filenet, Bizagi on-premise, ImagineX-nativo — de <span class="highlight">7 plataformas a 3</span>.</li>
+  <li><strong>Beneficios:</strong> Tracking 100% de casos, <span class="highlight">-144 horas/mes</span> manuales, eliminación de <span class="highlight">829 casos/mes</span> manuales (outsourcing), ahorro <span class="highlight">$9M/mes</span>.</li>
+  <li><strong>Inversión:</strong> 15 meses, Capex externo $735M, Capex interno $196M.</li>
+</ul>
+
+<h2>2. Alcance del Proyecto</h2>
+<table class="info-table">
+<thead><tr><th>Paquete</th><th>Process Unit (PU)</th></tr></thead>
+<tbody>
+<tr><td rowspan="7" style="font-weight:700;color:#42a5f5;vertical-align:top">Paquete 1</td><td>Solicitud de siniestro</td></tr>
+<tr><td>Configurar Aviso Web</td></tr>
+<tr><td>Trámite del Aviso</td></tr>
+<tr><td>Aviso de póliza</td></tr>
+<tr><td>Consulta de Póliza</td></tr>
+<tr><td>Consulta a terceros</td></tr>
+<tr><td>Gestión de información</td></tr>
+<tr><td rowspan="7" style="font-weight:700;color:#ff9800;vertical-align:top">Paquete 2</td><td>Gestión análisis</td></tr>
+<tr><td>Análisis médico</td></tr>
+<tr><td>Valoración médica</td></tr>
+<tr><td>Investigación</td></tr>
+<tr><td>Gestión conocimiento del cliente</td></tr>
+<tr><td>Gestión información técnica</td></tr>
+<tr><td>Análisis de riesgo de fraude</td></tr>
+<tr><td rowspan="5" style="font-weight:700;color:#ef5350;vertical-align:top">Paquete 3</td><td>Gestión de inconsistencias</td></tr>
+<tr><td>Documentos faltantes</td></tr>
+<tr><td>Autorización</td></tr>
+<tr><td>Envío comunicado</td></tr>
+<tr><td>Envío documentos Filenet</td></tr>
+</tbody>
+</table>
+
+<h2>3. Cronograma Maestro</h2>
+<table class="info-table">
+<thead><tr><th>Fase</th><th>Fechas</th><th>Duración</th></tr></thead>
+<tbody>
+<tr><td>Preparación</td><td>02/01/26 — 04/02/26</td><td>—</td></tr>
+<tr><td>Paquete 1</td><td>19/02/26 — 08/05/26</td><td>52.1 días</td></tr>
+<tr><td>Paquete 2</td><td>10/03/26 — 25/05/26</td><td>49.58 días</td></tr>
+<tr><td>Paquete 3</td><td>27/03/26 — 19/06/26</td><td>53.63 días</td></tr>
+<tr><td>Despliegue</td><td>19/06/26 — 02/07/26</td><td>—</td></tr>
+<tr><td>Garantía</td><td>24/06/26 — 21/09/26</td><td>61 días</td></tr>
+</tbody>
+</table>
+
+<h2>4. Contenido Estratégico</h2>
+<ul>
+  <li><strong>Licenciamiento:</strong> Bizagi Cloud Transacciones Ilimitadas, 7.500 prompts, 200 usuarios, Soporte Bronze.</li>
+  <li><strong>BPU:</strong> 1 BPU = 10.000 Pasos/mes (un paso = cualquier elemento donde se ejecuta una acción).</li>
+  <li><strong>Fases:</strong> Fase 1 (Gattaca + interno), Fase 2 (interno + 1 mes Gattaca), Fase 3 (interno).</li>
+  <li><strong>Opex:</strong> $276M/año licencias, $58M soporte, $165M infra 6 meses.</li>
+</ul>
+
+<h2>5. Dependencias y Riesgos</h2>
+<div class="risk-card">
+  <div class="risk-title">🔗 Dependencia Integraciones Core</div>
+  <p>El flujo no se ejecuta sin respuesta de Sistema Terceros (perfil + CLV), Tronador (pólizas + reserva proceso 70) y Registraduría (validación documento). Si una integración falla, el proceso va a Gestión de Inconsistencias.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">🤖 Riesgo IA: Agotamiento de Prompts</div>
+  <p>7.500 prompts contratados. Cada caso consume mínimo 2 prompts (Refinador + Especializado). Con 829 casos/mes = ~2.487 prompts/mes. Cuota agotada en ~3 meses.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">📊 Riesgo BPU: Alto Consumo</div>
+  <p>Iteraciones complejas (subprocesos de Múltiples Instancias para adjuntos y reservas masivas) detonan alto consumo de BPUs. Evaluación anual podría cambiar modelo de licenciamiento o aumentar costo radicalmente.</p>
+</div>
+
+</div>
+</div>
+
+<!-- TAB 2: ARQUITECTURA -->
+<div id="tab-arquitectura" class="tab-content">
+  <div class="svg-container" id="arq-container"></div>
+</div>
+
+<!-- TAB 3: DEPENDENCIAS -->
+<div id="tab-dependencias" class="tab-content">
+  <div class="svg-container" id="dep-container"></div>
+</div>
+
+<!-- TAB 4: RUTA CRÍTICA -->
+<div id="tab-rutacritica" class="tab-content">
+<div class="informe">
+<h1>AN&#193;LISIS DE DEPENDENCIAS Y RUTA CR&#205;TICA</h1>
+<p class="subtitle">Cruce: CSV de APIs &#215; Arquitectura multi-cloud &#215; Plan de trabajo inmersi&#243;n 24/04/2026</p>
+
+<h2>Resumen por Paquete</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0 28px">
+<div style="background:#0d1230;border:1px solid #1a3a70;border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#42a5f5;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">PAQUETE 1</span>
+    <span style="color:#42a5f5;font-weight:600">Aviso</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">12 APIs &#8226; 100h</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:58;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:34;height:8px;background:#ffa726"></div>
+    <div style="flex:8;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>58%</strong> existentes sin cambios (7 APIs, 0h)</div>
+    <div><span style="color:#ffa726">&#9679;</span> <strong>34%</strong> requieren modificaci&#243;n (4 APIs, 80h)</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>8%</strong> nuevas (1 API, 20h)</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Concentraci&#243;n:</strong> Lago de Datos (5) y Core X (2) = <strong>58%</strong> de APIs.</div>
+    <div style="color:#ffa726"><strong>Ruta cr&#237;tica:</strong> api-consulta-polizas (Core X, dep. Tronador On-Premise).</div>
+    <div><strong>Dep. externa:</strong> Registradur&#237;a.</div>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid #1a3a50;border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#ff9800;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">PAQUETE 2</span>
+    <span style="color:#ff9800;font-weight:600">An&#225;lisis</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">10 APIs &#8226; 280h</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:30;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:40;height:8px;background:#ffa726"></div>
+    <div style="flex:30;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>30%</strong> existentes (3 APIs, 0h)</div>
+    <div><span style="color:#ffa726">&#9679;</span> <strong>40%</strong> modificaci&#243;n (4 APIs, 240h)</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>30%</strong> nuevas + externas (3 APIs, 120h)</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Concentraci&#243;n:</strong> Core X = <strong>5 de 10 APIs</strong> (260h).</div>
+    <div style="color:#ffa726"><strong>Cuello botella:</strong> Control t&#233;cnico (120h secuenciales).</div>
+    <div style="color:#ef5350"><strong>Dep. externa:</strong> 3 APIs Securitas.</div>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid #1a2a40;border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#f44336;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">PAQUETE 3</span>
+    <span style="color:#f44336;font-weight:600">Cierre</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">7 APIs &#8226; 240h</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:43;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:57;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>43%</strong> existentes (3 APIs, 40h)</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>57%</strong> nuevas (4 APIs, 200h)</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Concentraci&#243;n:</strong> CUC-DAM = <strong>83%</strong> del esfuerzo (200h/240h).</div>
+    <div style="color:#ef5350"><strong>Mayor riesgo:</strong> 4 APIs nuevas, proyecto paralelo.</div>
+    <div><strong>Cross-cloud:</strong> Bizagi &#8594; GCP &#8594; ECM-Services.</div>
+  </div>
+</div>
+</div>
+
+<div style="background:rgba(100,181,246,.04);border:1px solid #1a3a70;border-radius:10px;padding:18px 22px;margin-bottom:28px">
+  <div style="font-size:14px;font-weight:600;color:#64b5f6;margin-bottom:10px">Lectura ejecutiva</div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8">
+    <p>De las <strong>29 APIs</strong>, el <strong>45% son existentes</strong> (13, 0h), el <strong>35% requiere modificaci&#243;n</strong> (10, 320h) y el <strong>20% son nuevas</strong> (6, 300h). Total: <strong>620h</strong> en 11 squads.</p>
+    <p style="margin-top:8px"><strong style="color:#7e57c2">Core X es el squad cr&#237;tico:</strong> <strong>7 APIs</strong> en los 3 paquetes, <strong>250h</strong> (40% del esfuerzo total). Retraso en Core X impacta los 3 paquetes. <strong style="color:#ffa726">api-consulta-polizas es la nueva ruta cr&#237;tica</strong> (dep. sp-core Tronador + construcci&#243;n v2, campos faltantes).</p>
+    <p style="margin-top:8px"><strong style="color:#42a5f5">Lago de Datos:</strong> 5 APIs, mayormente existentes. Riesgo en <em>anal&#237;tica-lago-siniestros</em> (60h, cross-cloud GCP BigQuery).</p>
+    <p style="margin-top:8px"><strong style="color:#ef5350">2 dependencias externas sin SLA:</strong> Securitas (3 APIs P2), Registradur&#237;a (P1). = 14% de APIs.</p>
+    <p style="margin-top:8px"><strong style="color:#ef5350">CUC-DAM:</strong> 83% del esfuerzo P3 (200h/240h) en 4 APIs nuevas de proyecto paralelo.</p>
+  </div>
+</div>
+
+<h2>Estatus APIs Bloqueantes &#8212; Paquete 1</h2>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Seguimiento cruzado con mapa de dependencias por squad. Datos de inmersión presencial 24/04/2026. <strong style="color:#ffa726">5 de 7 APIs son responsabilidad de Bolívar.</strong></p>
+
+<table class="info-table">
+<thead><tr><th>#</th><th>API</th><th>Acción</th><th>Squad</th><th>Estado</th><th>Responsable</th><th>Observaciones</th></tr></thead>
+<tbody>
+<tr>
+  <td>1</td><td>api-consulta-terceros-natural</td><td>Mod. nuevos campos</td>
+  <td style="color:#42a5f5;font-weight:600">Lago de Datos / Jur&#237;dico</td>
+  <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
+  <td>N/A</td>
+  <td style="font-size:12px">Entrega exitosa. Prueba confirmada por Gattaca.</td>
+</tr>
+<tr>
+  <td>2</td><td>api-consulta-terceros-juridico</td><td>Mod. nuevos campos</td>
+  <td style="color:#42a5f5;font-weight:600">Lago de Datos / Jur&#237;dico</td>
+  <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
+  <td>Leonel Pedrozo</td>
+  <td style="font-size:12px">Entrega exitosa. Pdte: Leonel revisar y comparar respuesta nueva versi&#243;n (JPineda).</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>3</td><td>api-consulta-polizas</td><td>Mod. nuevos campos</td>
+  <td style="color:#7e57c2;font-weight:600">Core X</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Daniel Pepinosa / Camilo Jim&#233;nez</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pdte entrega sp-core Tronador (Leonel/Daniel Pepinosa) + construcci&#243;n v2 (equipo Camilo). Campos faltantes: Data, Nombre producto, Valor asegurado, N&#250;mero cr&#233;dito.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>4</td><td>api-gesti&#243;n-reserva-creacion</td><td>Completar request</td>
+  <td style="color:#7e57c2;font-weight:600">Core X</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Doris Ram&#237;rez / Leonel Pedrozo</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pdte reuni&#243;n con Doris para ajustes/construcci&#243;n de campos. Entregar param&#233;trica para conexi&#243;n y creaci&#243;n de reserva. Campo faltante: N&#250;mero cr&#233;dito.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>5</td><td>api-analitica-siniestros-graphql</td><td>Adapter GraphQL&#8594;REST</td>
+  <td style="color:#42a5f5;font-weight:600">Lago de Datos</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Weimar Avenda&#241;o B. / Gattaca</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Campo &#171;coberturasAfectadas&#187; = json-string (query transversal, no modificable). Pdte validar con Gattaca si usan el campo en UI. In progress: env&#237;an URL API REST. Excluidos: Hist&#243;ricos p&#243;lizas, Sistema origen.</td>
+</tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>6</td><td>api-o'leary (gestor documental)</td><td>Disponibilizar APIs</td>
+  <td style="color:#ef5350;font-weight:600">Carpeta &#218;nica</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Weimar Avenda&#241;o B.</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Equipo CUC-OLeary dedicado a disponibilizaci&#243;n. API Gestor Documental pendiente. Dep. directa con CUC-DAM (200h P3).</td>
+</tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>7</td><td>api-motor-ia-indem</td><td>Desarrollo Bizagi</td>
+  <td style="color:#26a69a;font-weight:600">Gattaca (IA Bizagi)</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Leonel Pedrozo</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pdte definici&#243;n interna para exponer API. Se usar&#225; IA para validar causa-consecuencia con URLs de documentos. Integraci&#243;n necesaria para creaci&#243;n de reserva.</td>
+</tr>
+</tbody>
+</table>
+
+<div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
+    <div style="color:#4caf50;font-weight:700;font-size:22px">2 / 7</div>
+    <div style="color:#7a8bb5;font-size:11px">APIs solucionadas</div>
+  </div>
+  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
+    <div style="color:#ffa726;font-weight:700;font-size:22px">5 / 7</div>
+    <div style="color:#7a8bb5;font-size:11px">Pendientes Bol&#237;var</div>
+  </div>
+  <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
+    <div style="color:#ef5350;font-weight:700;font-size:22px">0</div>
+    <div style="color:#7a8bb5;font-size:11px">Pendientes Gattaca</div>
+  </div>
+  <div style="background:rgba(126,87,194,.08);border:1px solid rgba(126,87,194,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
+    <div style="color:#7e57c2;font-weight:700;font-size:22px">2</div>
+    <div style="color:#7a8bb5;font-size:11px">Bloqueantes Core X</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="svg-tooltip" id="tooltip"></div>
+
+<script>
+/* ── Tab switching ── */
+const tabInited = { informe: true, arquitectura: false, dependencias: false, rutacritica: true };
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    const tabs = ['informe','arquitectura','dependencias','rutacritica'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (!tabInited[name]) { tabInited[name] = true; if (name === 'arquitectura') initArquitectura(); else if (name === 'dependencias') initDependencias(); }
+}
+
+/* ── Tooltip helper ── */
+const tip = document.getElementById('tooltip');
+function showTip(e, html) { tip.innerHTML = html; tip.style.display = 'block'; moveTip(e); }
+function moveTip(e) { let x = e.clientX + 14, y = e.clientY + 14; if (x + 320 > window.innerWidth) x = e.clientX - 330; if (y + 200 > window.innerHeight) y = e.clientY - 210; tip.style.left = x + 'px'; tip.style.top = y + 'px'; }
+function hideTip() { tip.style.display = 'none'; }
+
+/* ── SVG helpers ── */
+function svgEl(tag, attrs) { const el = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v); return el; }
+function addText(parent, x, y, text, opts) {
+  const t = svgEl('text', { x, y, fill: opts.fill || '#c0cce0', 'font-size': opts.size || 12, 'font-family': "'Segoe UI',system-ui,sans-serif", 'text-anchor': opts.anchor || 'middle', 'dominant-baseline': opts.baseline || 'central', 'font-weight': opts.weight || '400', 'pointer-events': 'none' });
+  t.textContent = text; parent.appendChild(t); return t;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TAB 2: ARQUITECTURA — Radial Diagram
+   ══════════════════════════════════════════════════════════════ */
+function initArquitectura() {
+  const container = document.getElementById('arq-container');
+  const W = container.clientWidth || 1200, H = container.clientHeight || 700;
+  const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.34;
+  const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H });
+
+  const defs = svgEl('defs', {});
+  defs.innerHTML = '<radialGradient id="cg"><stop offset="0%" stop-color="#42a5f5"/><stop offset="100%" stop-color="#1565c0"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg.appendChild(defs);
+
+  /* Background rings */
+  const bg = svgEl('g', { opacity: '0.06' });
+  for (let r = 80; r < R + 200; r += 80) bg.appendChild(svgEl('circle', { cx, cy, r, fill: 'none', stroke: '#64b5f6', 'stroke-width': '0.5' }));
+  svg.appendChild(bg);
+
+  /* Center node */
+  const cg = svgEl('g', { filter: 'url(#glow)' });
+  cg.appendChild(svgEl('circle', { cx, cy, r: 56, fill: 'url(#cg)', opacity: '0.9' }));
+  cg.appendChild(svgEl('circle', { cx, cy, r: 56, fill: 'none', stroke: '#90caf9', 'stroke-width': '1.5', opacity: '0.5' }));
+  svg.appendChild(cg);
+  addText(svg, cx, cy - 10, 'BIZAGI Cloud', { fill: '#fff', size: 13, weight: '700' });
+  addText(svg, cx, cy + 8, 'BPMS', { fill: '#bbdefb', size: 11, weight: '500' });
+
+  const blocks = [
+    { id:'prod', name:'AWS APIs PROD', color:'#ff9800', angle:-1.2, cloud:'AWS', risk:'Medio', components:'WAF, API Gateway, Cognito, IA Service, Data Operativa', desc:'Punto de entrada principal. Todas las APIs pasan por API Gateway con WAF y Cognito como IdP.' },
+    { id:'commons', name:'AWS APIs COMMONS', color:'#42a5f5', angle:-0.3, cloud:'AWS', risk:'Alto', components:'VPC, ALB, ECS Cluster (5 microservicios)', desc:'Concentra la mayoría de APIs existentes. 6 APIs requieren modificación de atributos.' },
+    { id:'reglas', name:'AWS Reglas Negocio', color:'#ab47bc', angle:0.5, cloud:'AWS', risk:'Medio', components:'API GW, ALB, ECS reglas-negocio-ms', desc:'Motor de reglas OpenL con ECS dedicado. API openl-reglas-ia (40h, nueva).' },
+    { id:'tronador', name:'TRONADOR On-Premise', color:'#78909c', angle:1.3, cloud:'On-Prem', risk:'Alto', components:'Core pólizas, Reservas, Replicación', desc:'27% de APIs dependen de Tronador vía replicación AWS. Sin circuit breaker visible.' },
+    { id:'gcp-ia', name:'GCP IA Indemnizaciones', color:'#26a69a', angle:2.3, cloud:'GCP', risk:'Alto', components:'Cloud Run agents, Vertex AI, Firestore', desc:'Agentes IA: Refinador, Especializado Vida, Rentas. 7.500 prompts se agotan en ~3 meses.' },
+    { id:'gcp-data', name:'GCP Data Operativa', color:'#66bb6a', angle:3.5, cloud:'GCP', risk:'Medio', components:'DataOps, PostgreSQL, BigQuery, Dataproc', desc:'Pipeline: Cloud Run, PostgreSQL, BigQuery (Landing, Raw, Production, Gold).' },
+    { id:'gcp-doc', name:'GCP Gestor Documental', color:'#ef5350', angle:4.5, cloud:'GCP', risk:'Alto', components:'ECM services, Cloud SQL', desc:'4 APIs nuevas (200h) Paquete 3. Dependencia cruzada con CUC-DAM. Mayor riesgo.' }
+  ];
+
+  const bp = {};
+  const blkG = svgEl('g', {});
+
+  blocks.forEach(b => {
+    const bx = cx + R * Math.cos(b.angle), by = cy + R * Math.sin(b.angle);
+    bp[b.id] = { x: bx, y: by };
+    svg.insertBefore(svgEl('line', { x1:cx, y1:cy, x2:bx, y2:by, stroke:b.color, 'stroke-width':'1.5', opacity:'0.3' }), cg);
+    const rw=150, rh=64, rx=bx-rw/2, ry=by-rh/2;
+    const rect = svgEl('rect', { x:rx, y:ry, width:rw, height:rh, rx:10, fill:'#0d1230', stroke:b.color, 'stroke-width':'1.8', filter:'url(#glow2)', cursor:'pointer' });
+    blkG.appendChild(rect);
+    addText(blkG, bx, by-10, b.name, { fill:'#fff', size:10.5, weight:'600' });
+    const cc = { AWS:'#ff9800', GCP:'#4285f4', 'On-Prem':'#78909c' };
+    blkG.appendChild(svgEl('rect', { x:bx-22, y:by+6, width:44, height:16, rx:8, fill:cc[b.cloud]||'#555', opacity:'0.85' }));
+    addText(blkG, bx, by+14, b.cloud, { fill:'#fff', size:8, weight:'700' });
+    const rc = { Alto:'#ef5350', Medio:'#ffa726', Bajo:'#66bb6a' };
+    blkG.appendChild(svgEl('rect', { x:rx+rw-42, y:ry+2, width:40, height:14, rx:7, fill:rc[b.risk], opacity:'0.9' }));
+    addText(blkG, rx+rw-22, ry+9, b.risk, { fill:'#fff', size:8, weight:'700' });
+    rect.addEventListener('mousemove', e => showTip(e, '<div class="tt-title">'+b.name+'</div><div class="tt-sub">'+b.cloud+' | Riesgo: '+b.risk+'</div><div class="tt-line" style="margin-top:6px"><strong>Componentes:</strong> '+b.components+'</div><div class="tt-line" style="margin-top:4px">'+b.desc+'</div>'));
+    rect.addEventListener('mouseleave', hideTip);
+  });
+
+  /* Cross-block dashed lines */
+  const links = [
+    { from:'commons', to:'tronador', label:'Replicación' },
+    { from:'prod', to:'gcp-ia', label:'Cross-cloud' },
+    { from:'prod', to:'gcp-data', label:'Data Operativa' },
+    { from:'commons', to:'reglas', label:'Reglas' },
+    { from:'gcp-ia', to:'gcp-data', label:'Data IA' }
+  ];
+  const lG = svgEl('g', {});
+  links.forEach(l => {
+    const a=bp[l.from], b=bp[l.to];
+    lG.appendChild(svgEl('line', { x1:a.x, y1:a.y, x2:b.x, y2:b.y, stroke:'#5c6bc0', 'stroke-width':'1', 'stroke-dasharray':'6,4', opacity:'0.5' }));
+    addText(lG, (a.x+b.x)/2, (a.y+b.y)/2-6, l.label, { fill:'#7986cb', size:9, weight:'500' });
+  });
+  svg.appendChild(lG);
+  svg.appendChild(blkG);
+  container.appendChild(svg);
+}
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   TAB 3: DEPENDENCIAS APIs POR SQUAD — Radial Diagram
+   ══════════════════════════════════════════════════════════════ */
+function initDependencias() {
+  const container = document.getElementById('dep-container');
+  const W = container.clientWidth || 1200, H = container.clientHeight || 700;
+  const cx = W / 2, cy = H / 2;
+  const R1 = Math.min(W, H) * 0.22;
+  const R2 = Math.min(W, H) * 0.38;
+  const svg = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H });
+
+  const defs = svgEl('defs', {});
+  defs.innerHTML = '<radialGradient id="cg2"><stop offset="0%" stop-color="#42a5f5"/><stop offset="100%" stop-color="#1565c0"/></radialGradient><filter id="glowD"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  const style = document.createElementNS('http://www.w3.org/2000/svg','style');
+  style.textContent = '@keyframes pulse{0%,100%{r:9;opacity:1}50%{r:15;opacity:0.4}} .pulse-anim{animation:pulse 1.5s ease-in-out infinite}';
+  defs.appendChild(style);
+  svg.appendChild(defs);
+
+  const bg = svgEl('g', { opacity: '0.04' });
+  for (let r = 60; r < R2 + 100; r += 60) bg.appendChild(svgEl('circle', { cx, cy, r, fill:'none', stroke:'#64b5f6', 'stroke-width':'0.5' }));
+  svg.appendChild(bg);
+
+  const cGrp = svgEl('g', { filter:'url(#glowD)' });
+  cGrp.appendChild(svgEl('circle', { cx, cy, r:44, fill:'url(#cg2)', opacity:'0.9' }));
+  svg.appendChild(cGrp);
+  addText(svg, cx, cy-8, 'BIZAGI Cloud', { fill:'#fff', size:11, weight:'700' });
+  addText(svg, cx, cy+8, 'BPMS', { fill:'#bbdefb', size:9, weight:'500' });
+
+  const squads = [
+    { name:'Lago de Datos', color:'#42a5f5', apis:[
+      {n:'calificacion CLV',p:'P1',s:'ok',h:0},{n:'consulta-validar-tercero',p:'P1',s:'ok',h:0},{n:'api-consulta-terceros',p:'P1',s:'mod',h:15},{n:'consulta-tercero-juridico',p:'P1',s:'mod',h:15},{n:'analitica-lago-siniestros',p:'P2',s:'new',h:60,ext:true}
+    ]},
+    { name:'Core X', color:'#7e57c2', apis:[
+      {n:'consulta-datos-poliza',p:'P1',s:'mod',h:20},{n:'consulta-entidades-param.',p:'P1',s:'mod',h:30},{n:'levant.-control-tecnico',p:'P2',s:'mod',h:60},{n:'consulta-control-tecnico',p:'P2',s:'mod',h:60},{n:'openl-reglas-ia',p:'P2',s:'new',h:40},{n:'liberacion-reserva',p:'P3',s:'ok',h:20},{n:'liquidacion-orden-pago',p:'P3',s:'ok',h:20}
+    ]},
+    { name:'Juridico', color:'#26a69a', apis:[{n:'calificacion-sarlaft',p:'P2',s:'ok',h:0}]},
+    { name:'Comunes', color:'#66bb6a', apis:[{n:'consulta-registraduria',p:'P1',s:'ok',h:0,ext:true},{n:'api-consulta creditos',p:'P1',s:'mod',h:20}]},
+    { name:'Ingresos y Egresos', color:'#29b6f6', apis:[{n:'consulta-deuda-poliza',p:'P1',s:'ok',h:0},{n:'consulta-lista-bancos',p:'P1',s:'ok',h:0}]},
+    { name:'Pagos en Linea', color:'#5c6bc0', apis:[{n:'consulta-cuentas-bancarias',p:'P1',s:'ok',h:0},{n:'consulta-creac.-cuenta',p:'P1',s:'ok',h:0}]},
+    { name:'Bienestar', color:'#ab47bc', apis:[{n:'consulta polizas-salud',p:'P2',s:'ok',h:0}]},
+    { name:'ARL', color:'#ff7043', apis:[{n:'poliza-arl-trabajador',p:'P2',s:'ok',h:0},{n:'securitas-arl-pension',p:'P2',s:'new',h:40,ext:true},{n:'calif. arl-perdida-lab.',p:'P2',s:'new',h:40,ext:true}]},
+    { name:'Pensiones', color:'#ffa726', apis:[{n:'securitas-pension',p:'P2',s:'new',h:40,ext:true}]},
+    { name:'Carpeta Unica', color:'#ef5350', apis:[{n:'gestor-doc-consulta',p:'P3',s:'new',h:40},{n:'gestor-doc-validar-pert.',p:'P3',s:'new',h:60},{n:'gestor-doc-escanear',p:'P3',s:'new',h:60},{n:'gestor-doc-upload',p:'P3',s:'new',h:40}]},
+    { name:'Mercadeo y Notif.', color:'#78909c', apis:[{n:'notificaciones-transv.',p:'P3',s:'ok',h:0}]}
+  ];
+
+  const totalApis = squads.reduce((s, sq) => s + sq.apis.length, 0);
+  const stC = { ok:'#4caf50', mod:'#ffa726', 'new':'#ef5350' };
+  const pkC = { P1:'#42a5f5', P2:'#ff9800', P3:'#f44336' };
+  const pkDash = { P1:'none', P2:'6,3', P3:'2,3' };
+  let aOff = -Math.PI / 2;
+
+  const linesG = svgEl('g', {}), squadsG = svgEl('g', {}), apisG = svgEl('g', {});
+
+  function drawShape(parent, x, y, sz, shape, fill, strokeCol, strokeW) {
+    if (shape === 'square') {
+      return parent.appendChild(svgEl('rect', { x:x-sz, y:y-sz, width:sz*2, height:sz*2, rx:2, fill, stroke:strokeCol, 'stroke-width':strokeW, cursor:'pointer' }));
+    } else if (shape === 'diamond') {
+      const d = 'M'+x+' '+(y-sz)+' L'+(x+sz)+' '+y+' L'+x+' '+(y+sz)+' L'+(x-sz)+' '+y+' Z';
+      return parent.appendChild(svgEl('path', { d, fill, stroke:strokeCol, 'stroke-width':strokeW, cursor:'pointer' }));
+    } else {
+      return parent.appendChild(svgEl('circle', { cx:x, cy:y, r:sz, fill, stroke:strokeCol, 'stroke-width':strokeW, cursor:'pointer' }));
+    }
+  }
+  const shapeMap = { ok:'square', mod:'circle', 'new':'diamond' };
+
+  squads.forEach(sq => {
+    const slice = (sq.apis.length / totalApis) * Math.PI * 2;
+    const mid = aOff + slice / 2;
+    const sx = cx + R1 * Math.cos(mid), sy = cy + R1 * Math.sin(mid);
+    const sqR = Math.max(14, 10 + sq.apis.length * 1.5);
+
+    linesG.appendChild(svgEl('line', { x1:cx, y1:cy, x2:sx, y2:sy, stroke:sq.color, 'stroke-width':'2.5', opacity:'0.3' }));
+    squadsG.appendChild(svgEl('circle', { cx:sx, cy:sy, r:sqR, fill:sq.color, opacity:'0.18', stroke:sq.color, 'stroke-width':'2' }));
+    squadsG.appendChild(svgEl('circle', { cx:sx, cy:sy, r:sqR, fill:'none', stroke:sq.color, 'stroke-width':'1.5', opacity:'0.6' }));
+
+    const lR = R1 + sqR + 14;
+    const lx = cx + lR * Math.cos(mid), ly = cy + lR * Math.sin(mid);
+    const anc = Math.cos(mid) > 0.1 ? 'start' : Math.cos(mid) < -0.1 ? 'end' : 'middle';
+    addText(squadsG, lx, ly, sq.name, { fill:sq.color, size:9.5, weight:'600', anchor:anc });
+
+    sq.apis.forEach((api, i) => {
+      const aa = aOff + (i + 0.5) / sq.apis.length * slice;
+      const ax = cx + R2 * Math.cos(aa), ay = cy + R2 * Math.sin(aa);
+
+      linesG.appendChild(svgEl('line', { x1:sx, y1:sy, x2:ax, y2:ay, stroke:sq.color, 'stroke-width':'1.8', opacity:'0.3', 'stroke-dasharray':pkDash[api.p] }));
+      apisG.appendChild(svgEl('circle', { cx:ax, cy:ay, r:13, fill:'none', stroke:pkC[api.p], 'stroke-width':'2.5', opacity:'0.7', 'stroke-dasharray':pkDash[api.p] }));
+
+      const shape = shapeMap[api.s];
+      const ac = drawShape(apisG, ax, ay, 8, shape, stC[api.s], api.critical?'#fff':stC[api.s], api.critical?2.5:1);
+      ac.setAttribute('opacity', '0.9');
+      if (api.critical) ac.classList.add('pulse-anim');
+
+      if (api.ext) apisG.appendChild(svgEl('circle', { cx:ax+9, cy:ay-9, r:4, fill:'#ef5350', stroke:'#080c22', 'stroke-width':'1.5' }));
+      if (api.critical) {
+        const pr = svgEl('circle', { cx:ax, cy:ay, r:9, fill:'none', stroke:'#ef5350', 'stroke-width':'2', opacity:'0.6' });
+        pr.classList.add('pulse-anim');
+        apisG.appendChild(pr);
+      }
+
+      const aR = R2 + 20;
+      const alx = cx + aR * Math.cos(aa), aly = cy + aR * Math.sin(aa);
+      const aAnc = Math.cos(aa) > 0.15 ? 'start' : Math.cos(aa) < -0.15 ? 'end' : 'middle';
+      addText(apisG, alx, aly, api.n, { fill:'#8899bb', size:8, weight:'400', anchor:aAnc });
+
+      const route = api.ext ? 'Bizagi > AWS > Externo' : 'Bizagi > AWS > Interno';
+      const stLabel = api.s === 'ok' ? 'Existente' : api.s === 'mod' ? 'Modificar' : 'Nueva';
+      const shapeLabel = api.s === 'ok' ? '\u25A0' : api.s === 'mod' ? '\u25CF' : '\u25C6';
+      ac.addEventListener('mousemove', e => showTip(e,
+        '<div class="tt-title">' + shapeLabel + ' ' + api.n + '</div>' +
+        '<div class="tt-sub">Squad: ' + sq.name + '</div>' +
+        '<div class="tt-line">Paquete: ' + api.p + ' | Estado: ' + stLabel + '</div>' +
+        '<div class="tt-line">Horas: ' + api.h + 'h | Ruta: ' + route + '</div>' +
+        (api.critical ? '<div class="tt-line" style="color:#ef5350;font-weight:600;margin-top:4px">\u26A0 RUTA CRITICA</div>' : '') +
+        (api.ext ? '<div class="tt-line" style="color:#ffa726;margin-top:2px">\u26A1 Dependencia externa</div>' : '')
+      ));
+      ac.addEventListener('mouseleave', hideTip);
+    });
+    aOff += slice;
+  });
+
+  svg.appendChild(linesG);
+  svg.appendChild(squadsG);
+  svg.appendChild(apisG);
+  container.appendChild(svg);
+
+  const kpiBar = document.createElement('div');
+  kpiBar.className = 'kpi-bar';
+  [{v:'100h',l:'Paquete 1',c:'#42a5f5'},{v:'280h',l:'Paquete 2',c:'#ff9800'},{v:'240h',l:'Paquete 3',c:'#f44336'},{v:'620h',l:'Total',c:'#64b5f6'}].forEach(k => {
+    const d = document.createElement('div'); d.className = 'kpi-card';
+    d.innerHTML = '<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';
+    kpiBar.appendChild(d);
+  });
+  container.appendChild(kpiBar);
+
+  const leg = document.createElement('div'); leg.className = 'legend-bar';
+  [
+    {t:'html',h:'\u25A0',c:'#4caf50',l:'Existente'},
+    {t:'html',h:'\u25CF',c:'#ffa726',l:'Modificar'},
+    {t:'html',h:'\u25C6',c:'#ef5350',l:'Nueva'},
+    {t:'ring',c:'#42a5f5',l:'P1 (s\u00f3lido)'},
+    {t:'ring',c:'#ff9800',l:'P2 (rayado)',d:true},
+    {t:'ring',c:'#f44336',l:'P3 (punteado)',d:true},
+    {t:'dot',c:'#ef5350',l:'Dep. externa',sm:true},
+    {t:'dot',c:'#ef5350',l:'Ruta cr\u00edtica'}
+  ].forEach(it => {
+    const el = document.createElement('div'); el.className = 'legend-item';
+    if (it.t === 'html') el.innerHTML = '<span style="color:'+it.c+';font-size:14px;line-height:1">'+it.h+'</span>'+it.l;
+    else if (it.t === 'ring') el.innerHTML = '<span class="legend-ring" style="border-color:'+it.c+(it.d?';border-style:dashed':'')+'"></span>'+it.l;
+    else el.innerHTML = '<span class="legend-dot" style="background:'+it.c+(it.sm?';width:7px;height:7px':'')+'"></span>'+it.l;
+    leg.appendChild(el);
+  });
+  container.appendChild(leg);
+}
+</script>
+</body>
+</html>
