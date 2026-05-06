@@ -63,6 +63,7 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
   <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura TO-BE</button>
   <button class="tab-btn" onclick="switchTab('roadmap')">Roadmap</button>
   <button class="tab-btn" onclick="switchTab('riesgos')">Dependencias y Riesgos</button>
+  <button class="tab-btn" onclick="switchTab('grafo')">Grafo Dependencias</button>
 </div>
 
 <!-- TAB 1: INFORME MAESTRO -->
@@ -315,19 +316,24 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </div>
 </div>
 
+<!-- TAB 5: GRAFO DE DEPENDENCIAS -->
+<div id="tab-grafo" class="tab-content">
+<div class="svg-container" id="grafo-container"></div>
+</div>
+
 <div class="svg-tooltip" id="tooltip"></div>
 
 <script>
 /* Tab switching */
-const tabInited={informe:true,arquitectura:false,roadmap:false,riesgos:true};
+const tabInited={informe:true,arquitectura:false,roadmap:false,riesgos:true,grafo:false};
 function switchTab(name){
   document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    const tabs=['informe','arquitectura','roadmap','riesgos'];
+    const tabs=['informe','arquitectura','roadmap','riesgos','grafo'];
     b.classList.toggle('active',tabs[i]===name);
   });
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  if(!tabInited[name]){tabInited[name]=true;if(name==='arquitectura')initArquitectura();else if(name==='roadmap')initRoadmap();}
+  if(!tabInited[name]){tabInited[name]=true;if(name==='arquitectura')initArquitectura();else if(name==='roadmap')initRoadmap();else if(name==='grafo')initGrafo();}
 }
 
 /* Tooltip */
@@ -620,6 +626,180 @@ function initRoadmap(){
     </div>
   `;
   container.appendChild(critDiv);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TAB 5: GRAFO DE DEPENDENCIAS — Radial Network Graph
+   Nodo central CUC con dependencias orbitales por categoría
+   Ruta crítica resaltada con borde rojo pulsante
+   ══════════════════════════════════════════════════════════════ */
+function initGrafo(){
+  const container=document.getElementById('grafo-container');
+  const W=container.clientWidth||1200,H=container.clientHeight||700;
+  const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
+  const cx=W/2,cy=H/2;
+
+  /* Defs: glow filters and pulse animation */
+  const defs=svgEl('defs',{});
+  defs.innerHTML=`
+    <filter id="glowCenter"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowNode"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#64b5f6" stop-opacity="0.9"/><stop offset="100%" stop-color="#1565c0" stop-opacity="0.6"/></radialGradient>
+  `;
+  svg.appendChild(defs);
+
+  /* Style for pulse animation */
+  const styleEl=document.createElement('style');
+  styleEl.textContent=`@keyframes pulse-critical{0%,100%{stroke-opacity:1;stroke-width:3}50%{stroke-opacity:0.4;stroke-width:1.5}}
+  .critical-ring{animation:pulse-critical 2s ease-in-out infinite}
+  .edge-critical{stroke-dasharray:8,4;animation:dash-flow 1.5s linear infinite}
+  @keyframes dash-flow{to{stroke-dashoffset:-24}}`;
+  container.appendChild(styleEl);
+
+  /* Central node */
+  svg.appendChild(svgEl('circle',{cx,cy,r:60,fill:'url(#centerGrad)',filter:'url(#glowCenter)'}));
+  svg.appendChild(svgEl('circle',{cx,cy,r:60,fill:'none',stroke:'#90caf9','stroke-width':'2','stroke-opacity':'0.4'}));
+  addText(svg,cx,cy-8,'CUC',{fill:'#fff',size:18,weight:'700'});
+  addText(svg,cx,cy+12,'Carpeta \u00DAnica',{fill:'#b0c4de',size:10,weight:'400'});
+
+  /* Node categories with orbital positions */
+  const categories=[
+    {id:'cat-param',label:'Parametrizaci\u00F3n',color:'#42a5f5',angle:-90,dist:180,status:'progress',priority:'P1',critical:false,
+     children:[
+       {id:'api-param',label:'API Parametrizaci\u00F3n',status:'progress',priority:'P1',desc:'M\u00F3dulo de reglas de vigencia y cat\u00E1logo de tipos documentales'},
+       {id:'reglas-vig',label:'Reglas Vigencia',status:'progress',priority:'P1',desc:'Motor de evaluaci\u00F3n de completitud documental por producto'}
+     ]},
+    {id:'cat-gestor',label:'Gestor Doc/DAM',color:'#ff9800',angle:-40,dist:200,status:'critical',priority:'P1',critical:true,
+     children:[
+       {id:'oleary',label:'O\'Leary ECM',status:'critical',priority:'P1',desc:'Plataforma TO-BE en GCP. Reemplaza FileNet y Stellent'},
+       {id:'migracion',label:'Migraci\u00F3n Datos',status:'critical',priority:'P1',desc:'Migraci\u00F3n gradual con convivencia obligatoria'}
+     ]},
+    {id:'cat-ocr',label:'Motor OCR',color:'#ef5350',angle:10,dist:210,status:'critical',priority:'P1',critical:true,
+     children:[
+       {id:'ocr-def',label:'Definici\u00F3n Arq.',status:'blocked',priority:'P1',desc:'Pdte valoraci\u00F3n de OCR actuales y definici\u00F3n componente definitivo'},
+       {id:'ocr-dev',label:'Desarrollo OCR',status:'pending',priority:'P1',desc:'CloudRun + Vertex AI. Extracci\u00F3n autom\u00E1tica de datos'}
+     ]},
+    {id:'cat-canales',label:'Canales',color:'#26a69a',angle:60,dist:190,status:'pending',priority:'P2',critical:false,
+     children:[
+       {id:'portal-int',label:'Portal Intermediarios',status:'pending',priority:'P2',desc:'Canal principal de cargue de documentos'},
+       {id:'correo-ch',label:'Correo',status:'pending',priority:'P3',desc:'Recepci\u00F3n de documentos v\u00EDa email'},
+       {id:'core-ch',label:'CORE Multicanalidad',status:'pending',priority:'P2',desc:'Punto de entrada desde sistemas core'}
+     ]},
+    {id:'cat-persist',label:'Persistencia',color:'#78909c',angle:120,dist:200,status:'progress',priority:'P1',critical:true,
+     children:[
+       {id:'filenet',label:'FileNet (8M+ docs)',status:'decomiso',priority:'P1',desc:'Repositorio legacy IBM. A decomisionar tras migraci\u00F3n'},
+       {id:'stellent',label:'Stellent (27+ TB)',status:'decomiso',priority:'P1',desc:'Repositorio legacy Oracle UCM. A decomisionar'}
+     ]},
+    {id:'cat-data',label:'Data Operativa',color:'#ab47bc',angle:170,dist:185,status:'done',priority:'P2',critical:false,
+     children:[
+       {id:'graphql',label:'GraphQL API',status:'done',priority:'P2',desc:'Consulta consolidada de datos del cliente'},
+       {id:'refinador',label:'Refinador Data',status:'progress',priority:'P2',desc:'Consolida datos operativos desde m\u00FAltiples fuentes'}
+     ]},
+    {id:'cat-depuracion',label:'Depuraci\u00F3n Docs',color:'#ffd54f',angle:-145,dist:195,status:'progress',priority:'P1',critical:false,
+     children:[
+       {id:'matriz-docs',label:'Matriz Documentos',status:'done',priority:'P1',desc:'98 requisitos documentales identificados. 30.6% completado'},
+       {id:'cero-docs',label:'Cero Documentos',status:'progress',priority:'P1',desc:'Objetivo: eliminar documentos f\u00EDsicos del proceso'}
+     ]}
+  ];
+
+  /* Status colors */
+  const statusColors={done:'#4caf50',progress:'#ffa726',pending:'#9e9e9e',critical:'#ef5350',blocked:'#f44336',decomiso:'#78909c'};
+
+  /* Draw edges from center to categories */
+  const edgesG=svgEl('g',{});
+  const nodesG=svgEl('g',{});
+
+  categories.forEach(cat=>{
+    const rad=cat.angle*Math.PI/180;
+    const nx=cx+Math.cos(rad)*cat.dist;
+    const ny=cy+Math.sin(rad)*cat.dist;
+    cat._x=nx;cat._y=ny;
+
+    /* Edge center -> category */
+    const edge=svgEl('line',{x1:cx,y1:cy,x2:nx,y2:ny,stroke:cat.color,'stroke-width':cat.critical?'2.5':'1.5','stroke-opacity':cat.critical?'0.9':'0.4'});
+    if(cat.critical)edge.classList.add('edge-critical');
+    edgesG.appendChild(edge);
+
+    /* Category node (larger) */
+    const catR=cat.critical?28:24;
+    if(cat.critical){
+      const ring=svgEl('circle',{cx:nx,cy:ny,r:catR+6,fill:'none',stroke:'#ef5350','stroke-width':'2.5'});
+      ring.classList.add('critical-ring');
+      nodesG.appendChild(ring);
+    }
+    nodesG.appendChild(svgEl('circle',{cx:nx,cy:ny,r:catR,fill:cat.color,opacity:'0.2',stroke:cat.color,'stroke-width':'2',filter:'url(#glowNode)',cursor:'pointer'}));
+    nodesG.appendChild(svgEl('circle',{cx:nx,cy:ny,r:catR-4,fill:cat.color,opacity:'0.85',cursor:'pointer'}));
+    addText(nodesG,nx,ny,cat.label,{fill:'#fff',size:8,weight:'700'});
+
+    /* Tooltip on category */
+    const hitArea=svgEl('circle',{cx:nx,cy:ny,r:catR,fill:'transparent',cursor:'pointer'});
+    hitArea.addEventListener('mousemove',e=>{
+      const childList=cat.children.map(c=>'<div class="tt-line">\u2022 '+c.label+' <span style="color:'+statusColors[c.status]+'">('+(c.status==='done'?'Listo':c.status==='progress'?'En progreso':c.status==='critical'?'Cr\u00EDtico':c.status==='blocked'?'Bloqueado':c.status==='decomiso'?'Decomiso':'Pendiente')+')</span></div>').join('');
+      showTip(e,'<div class="tt-title" style="color:'+cat.color+'">'+cat.label+'</div><div class="tt-sub">Prioridad: '+cat.priority+(cat.critical?' | \u26A0 RUTA CR\u00CDTICA':'')+'</div><div style="margin-top:8px">'+childList+'</div>');
+    });
+    hitArea.addEventListener('mouseleave',hideTip);
+    nodesG.appendChild(hitArea);
+
+    /* Draw children nodes */
+    const childSpread=cat.children.length>2?35:30;
+    const baseAngle=cat.angle;
+    cat.children.forEach((child,ci)=>{
+      const childAngle=(baseAngle+(ci-(cat.children.length-1)/2)*childSpread)*Math.PI/180;
+      const childDist=cat.dist+70;
+      const chx=cx+Math.cos(childAngle)*childDist;
+      const chy=cy+Math.sin(childAngle)*childDist;
+
+      /* Edge category -> child */
+      const cEdge=svgEl('line',{x1:nx,y1:ny,x2:chx,y2:chy,stroke:cat.color,'stroke-width':'1','stroke-opacity':'0.3'});
+      if(child.priority==='P2')cEdge.setAttribute('stroke-dasharray','4,3');
+      else if(child.priority==='P3')cEdge.setAttribute('stroke-dasharray','2,3');
+      edgesG.appendChild(cEdge);
+
+      /* Child node */
+      const chR=14;
+      const chColor=statusColors[child.status]||'#9e9e9e';
+      if(child.status==='critical'||child.status==='blocked'){
+        const cRing=svgEl('circle',{cx:chx,cy:chy,r:chR+4,fill:'none',stroke:'#ef5350','stroke-width':'1.5'});
+        cRing.classList.add('critical-ring');
+        nodesG.appendChild(cRing);
+      }
+      nodesG.appendChild(svgEl('circle',{cx:chx,cy:chy,r:chR,fill:chColor,opacity:'0.2',stroke:chColor,'stroke-width':'1.5'}));
+      nodesG.appendChild(svgEl('circle',{cx:chx,cy:chy,r:chR-3,fill:chColor,opacity:'0.9',cursor:'pointer'}));
+
+      /* Child label */
+      const labelY=chy+chR+12;
+      addText(nodesG,chx,labelY,child.label,{fill:'#8899bb',size:9,weight:'500'});
+
+      /* Child tooltip */
+      const chHit=svgEl('circle',{cx:chx,cy:chy,r:chR,fill:'transparent',cursor:'pointer'});
+      chHit.addEventListener('mousemove',e=>showTip(e,'<div class="tt-title">'+child.label+'</div><div class="tt-sub">'+cat.label+' | '+child.priority+'</div><div class="tt-line" style="margin-top:6px">'+child.desc+'</div><div class="tt-line" style="margin-top:4px;color:'+chColor+'">Estado: '+(child.status==='done'?'\u2705 Listo':child.status==='progress'?'\u23F3 En progreso':child.status==='critical'?'\u26A0 Cr\u00EDtico':child.status==='blocked'?'\u26D4 Bloqueado':child.status==='decomiso'?'\u267B Decomiso':'\u23F8 Pendiente')+'</div>'));
+      chHit.addEventListener('mouseleave',hideTip);
+      nodesG.appendChild(chHit);
+    });
+  });
+
+  svg.appendChild(edgesG);
+  svg.appendChild(nodesG);
+  container.appendChild(svg);
+
+  /* KPI bar */
+  const kpiBar=document.createElement('div');kpiBar.className='kpi-bar';
+  [{v:'7',l:'Dominios',c:'#64b5f6'},{v:'15',l:'Componentes',c:'#ab47bc'},{v:'3',l:'Ruta Cr\u00EDtica',c:'#ef5350'},{v:'5',l:'Dependencias Ext.',c:'#ff9800'}].forEach(k=>{
+    const d=document.createElement('div');d.className='kpi-card';
+    d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';
+    kpiBar.appendChild(d);
+  });
+  container.appendChild(kpiBar);
+
+  /* Legend */
+  const leg=document.createElement('div');leg.className='legend-bar';
+  [{c:'#4caf50',l:'Listo',shape:'rect'},{c:'#ffa726',l:'En progreso',shape:'rect'},{c:'#ef5350',l:'Cr\u00EDtico / Bloqueado',shape:'rect'},{c:'#9e9e9e',l:'Pendiente',shape:'rect'},{c:'#78909c',l:'Decomiso',shape:'rect'},{c:'#ef5350',l:'Ruta Cr\u00EDtica',shape:'ring'}].forEach(it=>{
+    const el=document.createElement('div');el.className='legend-item';
+    if(it.shape==='ring')el.innerHTML='<span style="width:10px;height:10px;border-radius:50%;border:2px solid '+it.c+';display:inline-block"></span>'+it.l;
+    else el.innerHTML='<span class="legend-dot" style="background:'+it.c+'"></span>'+it.l;
+    leg.appendChild(el);
+  });
+  container.appendChild(leg);
 }
 </script>
 </body>
