@@ -635,9 +635,9 @@ function initRoadmap(){
    ══════════════════════════════════════════════════════════════ */
 function initGrafo(){
   const container=document.getElementById('grafo-container');
-  const W=container.clientWidth||1200,H=container.clientHeight||700;
+  const W=container.clientWidth||1200,H=Math.max(container.clientHeight||750,750);
   const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
-  const cx=W/2,cy=H/2;
+  const cx=W/2,cy=H/2-20;
 
   /* Defs: glow filters and pulse animation */
   const defs=svgEl('defs',{});
@@ -664,38 +664,38 @@ function initGrafo(){
 
   /* Node categories with orbital positions */
   const categories=[
-    {id:'cat-param',label:'Parametrizaci\u00F3n',color:'#42a5f5',angle:-90,dist:180,status:'progress',priority:'P1',critical:false,
+    {id:'cat-param',label:'Parametrizaci\u00F3n',color:'#42a5f5',angle:-70,dist:200,status:'progress',priority:'P1',critical:false,
      children:[
        {id:'api-param',label:'API Parametrizaci\u00F3n',status:'progress',priority:'P1',desc:'M\u00F3dulo de reglas de vigencia y cat\u00E1logo de tipos documentales'},
        {id:'reglas-vig',label:'Reglas Vigencia',status:'progress',priority:'P1',desc:'Motor de evaluaci\u00F3n de completitud documental por producto'}
      ]},
-    {id:'cat-gestor',label:'Gestor Doc/DAM',color:'#ff9800',angle:-40,dist:200,status:'critical',priority:'P1',critical:true,
+    {id:'cat-gestor',label:'Gestor Doc/DAM',color:'#ff9800',angle:-18,dist:210,status:'critical',priority:'P1',critical:true,
      children:[
        {id:'oleary',label:'O\'Leary ECM',status:'critical',priority:'P1',desc:'Plataforma TO-BE en GCP. Reemplaza FileNet y Stellent'},
        {id:'migracion',label:'Migraci\u00F3n Datos',status:'critical',priority:'P1',desc:'Migraci\u00F3n gradual con convivencia obligatoria'}
      ]},
-    {id:'cat-ocr',label:'Motor OCR',color:'#ef5350',angle:10,dist:210,status:'critical',priority:'P1',critical:true,
+    {id:'cat-ocr',label:'Motor OCR',color:'#ef5350',angle:33,dist:215,status:'critical',priority:'P1',critical:true,
      children:[
        {id:'ocr-def',label:'Definici\u00F3n Arq.',status:'blocked',priority:'P1',desc:'Pdte valoraci\u00F3n de OCR actuales y definici\u00F3n componente definitivo'},
        {id:'ocr-dev',label:'Desarrollo OCR',status:'pending',priority:'P1',desc:'CloudRun + Vertex AI. Extracci\u00F3n autom\u00E1tica de datos'}
      ]},
-    {id:'cat-canales',label:'Canales',color:'#26a69a',angle:60,dist:190,status:'pending',priority:'P2',critical:false,
+    {id:'cat-canales',label:'Canales',color:'#26a69a',angle:82,dist:205,status:'pending',priority:'P2',critical:false,
      children:[
        {id:'portal-int',label:'Portal Intermediarios',status:'pending',priority:'P2',desc:'Canal principal de cargue de documentos'},
        {id:'correo-ch',label:'Correo',status:'pending',priority:'P3',desc:'Recepci\u00F3n de documentos v\u00EDa email'},
        {id:'core-ch',label:'CORE Multicanalidad',status:'pending',priority:'P2',desc:'Punto de entrada desde sistemas core'}
      ]},
-    {id:'cat-persist',label:'Persistencia',color:'#78909c',angle:120,dist:200,status:'progress',priority:'P1',critical:true,
+    {id:'cat-persist',label:'Persistencia',color:'#78909c',angle:135,dist:210,status:'progress',priority:'P1',critical:true,
      children:[
        {id:'filenet',label:'FileNet (8M+ docs)',status:'decomiso',priority:'P1',desc:'Repositorio legacy IBM. A decomisionar tras migraci\u00F3n'},
        {id:'stellent',label:'Stellent (27+ TB)',status:'decomiso',priority:'P1',desc:'Repositorio legacy Oracle UCM. A decomisionar'}
      ]},
-    {id:'cat-data',label:'Data Operativa',color:'#ab47bc',angle:170,dist:185,status:'done',priority:'P2',critical:false,
+    {id:'cat-data',label:'Data Operativa',color:'#ab47bc',angle:187,dist:200,status:'done',priority:'P2',critical:false,
      children:[
        {id:'graphql',label:'GraphQL API',status:'done',priority:'P2',desc:'Consulta consolidada de datos del cliente'},
        {id:'refinador',label:'Refinador Data',status:'progress',priority:'P2',desc:'Consolida datos operativos desde m\u00FAltiples fuentes'}
      ]},
-    {id:'cat-depuracion',label:'Depuraci\u00F3n Docs',color:'#ffd54f',angle:-145,dist:195,status:'progress',priority:'P1',critical:false,
+    {id:'cat-depuracion',label:'Depuraci\u00F3n Docs',color:'#ffd54f',angle:-125,dist:200,status:'progress',priority:'P1',critical:false,
      children:[
        {id:'matriz-docs',label:'Matriz Documentos',status:'done',priority:'P1',desc:'98 requisitos documentales identificados. 30.6% completado'},
        {id:'cero-docs',label:'Cero Documentos',status:'progress',priority:'P1',desc:'Objetivo: eliminar documentos f\u00EDsicos del proceso'}
@@ -741,11 +741,11 @@ function initGrafo(){
     nodesG.appendChild(hitArea);
 
     /* Draw children nodes */
-    const childSpread=cat.children.length>2?35:30;
+    const childSpread=cat.children.length>2?28:24;
     const baseAngle=cat.angle;
     cat.children.forEach((child,ci)=>{
       const childAngle=(baseAngle+(ci-(cat.children.length-1)/2)*childSpread)*Math.PI/180;
-      const childDist=cat.dist+70;
+      const childDist=cat.dist+80;
       const chx=cx+Math.cos(childAngle)*childDist;
       const chy=cy+Math.sin(childAngle)*childDist;
 
