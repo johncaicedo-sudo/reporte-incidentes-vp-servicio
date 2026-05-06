@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Motor de Suscripción — VP TI</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6}
+.tab-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;background:#0a0f2a;border-bottom:1px solid #1a2040;padding:0 24px;height:48px;align-items:stretch}
+.tab-btn{background:none;border:none;color:#8899bb;font-family:inherit;font-size:14px;font-weight:500;padding:0 24px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+.tab-btn:hover{color:#b0c4de;background:rgba(100,181,246,.06)}
+.tab-btn.active{color:#64b5f6;border-bottom-color:#64b5f6}
+.tab-content{display:none;position:absolute;top:48px;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden}
+.tab-content.active{display:block}
+.tab-content::-webkit-scrollbar{width:6px}
+.tab-content::-webkit-scrollbar-track{background:#0a0f2a}
+.tab-content::-webkit-scrollbar-thumb{background:#2a3560;border-radius:3px}
+.informe{max-width:960px;margin:0 auto;padding:40px 32px 80px}
+.informe h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:.3px}
+.informe .subtitle{font-size:13px;color:#7a8bb5;margin-bottom:36px}
+.informe h2{font-size:17px;font-weight:600;color:#64b5f6;margin:32px 0 14px;padding-bottom:6px;border-bottom:1px solid #1a2550}
+.informe h3{font-size:14px;font-weight:600;color:#90caf9;margin:20px 0 8px}
+.informe p{margin-bottom:10px;color:#c0cce0}
+.informe ul{margin:8px 0 14px 20px}
+.informe ul li{margin-bottom:4px;color:#b0bdd0}
+.informe ul li strong{color:#e0e8f0}
+.informe code{background:#111940;padding:2px 6px;border-radius:3px;font-size:12px;color:#90caf9}
+.highlight{color:#ffd54f;font-weight:600}
+.info-table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13px}
+.info-table th{background:#111940;color:#90caf9;text-align:left;padding:10px 14px;font-weight:600;border-bottom:2px solid #1a2a60}
+.info-table td{padding:9px 14px;border-bottom:1px solid #151e40;color:#c0cce0}
+.info-table tr:hover td{background:rgba(100,181,246,.04)}
+.risk-card{background:rgba(255,255,255,.03);border:1px solid #1a2550;border-radius:8px;padding:16px 20px;margin:10px 0}
+.risk-card .risk-title{font-weight:600;color:#e0e8f0;font-size:14px;margin-bottom:6px}
+.risk-card p{font-size:13px;color:#a0b0c8;margin:0}
+.alert-card{border-left:4px solid;border-radius:6px;padding:14px 18px;margin:10px 0;background:rgba(255,255,255,.03)}
+.alert-card.yellow{border-color:#ffa726;background:rgba(255,167,38,.06)}
+.alert-card.red{border-color:#ef5350;background:rgba(239,83,80,.08)}
+.alert-card .alert-title{font-weight:600;font-size:13px;margin-bottom:4px}
+.alert-card.yellow .alert-title{color:#ffa726}
+.alert-card.red .alert-title{color:#ef5350}
+.alert-card p{font-size:13px;color:#b0bdd0;margin:0}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0}
+.kpi-box{background:#0d1230;border:1px solid #1a2550;border-radius:10px;padding:18px 16px;text-align:center}
+.kpi-box .kpi-val{font-size:24px;font-weight:700;color:#fff}
+.kpi-box .kpi-label{font-size:11px;color:#7a8bb5;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.kpi-box .kpi-sub{font-size:10px;color:#555;margin-top:2px}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.mission-card{background:#0d1230;border:1px solid #1a2550;border-radius:10px;padding:18px 20px}
+.mission-card .mission-num{display:inline-block;background:#1a3060;color:#64b5f6;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:8px}
+.mission-card .mission-title{font-weight:600;color:#e0e8f0;font-size:14px;margin-bottom:6px}
+.mission-card p{font-size:12px;color:#a0b0c8;margin:0;line-height:1.6}
+.arq-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0}
+.arq-card{background:#0d1230;border:1px solid #1a2550;border-radius:10px;padding:18px 20px}
+.arq-card .arq-icon{font-size:24px;margin-bottom:8px}
+.arq-card .arq-title{font-weight:600;color:#e0e8f0;font-size:13px;margin-bottom:6px}
+.arq-card p{font-size:12px;color:#a0b0c8;margin:0;line-height:1.6}
+.arq-card .arq-tech{display:inline-block;background:#1a3060;color:#64b5f6;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600;margin-top:8px}
+.coherence-card{background:rgba(255,167,38,.04);border:1px solid rgba(255,167,38,.2);border-radius:8px;padding:14px 18px;margin:10px 0}
+.coherence-card .coherence-title{font-weight:600;color:#ffa726;font-size:13px;margin-bottom:4px}
+.coherence-card p{font-size:12px;color:#b0bdd0;margin:0}
+.roadmap-item{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #151e40}
+.roadmap-item:last-child{border-bottom:none}
+.roadmap-date{flex-shrink:0;width:100px;font-size:12px;font-weight:600;color:#64b5f6}
+.roadmap-content{flex:1}
+.roadmap-content .rm-title{font-weight:600;color:#e0e8f0;font-size:13px;margin-bottom:4px}
+.roadmap-content p{font-size:12px;color:#a0b0c8;margin:0}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;margin-left:8px}
+.badge-done{background:rgba(76,175,80,.15);color:#4caf50}
+.badge-progress{background:rgba(255,167,38,.15);color:#ffa726}
+.badge-planned{background:rgba(100,181,246,.15);color:#64b5f6}
+.badge-risk{background:rgba(239,83,80,.15);color:#ef5350}
+</style>
+</head>
+<body>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('informe')">Informe Maestro</button>
+  <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura TO-BE</button>
+  <button class="tab-btn" onclick="switchTab('roadmap')">Roadmap</button>
+  <button class="tab-btn" onclick="switchTab('dependencias')">Dependencias y Riesgos</button>
+</div>
+
+<!-- TAB 1: INFORME MAESTRO -->
+<div id="tab-informe" class="tab-content active">
+<div class="informe">
+<h1>INFORME MAESTRO: TRANSFORMACI&#211;N SUSCRIPCI&#211;N Y EMISI&#211;N</h1>
+<p class="subtitle">Proyecto Jira: GD-902 | Motor de Suscripci&#243;n &#8212; Modelo 2026 | Onda S</p>
+
+<h2>1. Resumen Ejecutivo</h2>
+<ul>
+  <li><strong>Objetivo:</strong> Transformar el proceso transversal de suscripci&#243;n y emisi&#243;n centralizando en autogesti&#243;n, automatizaci&#243;n con IA y reducci&#243;n de procesos manuales.</li>
+  <li><strong>Foco estrat&#233;gico:</strong> Cliente percibe fluidez mediante <span class="highlight">interlocutor &#250;nico</span>, pidiendo solo informaci&#243;n estrictamente necesaria.</li>
+  <li><strong>L&#237;neas de negocio:</strong> Autos/Movilidad, Vida, Salud, Generales (Propiedad y Cumplimiento), Transporte.</li>
+  <li><strong>Releases:</strong> R1 (Profundizaci&#243;n y Estabilizaci&#243;n), R2 (Expansi&#243;n), R3 (Parametrizaci&#243;n).</li>
+</ul>
+
+<h2>2. KPIs Principales</h2>
+<div class="kpi-grid">
+  <div class="kpi-box">
+    <div class="kpi-val" style="color:#4caf50">22h &#8594; 14h</div>
+    <div class="kpi-label">Tiempo Suscripci&#243;n</div>
+    <div class="kpi-sub">Meta final: 6h | Sin cliente: 3h &#8594; 1h</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-val" style="color:#42a5f5">&#8804; 3</div>
+    <div class="kpi-label">Interacciones/Solicitud</div>
+    <div class="kpi-sub">Meta 80% casos | Q4: 75%</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-val" style="color:#ffa726">7.9% &#8594; 3%</div>
+    <div class="kpi-label">Tasa Devoluciones</div>
+    <div class="kpi-sub">Meta final: 1% (300 txn)</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-val" style="color:#ef5350">$3.166 &#8594; $2.800</div>
+    <div class="kpi-label">Costo/Transacci&#243;n COP</div>
+    <div class="kpi-sub">&#9888; Ambig&#252;edad: PPT dice $1.500</div>
+  </div>
+</div>
+
+<h2>3. Alcance &#8212; 6 Misiones</h2>
+<div class="mission-grid">
+  <div class="mission-card">
+    <span class="mission-num">M1</span>
+    <div class="mission-title">Gesti&#243;n de Correos</div>
+    <p>Automatizaci&#243;n de interpretaci&#243;n, validaci&#243;n documental y creaci&#243;n autom&#225;tica de casos en Filenet. APIs p&#243;lizas madre + GraphQL Autos.</p>
+  </div>
+  <div class="mission-card">
+    <span class="mission-num">M2-M3</span>
+    <div class="mission-title">Solicitudes + Carpeta &#218;nica</div>
+    <p>Gesti&#243;n v&#237;a Portal de Intermediarios sin reprocesos. Parametrizaci&#243;n documentos y Gestor Documental DAM.</p>
+  </div>
+  <div class="mission-card">
+    <span class="mission-num">M4</span>
+    <div class="mission-title">Torre de Reglas</div>
+    <p>Extracci&#243;n, centralizaci&#243;n y parametrizaci&#243;n de reglas de negocio. NLP con IA, clonaci&#243;n y auditor&#237;a Rollback.</p>
+  </div>
+  <div class="mission-card">
+    <span class="mission-num">M5</span>
+    <div class="mission-title">Motor de Decisi&#243;n &#193;gil</div>
+    <p>Bots N8N: exclusi&#243;n, cancelaci&#243;n, inclusi&#243;n riesgo, aumento/disminuci&#243;n valor. API Liviana F&#233;nix.</p>
+  </div>
+  <div class="mission-card">
+    <span class="mission-num">M5b</span>
+    <div class="mission-title">Subsistemas por Ramo</div>
+    <p><strong>Autos:</strong> HECOPOT. <strong>Generales:</strong> Erika IA (-87%). <strong>Transporte:</strong> Realytix (Slips).</p>
+  </div>
+  <div class="mission-card">
+    <span class="mission-num">M6</span>
+    <div class="mission-title">Trazabilidad</div>
+    <p>Monitoreo del caso para visibilidad de intermediarios. Tracking web en tiempo real.</p>
+  </div>
+</div>
+
+<h2>4. Precisi&#243;n IA por L&#237;nea</h2>
+<table class="info-table">
+<thead><tr><th>L&#237;nea</th><th>Inicial</th><th>Actual</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600;color:#42a5f5">Autos</td><td>50%</td><td>91-94%</td><td><span class="badge badge-done">Estabilizado</span></td></tr>
+<tr><td style="font-weight:600;color:#ab47bc">Vida</td><td>46%</td><td>82-87%</td><td><span class="badge badge-done">Estabilizado</span></td></tr>
+<tr><td style="font-weight:600;color:#ef5350">Salud</td><td>&#8212;</td><td>En progreso</td><td><span class="badge badge-risk">Complejo</span></td></tr>
+<tr><td style="font-weight:600;color:#ff9800">Generales</td><td>&#8212;</td><td>En estabilizaci&#243;n</td><td><span class="badge badge-progress">En curso</span></td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+
+<!-- TAB 2: ARQUITECTURA TO-BE -->
+<div id="tab-arquitectura" class="tab-content">
+<div class="informe">
+<h1>ARQUITECTURA TO-BE</h1>
+<p class="subtitle">Modelo C4 &#8212; Contexto, Contenedores, Componentes y Secuencia | Versi&#243;n Transici&#243;n + TO-BE</p>
+
+<h2>Diagrama de Contexto (C4 Level 1)</h2>
+<p>El <strong>Motor de Suscripciones</strong> es el sistema central que orquesta la interacci&#243;n entre actores, sistemas legacy y servicios cloud.</p>
+
+<div class="arq-grid">
+  <div class="arq-card" style="border-color:#42a5f5">
+    <div class="arq-icon">&#128100;</div>
+    <div class="arq-title">L&#237;nea de Negocio</div>
+    <p>Configuraci&#243;n de reglas y parametrizaci&#243;n del motor.</p>
+    <span class="arq-tech">Actor</span>
+  </div>
+  <div class="arq-card" style="border-color:#26a69a">
+    <div class="arq-icon">&#128101;</div>
+    <div class="arq-title">Intermediario</div>
+    <p>Crea casos de suscripci&#243;n v&#237;a Simon Web, Servicio y Ventas.</p>
+    <span class="arq-tech">Actor</span>
+  </div>
+  <div class="arq-card" style="border-color:#1168BD">
+    <div class="arq-icon">&#9881;</div>
+    <div class="arq-title">Motor de Suscripciones</div>
+    <p>Sistema central. Orquesta reglas, IA, documentos y servicios.</p>
+    <span class="arq-tech">Software System</span>
+  </div>
+</div>
+
+<h2>Sistemas Integrados</h2>
+<table class="info-table">
+<thead><tr><th>Sistema</th><th>Tipo</th><th>Rol</th><th>Interacci&#243;n</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600;color:#1168BD">Motor de Suscripciones</td><td>Software System</td><td>Orquestador principal</td><td>Bidireccional con todos</td></tr>
+<tr><td style="font-weight:600;color:#ef5350">FileNet</td><td>Software System</td><td>Gestor documental</td><td>Consulta/actualizaci&#243;n de casos</td></tr>
+<tr><td style="font-weight:600;color:#42a5f5">Simon Web</td><td>Software System</td><td>Gesti&#243;n p&#243;lizas (compa&#241;&#237;a)</td><td>Crear/consultar casos</td></tr>
+<tr><td style="font-weight:600;color:#ab47bc">Simon Servicio</td><td>Software System</td><td>Gesti&#243;n p&#243;lizas (intermediarios)</td><td>Crear/consultar casos</td></tr>
+<tr><td style="font-weight:600;color:#ff9800">Simon Ventas</td><td>Software System</td><td>Gesti&#243;n p&#243;lizas (intermediarios)</td><td>Crear/consultar casos</td></tr>
+<tr><td style="font-weight:600;color:#66bb6a">Motor de Reglas de Negocio</td><td>Software System</td><td>Ejecuci&#243;n reglas parametrizadas</td><td>Consumo y ejecuci&#243;n</td></tr>
+<tr><td style="font-weight:600;color:#78909c">Commons</td><td>Software System</td><td>Servicios transversales</td><td>Consumo de servicios</td></tr>
+<tr><td style="font-weight:600;color:#26a69a">IA Transversal</td><td>Software System</td><td>IA Generativa (GCP Vertex AI)</td><td>Consumo de IA</td></tr>
+</tbody>
+</table>
+
+<h2>Contenedores On-Premise</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0">
+  <div class="arq-card" style="border-color:#23A2D9">
+    <div class="arq-icon">&#128451;</div>
+    <div class="arq-title">Terceros (Oracle)</div>
+    <p>Sistema donde se crean y actualiza informaci&#243;n de clientes, proveedores, empleados y terceros.</p>
+    <span class="arq-tech">Oracle DB &#8212; On-Premise</span>
+  </div>
+  <div class="arq-card" style="border-color:#23A2D9">
+    <div class="arq-icon">&#128451;</div>
+    <div class="arq-title">Tronador (Oracle)</div>
+    <p>Base de datos con la informaci&#243;n de administraci&#243;n de seguros (p&#243;lizas, reservas, triggers A20/A30/A40).</p>
+    <span class="arq-tech">Oracle DB &#8212; On-Premise</span>
+  </div>
+</div>
+
+<h2>Infraestructura Cloud</h2>
+<table class="info-table">
+<thead><tr><th>Capa</th><th>Tecnolog&#237;a</th><th>Cloud</th><th>Prop&#243;sito</th></tr></thead>
+<tbody>
+<tr><td>Compute APIs</td><td>ECS Cluster + API Gateway</td><td style="color:#ff9800;font-weight:600">AWS</td><td>Microservicios Motor</td></tr>
+<tr><td>Base de Datos</td><td>RDS</td><td style="color:#ff9800;font-weight:600">AWS</td><td>Persistencia relacional</td></tr>
+<tr><td>IA Generativa</td><td>Cloud Run + Vertex AI (Gemini Flash)</td><td style="color:#4285f4;font-weight:600">GCP</td><td>Modelos IA por ramo</td></tr>
+<tr><td>Orquestaci&#243;n Bots</td><td>N8N</td><td style="color:#ff9800;font-weight:600">AWS</td><td>Bots de decisi&#243;n &#225;gil</td></tr>
+<tr><td>Observabilidad</td><td>Datadog + Grafana</td><td style="color:#7e57c2;font-weight:600">SaaS</td><td>Score &#8805; 70 + Estabilidad 99.9%</td></tr>
+</tbody>
+</table>
+
+<h2>Versi&#243;n Transici&#243;n vs TO-BE</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0">
+  <div class="arq-card" style="border-color:#ffa726">
+    <div class="arq-title" style="color:#ffa726">&#9888; Versi&#243;n Transici&#243;n (Actual)</div>
+    <p>Usa componentes ya en producci&#243;n de <strong>Evoluci&#243;n Digital</strong> apoyados con IA. Solo se orquesta la interacci&#243;n con FileNet + IA inicialmente.</p>
+  </div>
+  <div class="arq-card" style="border-color:#4caf50">
+    <div class="arq-title" style="color:#4caf50">&#10003; Componentes TO-BE (Objetivo)</div>
+    <p>Arquitectura completa que da cumplimiento al flujo TO-BE: Motor de Reglas centralizado, API F&#233;nix, IA por ramo, trazabilidad end-to-end.</p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- TAB 3: ROADMAP -->
+<div id="tab-roadmap" class="tab-content">
+<div class="informe">
+<h1>ROADMAP</h1>
+<p class="subtitle">Hitos operativos: Marzo &#8212; Junio 2026 | Releases R1, R2, R3</p>
+
+<h2>Hitos Completados</h2>
+<div class="roadmap-item"><div class="roadmap-date">Mar 2026</div><div class="roadmap-content"><div class="rm-title">Extracci&#243;n Reglas Core (M4)<span class="badge badge-done">&#10003; Completado</span></div><p>Reglas de negocio extra&#237;das y centralizadas desde Excel.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">31/03/2026</div><div class="roadmap-content"><div class="rm-title">Conexi&#243;n t&#225;ctica API Autos<span class="badge badge-done">&#10003; Completado</span></div><p>Operaciones API conectadas para l&#237;nea Autos.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">10/04/2026</div><div class="roadmap-content"><div class="rm-title">Estabilizaci&#243;n IA Autos (91-94%)<span class="badge badge-done">&#10003; Completado</span></div><p>Precisi&#243;n de IA en Autos subi&#243; de 50% a 91-94%.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">17/04/2026</div><div class="roadmap-content"><div class="rm-title">Estabilizaci&#243;n IA Vida (82-87%)<span class="badge badge-done">&#10003; Completado</span></div><p>Precisi&#243;n de IA en Vida subi&#243; de 46% a 82-87%.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">23/04/2026</div><div class="roadmap-content"><div class="rm-title">API P&#243;lizas Madre (M1)<span class="badge badge-done">&#10003; Completado</span></div><p>Implementaci&#243;n para gesti&#243;n de correos.</p></div></div>
+
+<h2>En Curso / Reprogramados</h2>
+<div class="roadmap-item"><div class="roadmap-date">24/04/2026</div><div class="roadmap-content"><div class="rm-title">Bot de Cancelaciones<span class="badge badge-progress">&#9888; Reprogramado</span></div><p>Lanzamiento ajustado. Discrepancia con bot de exclusiones (ver Matriz Coherencia).</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">30/04/2026</div><div class="roadmap-content"><div class="rm-title">Parametrizaci&#243;n Generales + Bot Inclusiones + API Cotizaciones<span class="badge badge-progress">&#9888; En curso</span></div><p>M&#250;ltiples entregables en paralelo para cierre de abril.</p></div></div>
+
+<h2>Planificados (Mayo &#8212; Junio 2026)</h2>
+<div class="roadmap-item"><div class="roadmap-date">06/05/2026</div><div class="roadmap-content"><div class="rm-title">APIs Expedici&#243;n, Deuda y Pr&#233;stamo Digital<span class="badge badge-planned">Planificado</span></div><p>Salida a producci&#243;n de APIs cr&#237;ticas.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">08/05/2026</div><div class="roadmap-content"><div class="rm-title">Depuraci&#243;n Tronador + Estabilizaci&#243;n IA Salud<span class="badge badge-planned">Planificado</span></div><p>Datos variables de productos + reglas no usadas. L&#237;nea Salud es la m&#225;s compleja.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">15/05/2026</div><div class="roadmap-content"><div class="rm-title">Automatizaci&#243;n Filenet 80% + Bot Vida + Generales<span class="badge badge-planned">Planificado</span></div><p>Meta de automatizaci&#243;n de casos Filenet al 80%.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">22/05/2026</div><div class="roadmap-content"><div class="rm-title">Estabilizaci&#243;n IA Generales<span class="badge badge-planned">Planificado</span></div><p>Completar estabilizaci&#243;n de la &#250;ltima l&#237;nea de IA.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">30/05/2026</div><div class="roadmap-content"><div class="rm-title">Modificaciones Cambio Beneficiarios<span class="badge badge-planned">Planificado</span></div><p>Levantamiento de modificaciones por cambio de beneficiarios.</p></div></div>
+<div class="roadmap-item"><div class="roadmap-date">Jun 2026</div><div class="roadmap-content"><div class="rm-title">Correos Operaciones + Mesa Soporte + Nominativos<span class="badge badge-planned">Planificado</span></div><p>Cierre de Release con nuevos correos y entrega mesa de soporte.</p></div></div>
+
+<div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap">
+  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#4caf50;font-weight:700;font-size:22px">5</div>
+    <div style="color:#7a8bb5;font-size:11px">Completados</div>
+  </div>
+  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ffa726;font-weight:700;font-size:22px">2</div>
+    <div style="color:#7a8bb5;font-size:11px">En curso / Reprogramados</div>
+  </div>
+  <div style="background:rgba(100,181,246,.08);border:1px solid rgba(100,181,246,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#64b5f6;font-weight:700;font-size:22px">6</div>
+    <div style="color:#7a8bb5;font-size:11px">Planificados (May-Jun)</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- TAB 4: DEPENDENCIAS Y RIESGOS -->
+<div id="tab-dependencias" class="tab-content">
+<div class="informe">
+<h1>DEPENDENCIAS Y RIESGOS</h1>
+<p class="subtitle">An&#225;lisis cruzado: arquitectura, cronograma, integraciones y discrepancias detectadas</p>
+
+<h2>Riesgos Cr&#237;ticos</h2>
+<div class="risk-card">
+  <div class="risk-title">&#9888;&#65039; Latencias Cr&#237;ticas (Deuda T&#233;cnica)</div>
+  <p>Arquitectura exige &lt; 5s por servicio. Filenet, Fase Cota y Vertex IA reportan picos de <strong style="color:#ef5350">10 a 49.8 segundos</strong>. Impacta meta de tiempo de suscripci&#243;n.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">&#128680; Bloqueo por Environments (Staging vs Prod)</div>
+  <p>Botones "excluir p&#243;lizas" visibles en prueba pero no en producci&#243;n. <strong>Estanca paso de bots a producci&#243;n.</strong></p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">&#128203; Falta Logs N8N en Producci&#243;n</div>
+  <p>Sin trazabilidad en flujos N8N productivos. Meta 99.9% no verificable. Equipo no puede aislar errores.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">&#128200; Score Datadog: 48 / 70</div>
+  <p>Score actual <strong style="color:#ef5350">48</strong> vs meta <strong>&#8805; 70</strong>. Fallo grave en API Fasecolda contribuye significativamente.</p>
+</div>
+
+<h2>Dependencias de Integraci&#243;n</h2>
+<div class="alert-card red">
+  <div class="alert-title">Filenet &#8212; Carga Documentos (Weimar)</div>
+  <p>Ajuste urgente: procesamiento de <strong>15 min a &lt; 3 min</strong>. Impacta precisi&#243;n IA Autos + Vida.</p>
+</div>
+<div class="alert-card red">
+  <div class="alert-title">APIs Externas &#8212; Ca&#237;das Recurrentes</div>
+  <p>Falta validaciones IA generativa para OCR en formatos antiguos (firmas, slips no estructurados).</p>
+</div>
+<div class="alert-card yellow">
+  <div class="alert-title">API Fasecolda &#8212; Sin SLA</div>
+  <p>Fallo grave sin SLA documentado. Contribuye al score bajo de Datadog.</p>
+</div>
+
+<h2>Mapa de Dependencias</h2>
+<table class="info-table">
+<thead><tr><th>Sistema</th><th>Dependencia</th><th>Impacto</th><th>Riesgo</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600;color:#42a5f5">Tronador</td><td>Triggers A20/A30/A40</td><td>Velocidad bots</td><td><span class="badge badge-progress">Medio</span></td></tr>
+<tr><td style="font-weight:600;color:#ef5350">Filenet</td><td>Carga docs (Weimar)</td><td>Precisi&#243;n IA</td><td><span class="badge badge-risk">Alto</span></td></tr>
+<tr><td style="font-weight:600;color:#ab47bc">Vertex AI</td><td>Latencia Gemini</td><td>Tiempo respuesta</td><td><span class="badge badge-risk">Alto</span></td></tr>
+<tr><td style="font-weight:600;color:#ff9800">N8N</td><td>Logs producci&#243;n</td><td>Trazabilidad</td><td><span class="badge badge-risk">Alto</span></td></tr>
+<tr><td style="font-weight:600;color:#78909c">Fasecolda</td><td>API externa</td><td>Score Datadog</td><td><span class="badge badge-risk">Alto</span></td></tr>
+<tr><td style="font-weight:600;color:#26a69a">API F&#233;nix</td><td>Microservicios nuevos</td><td>Reemplazo RPA</td><td><span class="badge badge-progress">Medio</span></td></tr>
+<tr><td style="font-weight:600;color:#66bb6a">Portal Intermediarios</td><td>Environments</td><td>Paso a prod bots</td><td><span class="badge badge-risk">Alto</span></td></tr>
+</tbody>
+</table>
+
+<h2>Discrepancias Detectadas (Matriz de Coherencia)</h2>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; Fechas Estabilizaci&#243;n Vida</div>
+  <p>PPT dice "31 de abril" (inexistente). Cronograma real: 17 de abril.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#128176; Costo por Transacci&#243;n: $1.500 vs $2.800</div>
+  <p>Presentaci&#243;n gerencial contradice gr&#225;fica del mismo slide. Requiere auditor&#237;a financiera.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#128260; Bots Cancelador/Exclusi&#243;n: fechas cruzadas</div>
+  <p>Mesa Transformaci&#243;n (23/04) vs actualizaci&#243;n (30/04) vs Gantt: tres versiones distintas.</p>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px">
+  <div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px;text-align:center">
+    <div style="font-size:22px;font-weight:700;color:#ef5350">4</div>
+    <div style="font-size:10px;color:#7a8bb5">Riesgos cr&#237;ticos</div>
+  </div>
+  <div style="background:rgba(255,167,38,.06);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px;text-align:center">
+    <div style="font-size:22px;font-weight:700;color:#ffa726">3</div>
+    <div style="font-size:10px;color:#7a8bb5">Discrepancias</div>
+  </div>
+  <div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px;text-align:center">
+    <div style="font-size:22px;font-weight:700;color:#ef5350">5/7</div>
+    <div style="font-size:10px;color:#7a8bb5">Deps. riesgo alto</div>
+  </div>
+  <div style="background:rgba(126,87,194,.06);border:1px solid rgba(126,87,194,.3);border-radius:8px;padding:12px;text-align:center">
+    <div style="font-size:22px;font-weight:700;color:#7e57c2">48/70</div>
+    <div style="font-size:10px;color:#7a8bb5">Score Datadog</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    const tabs = ['informe','arquitectura','roadmap','dependencias'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+</script>
+</body>
+</html>
