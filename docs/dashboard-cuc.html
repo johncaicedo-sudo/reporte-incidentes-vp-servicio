@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Carpeta &#218;nica de Cliente (CUC) — VP TI</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6}
+.tab-bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;background:#0a0f2a;border-bottom:1px solid #1a2040;padding:0 24px;height:48px;align-items:stretch}
+.tab-btn{background:none;border:none;color:#8899bb;font-family:inherit;font-size:14px;font-weight:500;padding:0 24px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
+.tab-btn:hover{color:#b0c4de;background:rgba(100,181,246,.06)}
+.tab-btn.active{color:#64b5f6;border-bottom-color:#64b5f6}
+.tab-content{display:none;position:absolute;top:48px;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden}
+.tab-content.active{display:block}
+.tab-content::-webkit-scrollbar{width:6px}
+.tab-content::-webkit-scrollbar-track{background:#0a0f2a}
+.tab-content::-webkit-scrollbar-thumb{background:#2a3560;border-radius:3px}
+.informe{max-width:960px;margin:0 auto;padding:40px 32px 80px}
+.informe h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:.3px}
+.informe .subtitle{font-size:13px;color:#7a8bb5;margin-bottom:36px}
+.informe h2{font-size:17px;font-weight:600;color:#64b5f6;margin:32px 0 14px;padding-bottom:6px;border-bottom:1px solid #1a2550}
+.informe h3{font-size:14px;font-weight:600;color:#90caf9;margin:20px 0 8px}
+.informe p{margin-bottom:10px;color:#c0cce0}
+.informe ul{margin:8px 0 14px 20px}
+.informe ul li{margin-bottom:4px;color:#b0bdd0}
+.informe ul li strong{color:#e0e8f0}
+.informe code{background:#111940;padding:2px 6px;border-radius:3px;font-size:12px;color:#90caf9}
+.highlight{color:#ffd54f;font-weight:600}
+.info-table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13px}
+.info-table th{background:#111940;color:#90caf9;text-align:left;padding:10px 14px;font-weight:600;border-bottom:2px solid #1a2a60}
+.info-table td{padding:9px 14px;border-bottom:1px solid #151e40;color:#c0cce0}
+.info-table tr:hover td{background:rgba(100,181,246,.04)}
+.risk-card{background:rgba(255,255,255,.03);border:1px solid #1a2550;border-radius:8px;padding:16px 20px;margin:10px 0}
+.risk-card .risk-title{font-weight:600;color:#e0e8f0;font-size:14px;margin-bottom:6px}
+.risk-card p{font-size:13px;color:#a0b0c8;margin:0}
+.coherence-card{background:rgba(255,167,38,.04);border:1px solid rgba(255,167,38,.2);border-radius:8px;padding:14px 18px;margin:10px 0}
+.coherence-card .coherence-title{font-weight:600;color:#ffa726;font-size:13px;margin-bottom:6px}
+.coherence-card p{font-size:13px;color:#a0b0c8;margin:0}
+.svg-container{width:100%;height:100%;position:relative}
+.svg-container svg{width:100%;height:100%}
+.kpi-bar{position:absolute;top:16px;right:20px;display:flex;gap:10px;z-index:10}
+.kpi-card{background:rgba(10,15,42,.9);border:1px solid #1a2550;border-radius:8px;padding:8px 14px;text-align:center;backdrop-filter:blur(8px)}
+.kpi-card .kpi-val{font-size:18px;font-weight:700;color:#fff}
+.kpi-card .kpi-label{font-size:10px;color:#7a8bb5;text-transform:uppercase;letter-spacing:.5px}
+.legend-bar{position:absolute;top:50%;right:12px;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;background:rgba(10,15,42,.92);border:1px solid #1a2550;border-radius:8px;padding:12px 14px;z-index:10;backdrop-filter:blur(8px)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#8899bb}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.svg-tooltip{position:fixed;pointer-events:none;background:rgba(10,15,42,.95);border:1px solid #2a3a70;border-radius:8px;padding:12px 16px;font-size:12px;color:#c0cce0;max-width:320px;z-index:200;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.5);display:none;line-height:1.5}
+.svg-tooltip .tt-title{font-weight:700;color:#fff;font-size:13px;margin-bottom:4px}
+.svg-tooltip .tt-sub{color:#7a8bb5;font-size:11px}
+.svg-tooltip .tt-line{color:#a0b0c8}
+.status-badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600}
+.badge-done{background:rgba(76,175,80,.15);color:#4caf50}
+.badge-progress{background:rgba(255,167,38,.15);color:#ffa726}
+.badge-pending{background:rgba(158,158,158,.15);color:#9e9e9e}
+</style>
+</head>
+<body>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('informe')">Informe Maestro</button>
+  <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura TO-BE</button>
+  <button class="tab-btn" onclick="switchTab('roadmap')">Roadmap</button>
+  <button class="tab-btn" onclick="switchTab('riesgos')">Dependencias y Riesgos</button>
+</div>
+
+<!-- TAB 1: INFORME MAESTRO -->
+<div id="tab-informe" class="tab-content active">
+<div class="informe">
+<h1>INFORME MAESTRO DE PROYECTO: CARPETA &#218;NICA DE CLIENTE (CUC)</h1>
+<p class="subtitle">Proyecto Jira: GD-905 | Carpeta &#218;nica de Cliente — Gesti&#243;n Documental Centralizada</p>
+
+<h2>1. Resumen Ejecutivo</h2>
+<div style="display:flex;gap:16px;margin:16px 0 28px;flex-wrap:wrap">
+  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#4caf50;font-weight:700;font-size:22px">$72M</div>
+    <div style="color:#7a8bb5;font-size:11px">Ahorro anual proyectado</div>
+  </div>
+  <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ef5350;font-weight:700;font-size:22px">80%</div>
+    <div style="color:#7a8bb5;font-size:11px">Reducci&#243;n devoluciones</div>
+  </div>
+  <div style="background:rgba(66,165,245,.08);border:1px solid rgba(66,165,245,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#42a5f5;font-weight:700;font-size:22px">70K</div>
+    <div style="color:#7a8bb5;font-size:11px">Transacciones/mes</div>
+  </div>
+  <div style="background:rgba(171,71,188,.08);border:1px solid rgba(171,71,188,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ab47bc;font-weight:700;font-size:22px">4 FTEs</div>
+    <div style="color:#7a8bb5;font-size:11px">Liberados</div>
+  </div>
+</div>
+<ul>
+  <li><strong>Sponsor:</strong> Mar&#237;a del Pilar Falla</li>
+  <li><strong>Gerente:</strong> Liliana Carre&#241;o</li>
+  <li><strong>PO:</strong> John Alexander Caicedo</li>
+  <li><strong>Objetivo:</strong> Centralizar informaci&#243;n y acceso automatizado a datos/documentos de clientes, eliminando dispersi&#243;n documental.</li>
+  <li><strong>Procesos:</strong> Suscripci&#243;n y Emisi&#243;n (<span class="highlight">70K transacciones/mes</span>)</li>
+  <li><strong>Fuentes:</strong> FileNet (8M+ documentos), Stellent (27+ TB)</li>
+</ul>
+
+<h2>2. Alcance del Proyecto</h2>
+<table class="info-table">
+<thead><tr><th>Fase</th><th>Descripci&#243;n</th><th>Componentes</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:700;color:#42a5f5">Fase 1</td><td>M&#243;dulo Parametrizaci&#243;n + Reglas Vigencia</td><td>API parametrizaci&#243;n, reglas vigencia documental, cat&#225;logo tipos</td></tr>
+<tr><td style="font-weight:700;color:#ff9800">Fase 2</td><td>Trazabilidad + Canales + OCR Autom&#225;tico</td><td>API trazabilidad, integraci&#243;n canales, motor OCR clasificaci&#243;n</td></tr>
+<tr><td style="font-weight:700;color:#ab47bc">Fase 3</td><td>Integraci&#243;n repositorios + Ingesta Manual/Masiva</td><td>Migraci&#243;n O'Leary ECM, convivencia FileNet/Stellent, ingesta batch</td></tr>
+</tbody>
+</table>
+<h3>&#201;picas T&#233;cnicas</h3>
+<table class="info-table">
+<thead><tr><th>&#201;pica</th><th>Descripci&#243;n</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:700;color:#42a5f5">Control de Accesos</td><td>Perfiles, roles y permisos sobre documentos por producto/canal</td></tr>
+<tr><td style="font-weight:700;color:#ff9800">Data Operativa</td><td>Consulta consolidada de datos del cliente v&#237;a GraphQL</td></tr>
+<tr><td style="font-weight:700;color:#26a69a">Motor de Suscripci&#243;n</td><td>Reglas autom&#225;ticas de aceptaci&#243;n documental</td></tr>
+<tr><td style="font-weight:700;color:#ab47bc">Reporter&#237;a</td><td>Dashboards de cumplimiento, devoluciones y tiempos de gesti&#243;n</td></tr>
+</tbody>
+</table>
+
+<h2>3. Cronograma Maestro (2026)</h2>
+<table class="info-table">
+<thead><tr><th>Entregable</th><th>Inicio</th><th>Fin</th><th>Estado</th></tr></thead>
+<tbody>
+<tr><td>M&#243;dulo Parametrizaci&#243;n API</td><td>23/01</td><td>01/06</td><td><span class="status-badge badge-progress">En pruebas</span></td></tr>
+<tr><td>Gestor Documental/DAM/O'Leary</td><td>03/03</td><td>04/05</td><td><span class="status-badge badge-progress">Migraci&#243;n</span></td></tr>
+<tr><td>Motor OCR</td><td>15/02</td><td>18/05</td><td><span class="status-badge badge-progress">Ajustado</span></td></tr>
+<tr><td>Cero Documentos (98 req.)</td><td>01/02</td><td>30/06</td><td><span class="status-badge badge-pending">30.6% listo</span></td></tr>
+<tr><td>Integraciones Canales</td><td>01/04</td><td>15/06</td><td><span class="status-badge badge-pending">Sin iniciar</span></td></tr>
+</tbody>
+</table>
+
+<h2>4. Contenido Estrat&#233;gico — Financiero</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0">
+<div style="background:#0d1230;border:1px solid rgba(66,165,245,.3);border-radius:10px;padding:18px 20px">
+  <div style="color:#42a5f5;font-weight:700;font-size:16px;margin-bottom:10px">CAPEX Externo: $813.8M</div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <p>&#8226; Desarrolladores: $479.4M</p>
+    <p>&#8226; UX/UI: $94.4M</p>
+    <p>&#8226; Motor OCR: $240.0M</p>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid rgba(255,167,38,.3);border-radius:10px;padding:18px 20px">
+  <div style="color:#ffa726;font-weight:700;font-size:16px;margin-bottom:10px">OPEX Recurrente: $775.1M</div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <p>&#8226; Equipo interno dedicado</p>
+    <p>&#8226; Analistas, arquitectos, QA, PO</p>
+    <p>&#8226; Ahorro proyectado: <strong style="color:#4caf50">$72M/a&#241;o</strong></p>
+  </div>
+</div>
+</div>
+
+<h2>5. Matriz de Coherencia (6 Discrepancias)</h2>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; 1. Duraci&#243;n: 12 meses vs 10 meses</div>
+  <p>PPT del Sponsor indica 12 meses de ejecuci&#243;n. Cronograma Jira muestra 10 meses. Desalineaci&#243;n en fecha de cierre del proyecto.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; 2. Tipificaci&#243;n costos: CAPEX interno vs OPEX</div>
+  <p>Presupuesto clasifica equipo interno como CAPEX. Contabilidad lo registra como OPEX. Afecta reporte financiero y amortizaci&#243;n.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; 3. KPI Devoluciones: 6% vs 4%</div>
+  <p>Caso de Negocio apunta a reducir devoluciones al 6%. PPT de Presidencia indica meta del 4%. Ambig&#252;edad en medici&#243;n de &#233;xito.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; 4. KPI INS Intermediario: +2 pts vs +13 pts</div>
+  <p>Documento t&#233;cnico proyecta +2 puntos de INS. PPT Comercial promete +13 puntos. Expectativa completamente desalineada.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; 5. Ahorros: $75M terceros vs $72M FTEs internos</div>
+  <p>Caso de Negocio calcula $75M en reducci&#243;n de terceros. PPT indica $72M por liberaci&#243;n de FTEs internos. Fuente del ahorro contradictoria.</p>
+</div>
+<div class="coherence-card">
+  <div class="coherence-title">&#9888; 6. Fechas an&#243;malas: &#8220;15/6 - 10/3&#8221;</div>
+  <p>Cronograma contiene una actividad con fecha fin (10/3) anterior a fecha inicio (15/6). Posible error de captura o inversi&#243;n de campos.</p>
+</div>
+
+<h2>6. Volumen Operativo</h2>
+<div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap">
+  <div style="background:rgba(66,165,245,.08);border:1px solid rgba(66,165,245,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:120px">
+    <div style="color:#42a5f5;font-weight:700;font-size:22px">70K</div>
+    <div style="color:#7a8bb5;font-size:11px">Txn/mes</div>
+  </div>
+  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:120px">
+    <div style="color:#ffa726;font-weight:700;font-size:22px">8M+</div>
+    <div style="color:#7a8bb5;font-size:11px">Docs FileNet</div>
+  </div>
+  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:120px">
+    <div style="color:#4caf50;font-weight:700;font-size:22px">27+ TB</div>
+    <div style="color:#7a8bb5;font-size:11px">Stellent</div>
+  </div>
+  <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:120px">
+    <div style="color:#ef5350;font-weight:700;font-size:22px">98</div>
+    <div style="color:#7a8bb5;font-size:11px">Requisitos totales</div>
+  </div>
+  <div style="background:rgba(171,71,188,.08);border:1px solid rgba(171,71,188,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:120px">
+    <div style="color:#ab47bc;font-weight:700;font-size:22px">30.6%</div>
+    <div style="color:#7a8bb5;font-size:11px">Finalizado</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- TAB 2: ARQUITECTURA TO-BE -->
+<div id="tab-arquitectura" class="tab-content">
+<div class="svg-container" id="arq-container"></div>
+</div>
+
+<!-- TAB 3: ROADMAP -->
+<div id="tab-roadmap" class="tab-content">
+<div class="svg-container" id="roadmap-container"></div>
+</div>
+
+<!-- TAB 4: DEPENDENCIAS Y RIESGOS -->
+<div id="tab-riesgos" class="tab-content">
+<div class="informe">
+<h1>DEPENDENCIAS Y RIESGOS — CUC</h1>
+<p class="subtitle">Matriz de riesgos, dependencias cr&#237;ticas y plan de mitigaci&#243;n</p>
+
+<h2>Matriz de Riesgos</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0 28px">
+  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">ALTO</span>
+      <span style="color:#ef5350;font-weight:600">Recurso OCR bloqueado (Pdte Definici&#243;n Arquitectura)</span>
+    </div>
+    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+      <p>Dada la capacidad del equipo de arquitectura, ha sido un componente que se tiene pendiente realizar las valoraciones pertinentes a los OCR actuales y definir el componente definitivo para el uso de este proyecto.</p>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
+      <strong>Mitigaci&#243;n:</strong> Cerrar r&#225;pidamente la definici&#243;n t&#233;cnica.
+    </div>
+  </div>
+  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">CR&#205;TICO</span>
+      <span style="color:#ef5350;font-weight:600">Transici&#243;n Gestor Documental/DAM/O'Leary</span>
+    </div>
+    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+      <p>Convivencia con FileNet/Stellent. Migraci&#243;n gradual con per&#237;odo de convivencia obligatorio. FileNet y Stellent son AS-IS a decomisionar.</p>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
+      <strong>Mitigaci&#243;n:</strong> Plan de migraci&#243;n gradual con rollback.
+    </div>
+  </div>
+  <div style="background:#0d1230;border:1px solid rgba(255,167,38,.3);border-radius:10px;padding:18px 20px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <span style="background:#ffa726;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">ALTO</span>
+      <span style="color:#ffa726;font-weight:600">Taxonom&#237;a — Riesgo de duplicaci&#243;n</span>
+    </div>
+    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+      <p>Inconsistencias en nomenclatura entre canales. Riesgo de documentos duplicados por falta de cat&#225;logo unificado.</p>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
+      <strong>Mitigaci&#243;n:</strong> Definir cat&#225;logo &#250;nico con reglas de deduplicaci&#243;n.
+    </div>
+  </div>
+  <div style="background:#0d1230;border:1px solid rgba(158,158,158,.3);border-radius:10px;padding:18px 20px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <span style="background:#9e9e9e;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">MEDIO</span>
+      <span style="color:#9e9e9e;font-weight:600">Ambiente Stage no liberado</span>
+    </div>
+    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+      <p>URLs de prueba estables no liberadas. Bloquea validaci&#243;n de integraciones con negocio.</p>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
+      <strong>Mitigaci&#243;n:</strong> Escalar con Infraestructura para aprovisionamiento.
+    </div>
+  </div>
+  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">CR&#205;TICO</span>
+      <span style="color:#ef5350;font-weight:600">Riesgo normativo (privacidad/retenci&#243;n)</span>
+    </div>
+    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+      <p>Pol&#237;ticas de retenci&#243;n documental requieren validaci&#243;n jur&#237;dica. Cumplimiento de Habeas Data obligatorio.</p>
+    </div>
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
+      <strong>Mitigaci&#243;n:</strong> Validaci&#243;n jur&#237;dica de pol&#237;ticas de retenci&#243;n. Cumplimiento Habeas Data.
+    </div>
+  </div>
+</div>
+
+<h2>Dependencias Cr&#237;ticas</h2>
+<div class="risk-card">
+  <div class="risk-title">&#128274; FileNet (8M+ documentos) — AS-IS, Decomiso</div>
+  <p>Repositorio principal legacy a decomisionar. Convivencia obligatoria durante migraci&#243;n al Gestor Documental/DAM/O'Leary. Todos los documentos deben migrarse.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">&#128274; Stellent (27+ TB) — AS-IS, Decomiso</div>
+  <p>Segundo repositorio legacy a decomisionar. Volumen masivo requiere estrategia de migraci&#243;n por fases al Gestor Documental/DAM/O'Leary con validaci&#243;n de integridad.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">&#128274; Motor OCR — Pdte Definici&#243;n Arquitectura</div>
+  <p>Dada la capacidad del equipo de arquitectura, ha sido un componente que se tiene pendiente realizar las valoraciones pertinentes a los OCR actuales y definir el componente definitivo para el uso de este proyecto.</p>
+</div>
+<div class="risk-card">
+  <div class="risk-title">&#128274; Canales (Portal Intermediarios, Correo, CORE)</div>
+  <p>Integraci&#243;n pendiente. Cada canal tiene formatos y metadatos distintos. Requiere adaptadores espec&#237;ficos.</p>
+</div>
+
+<h2>Lectura Ejecutiva</h2>
+<div style="background:rgba(100,181,246,.04);border:1px solid #1a3a70;border-radius:10px;padding:18px 22px;margin-bottom:28px">
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8">
+    <p>El proyecto CUC impacta <strong>~70K transacciones/mes</strong> en suscripci&#243;n y emisi&#243;n. La arquitectura TO-BE centraliza documentos dispersos en <strong>FileNet + Stellent</strong> (AS-IS, a decomisionar) hacia el <strong>Gestor Documental/DAM/O'Leary</strong> (plataforma TO-BE en GCP) con OCR autom&#225;tico.</p>
+    <p style="margin-top:8px"><strong style="color:#ef5350">Riesgo principal:</strong> Recurso OCR pendiente de definici&#243;n arquitect&#243;nica y riesgo normativo de privacidad/retenci&#243;n documental.</p>
+    <p style="margin-top:8px"><strong style="color:#ffa726">Dependencia cr&#237;tica:</strong> Convivencia obligatoria con FileNet/Stellent durante transici&#243;n al Gestor Documental/DAM/O'Leary. Primera semana de mayo como deadline.</p>
+    <p style="margin-top:8px"><strong style="color:#4caf50">Mitigaci&#243;n:</strong> Escalamiento de recurso OCR, cat&#225;logo &#250;nico de taxonom&#237;a, validaci&#243;n jur&#237;dica de retenci&#243;n.</p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="svg-tooltip" id="tooltip"></div>
+
+<script>
+/* Tab switching */
+const tabInited={informe:true,arquitectura:false,roadmap:false,riesgos:true};
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    const tabs=['informe','arquitectura','roadmap','riesgos'];
+    b.classList.toggle('active',tabs[i]===name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(!tabInited[name]){tabInited[name]=true;if(name==='arquitectura')initArquitectura();else if(name==='roadmap')initRoadmap();}
+}
+
+/* Tooltip */
+const tip=document.getElementById('tooltip');
+function showTip(e,html){tip.innerHTML=html;tip.style.display='block';moveTip(e);}
+function moveTip(e){let x=e.clientX+14,y=e.clientY+14;if(x+320>window.innerWidth)x=e.clientX-330;if(y+200>window.innerHeight)y=e.clientY-210;tip.style.left=x+'px';tip.style.top=y+'px';}
+function hideTip(){tip.style.display='none';}
+
+/* SVG helpers */
+function svgEl(tag,attrs){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs||{}))el.setAttribute(k,v);return el;}
+function addText(parent,x,y,text,opts){
+  const t=svgEl('text',{x,y,fill:opts.fill||'#c0cce0','font-size':opts.size||12,'font-family':"'Segoe UI',system-ui,sans-serif",'text-anchor':opts.anchor||'middle','dominant-baseline':opts.baseline||'central','font-weight':opts.weight||'400','pointer-events':'none'});
+  t.textContent=text;parent.appendChild(t);return t;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TAB 2: ARQUITECTURA TO-BE — CUC Hierarchical 4-Layer Layout
+   Capas: Canales > Logica CUC > Servicios > Persistencia
+   ══════════════════════════════════════════════════════════════ */
+function initArquitectura(){
+  const container=document.getElementById('arq-container');
+  const W=container.clientWidth||1200,H=700;
+  const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
+
+  const defs=svgEl('defs',{});
+  defs.innerHTML='<filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg.appendChild(defs);
+
+  const layers=[
+    {label:'CAPA 1 \u2014 CANALES (Entrada)',color:'#42a5f5',y:30,h:110},
+    {label:'CAPA 2 \u2014 L\u00D3GICA CUC',color:'#ab47bc',y:160,h:130},
+    {label:'CAPA 3 \u2014 SERVICIOS',color:'#ff9800',y:310,h:130},
+    {label:'CAPA 4 \u2014 PERSISTENCIA',color:'#78909c',y:460,h:120}
+  ];
+
+  layers.forEach(l=>{
+    svg.appendChild(svgEl('rect',{x:20,y:l.y,width:W-40,height:l.h,rx:12,fill:l.color,opacity:'0.06',stroke:l.color,'stroke-width':'1','stroke-opacity':'0.2'}));
+    addText(svg,36,l.y+14,l.label,{fill:l.color,size:10,weight:'700',anchor:'start'});
+  });
+
+  const nw=155,nh=54;
+  const rc={Alto:'#ef5350',Medio:'#ffa726',Bajo:'#66bb6a'};
+  const cc={AWS:'#ff9800',GCP:'#4285f4','On-Prem':'#78909c',Cloud:'#5c6bc0'};
+
+  function drawNode(g,id,x,y,name,cloud,risk,components,desc){
+    const rx=x-nw/2,ry=y-nh/2;
+    const rect=svgEl('rect',{x:rx,y:ry,width:nw,height:nh,rx:10,fill:'#0d1230',stroke:cc[cloud]||'#555','stroke-width':'1.8',filter:'url(#glow2)',cursor:'pointer'});
+    g.appendChild(rect);
+    addText(g,x,y-12,name,{fill:'#fff',size:10,weight:'600'});
+    g.appendChild(svgEl('rect',{x:x-20,y:y+4,width:40,height:15,rx:7,fill:cc[cloud]||'#555',opacity:'0.85'}));
+    addText(g,x,y+11,cloud,{fill:'#fff',size:8,weight:'700'});
+    g.appendChild(svgEl('rect',{x:rx+nw-40,y:ry+2,width:38,height:14,rx:7,fill:rc[risk],opacity:'0.9'}));
+    addText(g,rx+nw-21,ry+9,risk,{fill:'#fff',size:8,weight:'700'});
+    rect.addEventListener('mousemove',e=>showTip(e,'<div class="tt-title">'+name+'</div><div class="tt-sub">'+cloud+' | Riesgo: '+risk+'</div><div class="tt-line" style="margin-top:6px"><strong>Componentes:</strong> '+components+'</div><div class="tt-line" style="margin-top:4px">'+desc+'</div>'));
+    rect.addEventListener('mouseleave',hideTip);
+    return {id,cx:x,cy:y,top:ry,bot:ry+nh,left:rx,right:rx+nw};
+  }
+
+  const nodesG=svgEl('g',{});
+  const bp={};
+
+  /* CAPA 1: Canales */
+  const c1y=layers[0].y+layers[0].h/2;
+  const c1gap=220;
+  bp.portal=drawNode(nodesG,'portal',W/2-c1gap,c1y,'Portal Intermediarios','AWS','Medio','Portal Web, Formularios, Cargue docs','Canal principal de intermediarios para cargue de documentos y consulta.');
+  bp.correo=drawNode(nodesG,'correo',W/2,c1y,'Correo Electr\u00F3nico','On-Prem','Bajo','Exchange, Bandeja entrada, Adjuntos','Canal de recepci\u00F3n de documentos v\u00EDa email con clasificaci\u00F3n autom\u00E1tica.');
+  bp.core=drawNode(nodesG,'core',W/2+c1gap,c1y,'CORE (Multicanalidad)','On-Prem','Medio','Sistemas internos, API Gateway','Punto de entrada desde sistemas core para solicitudes internas.');
+
+  /* CAPA 2: Logica CUC */
+  const c2y=layers[1].y+layers[1].h/2;
+  const c2gap=190;
+  const c2start=W/2-1.5*c2gap;
+  bp.refinador=drawNode(nodesG,'refinador',c2start,c2y,'Refinador Data Operativa','AWS','Medio','GraphQL, Consolidador datos, Cache','Consolida datos operativos del cliente desde m\u00FAltiples fuentes.');
+  bp.carpeta=drawNode(nodesG,'carpeta',c2start+c2gap,c2y,'Carpeta \u00DAnica (Reglas)','AWS','Alto','Motor reglas vigencia, Eval\u00FAa completitud','N\u00FAcleo del CUC: eval\u00FAa reglas de vigencia y completitud documental.');
+  bp.refdoc=drawNode(nodesG,'refdoc',c2start+2*c2gap,c2y,'Refinador Documental','AWS','Medio','Clasificador, Validador formato, OCR pre','Preprocesa documentos antes de almacenamiento: formato, tipo, calidad.');
+  bp.param=drawNode(nodesG,'param',c2start+3*c2gap,c2y,'Parametrizador Procesos','AWS','Bajo','Cat\u00E1logo tipos, Reglas por producto','Define par\u00E1metros de documentos requeridos por producto y canal.');
+
+  /* CAPA 3: Servicios */
+  const c3y=layers[2].y+layers[2].h/2;
+  const c3gap=200;
+  const c3start=W/2-1.5*c3gap;
+  bp.ocr=drawNode(nodesG,'ocr',c3start,c3y,'OCR Transversal','GCP','Alto','CloudRun, Vertex AI, Extracci\u00F3n datos','Motor OCR para extracci\u00F3n autom\u00E1tica de datos. Pdte definici\u00F3n arquitectura.');
+  bp.gestor=drawNode(nodesG,'gestor',c3start+c3gap,c3y,'Gestor Doc/DAM/O\'Leary','GCP','Alto','Cloud Run, API Gateway, Microservicios, Cloud SQL, Cloud Storage','Plataforma TO-BE que reemplaza FileNet y Stellent. Desplegada en GCP Cloud Run. API Gateway + Microservicios + Cloud SQL PostgreSQL + Cloud Storage.');
+  bp.paramdocs=drawNode(nodesG,'paramdocs',c3start+2*c3gap,c3y,'Parametrizador Docs','AWS','Medio','Metadatos, Taxonom\u00EDa, Cat\u00E1logo','Gestiona metadatos y taxonom\u00EDa documental unificada.');
+  bp.identdocs=drawNode(nodesG,'identdocs',c3start+3*c3gap,c3y,'Identificador Documentos','GCP','Medio','ML clasificaci\u00F3n, Auto-tag, Dedup','Identifica y clasifica documentos autom\u00E1ticamente con ML.');
+
+  /* CAPA 4: Persistencia */
+  const c4y=layers[3].y+layers[3].h/2;
+  const c4gap=240;
+  bp.filenet=drawNode(nodesG,'filenet',W/2-c4gap,c4y,'FileNet (AS-IS - Decomiso)','On-Prem','Alto','IBM FileNet, 8M+ documentos, Legacy','Repositorio legacy a decomisionar. 8M+ documentos deben migrarse al Gestor Documental/DAM/O\'Leary.');
+  bp.stellent=drawNode(nodesG,'stellent',W/2,c4y,'Stellent (AS-IS - Decomiso)','On-Prem','Alto','Oracle Stellent/UCM, 27+ TB, Legacy','Repositorio legacy a decomisionar. 27+ TB deben migrarse al Gestor Documental/DAM/O\'Leary.');
+  bp.dataop=drawNode(nodesG,'dataop',W/2+c4gap,c4y,'Data Operativa','AWS','Bajo','PostgreSQL, GraphQL API, Cache','Datos operativos consolidados del cliente. Fuente para reglas.');
+
+  /* Edges */
+  const edgesG=svgEl('g',{});
+  function drawEdge(from,to,label){
+    const a=bp[from],b=bp[to];
+    const midY=(a.bot+b.top)/2;
+    edgesG.appendChild(svgEl('path',{d:'M'+a.cx+' '+a.bot+' L'+a.cx+' '+midY+' L'+b.cx+' '+midY+' L'+b.cx+' '+b.top,fill:'none',stroke:'#5c6bc0','stroke-width':'1.5','stroke-dasharray':'6,4',opacity:'0.5'}));
+    edgesG.appendChild(svgEl('polygon',{points:(b.cx-4)+','+(b.top-6)+' '+b.cx+','+b.top+' '+(b.cx+4)+','+(b.top-6),fill:'#5c6bc0',opacity:'0.6'}));
+    if(label)addText(edgesG,(a.cx+b.cx)/2,midY-8,label,{fill:'#7986cb',size:9,weight:'500'});
+  }
+  drawEdge('portal','refinador','Data');
+  drawEdge('portal','carpeta','Docs');
+  drawEdge('correo','carpeta','Adjuntos');
+  drawEdge('correo','refdoc','Clasificar');
+  drawEdge('core','refdoc','Solicitudes');
+  drawEdge('core','param','Config');
+  drawEdge('refinador','dataop','Consulta');
+  drawEdge('carpeta','ocr','OCR');
+  drawEdge('carpeta','gestor','Almacenar');
+  drawEdge('refdoc','ocr','Extraer');
+  drawEdge('refdoc','identdocs','Clasificar');
+  drawEdge('param','paramdocs','Metadatos');
+  drawEdge('ocr','filenet','Legacy');
+  drawEdge('gestor','filenet','Migrar datos');
+  drawEdge('gestor','stellent','Migrar datos');
+  drawEdge('paramdocs','dataop','Sync');
+
+  svg.appendChild(edgesG);svg.appendChild(nodesG);container.appendChild(svg);
+
+  /* KPI bar */
+  const kpiBar=document.createElement('div');kpiBar.className='kpi-bar';
+  [{v:'70K',l:'Txn/Mes',c:'#42a5f5'},{v:'8M+',l:'Docs FileNet',c:'#ff9800'},{v:'27TB',l:'Stellent',c:'#ab47bc'},{v:'98',l:'Requisitos',c:'#4caf50'}].forEach(k=>{
+    const d=document.createElement('div');d.className='kpi-card';
+    d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';
+    kpiBar.appendChild(d);
+  });
+  container.appendChild(kpiBar);
+
+  /* Legend */
+  const leg=document.createElement('div');leg.className='legend-bar';
+  [{c:'#ff9800',l:'AWS'},{c:'#4285f4',l:'GCP'},{c:'#78909c',l:'On-Prem'},{c:'#5c6bc0',l:'Cloud'},{c:'#ef5350',l:'Riesgo Alto'},{c:'#ffa726',l:'Riesgo Medio'},{c:'#66bb6a',l:'Riesgo Bajo'}].forEach(it=>{
+    const el=document.createElement('div');el.className='legend-item';
+    el.innerHTML='<span class="legend-dot" style="background:'+it.c+'"></span>'+it.l;
+    leg.appendChild(el);
+  });
+  container.appendChild(leg);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TAB 3: ROADMAP + RUTA CRITICA — Gantt SVG + HTML Cards
+   Timeline: Ene 2026 - Jun 2026 (24 semanas)
+   ══════════════════════════════════════════════════════════════ */
+function initRoadmap(){
+  const container=document.getElementById('roadmap-container');
+  container.style.overflowY='auto';
+  const W=container.clientWidth||1200;
+  const ganttH=580;
+  const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+ganttH,width:W,height:ganttH,style:'display:block'});
+
+  const mL=180,mR=30,mT=70;
+  const chartW=W-mL-mR;
+  const weeks=24,weekW=chartW/weeks;
+  const months=[{name:'Enero',w:4},{name:'Febrero',w:4},{name:'Marzo',w:4},{name:'Abril',w:4},{name:'Mayo',w:4},{name:'Junio',w:4}];
+
+  /* Title */
+  addText(svg,mL,22,'Roadmap CUC \u2014 Ene 2026 a Jun 2026',{fill:'#fff',size:16,weight:'700',anchor:'start'});
+  addText(svg,mL,40,'24 semanas | 5 entregables principales',{fill:'#7a8bb5',size:11,anchor:'start'});
+
+  /* Month + week headers */
+  let wx=0;
+  months.forEach(m=>{
+    const x=mL+wx*weekW;
+    svg.appendChild(svgEl('rect',{x,y:mT-30,width:m.w*weekW,height:22,fill:'#111940',rx:4}));
+    addText(svg,x+m.w*weekW/2,mT-19,m.name,{fill:'#90caf9',size:11,weight:'700'});
+    for(let i=0;i<m.w;i++){
+      const lx=mL+(wx+i)*weekW;
+      addText(svg,lx+weekW/2,mT-2,'S'+(wx+i+1),{fill:'#556',size:8,weight:'400'});
+    }
+    wx+=m.w;
+  });
+
+  /* Grid lines */
+  for(let i=0;i<=weeks;i++){
+    const lx=mL+i*weekW;
+    svg.appendChild(svgEl('line',{x1:lx,y1:mT+6,x2:lx,y2:ganttH-10,stroke:'#1a2550','stroke-width':'0.5'}));
+  }
+
+  /* Row config */
+  const rows=[
+    {label:'Parametrizaci\u00F3n API',color:'#42a5f5'},
+    {label:'Gestor Doc/DAM/O\'Leary',color:'#ff9800'},
+    {label:'Motor OCR',color:'#ef5350'},
+    {label:'Depuraci\u00F3n Documentos',color:'#ab47bc'},
+    {label:'Integraci\u00F3n Canales',color:'#26a69a'}
+  ];
+  const rowH=90,rowStart=mT+16;
+
+  /* Draw row labels and backgrounds */
+  rows.forEach((r,i)=>{
+    const ry=rowStart+i*rowH;
+    svg.appendChild(svgEl('rect',{x:0,y:ry,width:mL-4,height:rowH-4,rx:6,fill:r.color,opacity:'0.08'}));
+    addText(svg,mL/2,ry+rowH/2,r.label,{fill:r.color,size:11,weight:'700'});
+  });
+
+  /* Task bar helper */
+  const barH=20,subH=15;
+  function bar(row,s,e,color,label,done,critical){
+    const ry=rowStart+row*rowH;
+    const x=mL+(s-1)*weekW+2,w=(e-s+1)*weekW-4;
+    const y=ry+10+(done!==undefined?(done?0:barH+4):0);
+    const r=svgEl('rect',{x,y,width:w,height:barH,rx:4,fill:color,opacity:done?'0.5':'0.85',cursor:'pointer'});
+    if(critical){r.setAttribute('stroke','#ef5350');r.setAttribute('stroke-width','2');}
+    svg.appendChild(r);
+    if(w>50)addText(svg,x+w/2,y+barH/2,label,{fill:'#fff',size:9,weight:'600'});
+    const status=done===true?'\u2705 Completado':done===false?'\u23F3 En progreso':'\u26A0 Ruta Cr\u00EDtica';
+    r.addEventListener('mousemove',ev=>showTip(ev,'<div class="tt-title">'+label+'</div><div class="tt-line">Semana '+s+' \u2013 '+e+' ('+(e-s+1)+' sem)</div><div class="tt-line" style="margin-top:4px">'+status+'</div>'+(critical?'<div class="tt-line" style="color:#ef5350;font-weight:600;margin-top:4px">\u26A0 RUTA CR\u00CDTICA</div>':'')));
+    r.addEventListener('mouseleave',hideTip);
+  }
+
+  /* Row 0: Parametrizacion API */
+  bar(0,1,18,'#2e7d32','Dev Parametrizaci\u00F3n API (S1-S18)',false,false);
+  bar(0,16,20,'#f9a825','Pruebas usuario (S16-S20)',undefined,false);
+
+  /* Row 1: Gestor Doc/DAM/O'Leary */
+  bar(1,1,8,'#4caf50','Definici\u00F3n (S1-S8)',true,false);
+  bar(1,10,12,'#66bb6a','Feedback UX (S10-S12)',true,false);
+  bar(1,9,17,'#ff9800','Entendimiento t\u00E9cnico (S9-S17)',false,true);
+  bar(1,14,17,'#f44336','Accesos (S14-S17)',undefined,true);
+
+  /* Row 2: Motor OCR */
+  bar(2,10,11,'#4caf50','Entendimiento (S10-S11)',true,false);
+  bar(2,12,14,'#42a5f5','Definici\u00F3n (S12-S14)',undefined,false);
+  bar(2,12,15,'#1565c0','Dev API (S12-S15)',undefined,false);
+  bar(2,14,20,'#ef5350','Dev OCR (S14-S20, ajustado May 18)',undefined,true);
+
+  /* Row 3: Depuracion Documentos */
+  bar(3,2,10,'#4caf50','Matriz docs (S2-S10)',true,false);
+  bar(3,12,16,'#66bb6a','Campos (S12-S16)',true,false);
+  bar(3,13,15,'#ffa726','Comunicaci\u00F3n (S13-S15)',undefined,false);
+  bar(3,1,24,'#ab47bc','Ejecuci\u00F3n continua (S1-S24)',false,false);
+
+  /* Row 4: Integracion Canales */
+  bar(4,13,20,'#26a69a','Integraci\u00F3n canales (S13-S20)',undefined,false);
+  bar(4,20,24,'#f9a825','Pruebas E2E (S20-S24)',undefined,false);
+
+  /* TODAY marker at week 15 (approx May 5) */
+  const todayX=mL+(15-0.5)*weekW;
+  svg.appendChild(svgEl('line',{x1:todayX,y1:mT+6,x2:todayX,y2:ganttH-10,stroke:'#ef5350','stroke-width':'2','stroke-dasharray':'4,3'}));
+  addText(svg,todayX,mT+2,'HOY',{fill:'#ef5350',size:9,weight:'700'});
+
+  container.appendChild(svg);
+
+  /* Legend below SVG */
+  const legDiv=document.createElement('div');
+  legDiv.style.cssText='display:flex;gap:16px;padding:12px 20px;flex-wrap:wrap;align-items:center;border-top:1px solid #1a2550';
+  [{c:'#4caf50',l:'Completado'},{c:'#ff9800',l:'En progreso'},{c:'#42a5f5',l:'Planificado'},{c:'#ef5350',l:'Ruta Cr\u00EDtica'},{c:'#f9a825',l:'Pruebas'}].forEach(it=>{
+    const el=document.createElement('div');
+    el.style.cssText='display:flex;align-items:center;gap:6px;font-size:11px;color:#8899bb';
+    el.innerHTML='<span style="width:12px;height:12px;border-radius:3px;background:'+it.c+';display:inline-block"></span>'+it.l;
+    legDiv.appendChild(el);
+  });
+  container.appendChild(legDiv);
+
+  /* Ruta Critica HTML Cards */
+  const critDiv=document.createElement('div');
+  critDiv.style.cssText='padding:20px 24px;max-width:960px';
+  critDiv.innerHTML=`
+    <h2 style="font-size:16px;font-weight:700;color:#ef5350;margin-bottom:16px;border-bottom:1px solid #2a1530;padding-bottom:8px">\u26A0 Ruta Cr\u00EDtica</h2>
+    <div style="display:grid;gap:12px">
+      <div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:14px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-weight:700;color:#ef5350;font-size:13px">1. OCR \u2014 Pdte Definici\u00F3n Arquitectura</span>
+          <span style="background:rgba(239,83,80,.2);color:#ef5350;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">ALTO</span>
+        </div>
+        <p style="font-size:12px;color:#a0b0c8;margin:0">Dada la capacidad del equipo de arquitectura, ha sido un componente que se tiene pendiente realizar las valoraciones pertinentes a los OCR actuales y definir el componente definitivo para el uso de este proyecto.</p>
+      </div>
+      <div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:14px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-weight:700;color:#ef5350;font-size:13px">2. Gestor Documental/DAM/O'Leary \u2014 Transici\u00F3n</span>
+          <span style="background:rgba(239,83,80,.2);color:#ef5350;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">CR\u00CDTICO</span>
+        </div>
+        <p style="font-size:12px;color:#a0b0c8;margin:0">Plataforma TO-BE en GCP que reemplaza FileNet/Stellent. Convivencia obligatoria durante migraci\u00F3n. Primera semana de mayo como deadline. Riesgo de rollback si no se estabiliza.</p>
+      </div>
+      <div style="background:rgba(255,167,38,.06);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:14px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-weight:700;color:#ffa726;font-size:13px">3. Taxonom\u00EDa duplicaci\u00F3n</span>
+          <span style="background:rgba(255,167,38,.2);color:#ffa726;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">ALTO</span>
+        </div>
+        <p style="font-size:12px;color:#a0b0c8;margin:0">Riesgo de duplicaci\u00F3n por inconsistencias en nomenclatura entre canales. Requiere cat\u00E1logo \u00FAnico con reglas de deduplicaci\u00F3n.</p>
+      </div>
+      <div style="background:rgba(158,158,158,.06);border:1px solid rgba(158,158,158,.3);border-radius:8px;padding:14px 18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-weight:700;color:#9e9e9e;font-size:13px">4. Ambiente Stage</span>
+          <span style="background:rgba(158,158,158,.2);color:#9e9e9e;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600">PENDIENTE</span>
+        </div>
+        <p style="font-size:12px;color:#a0b0c8;margin:0">URLs de prueba estables no liberadas. Bloquea validaci\u00F3n de integraciones. Escalar con Infraestructura.</p>
+      </div>
+    </div>
+  `;
+  container.appendChild(critDiv);
+}
+</script>
+</body>
+</html>
