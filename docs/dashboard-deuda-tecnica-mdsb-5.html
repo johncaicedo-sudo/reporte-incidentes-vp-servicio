@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Deuda Técnica — MDSB SIAB / Click / Portal Proveedores / Asistencia — 102 Incidentes</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f5f6fa;color:#333}
+.header{background:linear-gradient(135deg,#1a237e 0%,#3949ab 100%);color:#fff;padding:36px 48px;text-align:center}
+.header h1{font-size:1.7rem;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+.header p{opacity:.85;font-size:.9rem}
+.header .meta{margin-top:8px;font-size:.78rem;opacity:.6}
+.tabs{display:flex;justify-content:center;gap:0;background:#e8eaf6;padding:0}
+.tab{padding:14px 40px;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .2s;background:transparent;color:#5c6bc0;border:none;border-bottom:3px solid transparent}
+.tab:hover{color:#1a237e;background:rgba(255,255,255,.4)}
+.tab.active{color:#1a237e;background:#fff;border-bottom:3px solid #1a237e}
+.tab-content{display:none;padding:32px 48px 48px;background:#fff;min-height:70vh}
+.tab-content.active{display:block}
+.summary-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding:20px 24px;background:linear-gradient(135deg,#e8eaf6,#f3e5f5);border-radius:14px;border:1px solid #d1c4e9}
+.summary-bar .stat{text-align:center;flex:1;min-width:110px}
+.summary-bar .stat .num{font-size:2.2rem;font-weight:800;color:#1a237e}
+.summary-bar .stat .lbl{font-size:.76rem;color:#666;margin-top:2px}
+.card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:8px}
+@media(max-width:1200px){.card-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.card-grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .15s}
+.card:hover{box-shadow:0 6px 24px rgba(26,35,126,.1);transform:translateY(-2px)}
+.card-inner{padding:18px 20px 14px;flex:1;display:flex;flex-direction:column;border-left:5px solid #ccc}
+.card-inner.p1{border-left-color:#c62828}
+.card-inner.p2{border-left-color:#e65100}
+.card-inner.p3{border-left-color:#1565c0}
+.card-inner.p4{border-left-color:#2e7d32}
+.card-inner.p5{border-left-color:#78909c}
+.priority-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:8px;width:fit-content}
+.priority-label.p1{background:#ffebee;color:#c62828}
+.priority-label.p2{background:#fff3e0;color:#e65100}
+.priority-label.p3{background:#e3f2fd;color:#1565c0}
+.priority-label.p4{background:#e8f5e9;color:#2e7d32}
+.priority-label.p5{background:#eceff1;color:#546e7a}
+.card-title{font-size:.95rem;font-weight:700;color:#1a237e;margin-bottom:4px;line-height:1.3}
+.card-pct{font-size:1.4rem;font-weight:800;color:#333;margin-bottom:8px}
+.card-desc{font-size:.8rem;color:#666;line-height:1.55;flex:1;margin-bottom:14px}
+.card-footer{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:1px solid #eee;background:#fafbfc}
+.card-footer .fm{text-align:center;padding:10px 6px;border-right:1px solid #eee}
+.card-footer .fm:last-child{border-right:none}
+.card-footer .fm .fm-val{font-size:.95rem;font-weight:800;color:#1a237e}
+.card-footer .fm .fm-lbl{font-size:.65rem;color:#999;text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+.detail-section{margin-bottom:28px;padding:24px;background:#fafbfc;border-radius:10px;border:1px solid #e8e8e8;border-left:5px solid #1a237e}
+.detail-section h2{color:#1a237e;font-size:1.1rem;margin-bottom:2px}
+.detail-section .jira-ref{font-size:.78rem;color:#999;margin-bottom:14px}
+.detail-section .field{margin-bottom:12px}
+.detail-section .field label{font-weight:700;font-size:.82rem;color:#444;display:block;margin-bottom:3px}
+.detail-section .field p{font-size:.84rem;color:#555;line-height:1.65}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:700;margin-right:4px}
+.badge.open{background:#fff3e0;color:#e65100}
+.badge.resolved{background:#e8f5e9;color:#2e7d32}
+.badge.escalado{background:#fce4ec;color:#c62828}
+.badge.noise{background:#eceff1;color:#546e7a}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Dashboard de Resolución de Deuda Técnica — Lote 5</h1>
+  <p>Mesa de Servicio Seguros Bolívar — SIAB / Click / Portal Proveedores / Asistencia — 102 Incidentes</p>
+  <div class="meta">Generado: 19 de abril de 2026 · Creado con IA · Fuente: Jira MDSB</div>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('resumen',this)">Resumen Ejecutivo</div>
+  <div class="tab" onclick="switchTab('detalle',this)">Detalle Técnico y Funcional</div>
+</div>
+
+<!-- TAB 1: Resumen Ejecutivo -->
+<div id="resumen" class="tab-content active">
+  <div class="summary-bar">
+    <div class="stat"><div class="num">102</div><div class="lbl">Tickets Analizados</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">Causas Raíz</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">Sistemas Afectados</div></div>
+    <div class="stat"><div class="num">2</div><div class="lbl">Abiertos / Escalados</div></div>
+    <div class="stat"><div class="num">~60%</div><div class="lbl">Accesos / Credenciales / Ruido</div></div>
+  </div>
+  <div class="card-grid">
+    <!-- CR-1 -->
+    <div class="card">
+      <div class="card-inner p3">
+        <span class="priority-label p3">P3 — Media</span>
+        <div class="card-title">SIAB / Portal Asistencia — Acceso y Credenciales Proveedores</div>
+        <div class="card-pct">~25%</div>
+        <div class="card-desc">Proveedores no pueden acceder a SIAB Web o Portal Asistencia por contraseña olvidada, usuario no registrado, o falla sincronización credenciales. Se resuelve con reset de contraseña o validación con Gestor de Usuarios.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~25</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~100</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Baja</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+    <!-- CR-2 -->
+    <div class="card">
+      <div class="card-inner p2">
+        <span class="priority-label p2">P2 — Alta</span>
+        <div class="card-title">Click Service Edge — Fallas Completar Tareas / Errores en Servicios</div>
+        <div class="card-pct">~20%</div>
+        <div class="card-desc">Técnicos de asistencia (Hogar/Autos) no pueden completar tareas en Click. Errores al cerrar servicios, cargar evidencias o actualizar estados. Afecta productividad de proveedores en campo.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~20</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~80</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Alta</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+    <!-- CR-3 -->
+    <div class="card">
+      <div class="card-inner p3">
+        <span class="priority-label p3">P3 — Media</span>
+        <div class="card-title">Portal Proveedores — Error Acceso / Cargue Facturas</div>
+        <div class="card-pct">~15%</div>
+        <div class="card-desc">Proveedores no pueden acceder al portal o cargar facturas. Causas: usuario no encontrado en sistema, falla componentes identidad, desconocimiento del proceso. Se resuelve con Gestor de Usuarios.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~15</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~60</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Baja</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+    <!-- CR-4 -->
+    <div class="card">
+      <div class="card-inner p3">
+        <span class="priority-label p3">P3 — Media</span>
+        <div class="card-title">Click — Falla Login MFA / SMS No Llega</div>
+        <div class="card-pct">~12%</div>
+        <div class="card-desc">Técnicos no reciben SMS de MFA para acceder a Click. Problema con operador móvil o número registrado en RNE. Se ofrece alternativa Google Authenticator.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~12</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~48</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Media</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+    <!-- CR-5 -->
+    <div class="card">
+      <div class="card-inner p3">
+        <span class="priority-label p3">P3 — Media</span>
+        <div class="card-title">SIAB — Datos Incorrectos / Placa Inexistente en Autorizaciones</div>
+        <div class="card-pct">~10%</div>
+        <div class="card-desc">Autorizaciones en SIAB no traen información de placa por tipo 'inexistente'. Requiere actualización paramétrica vía BD. Causa devolución de facturas a proveedores.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~10</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~40</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Media</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+    <!-- CR-6 -->
+    <div class="card">
+      <div class="card-inner p5">
+        <span class="priority-label p5">P5 — Ruido</span>
+        <div class="card-title">Portal Asistencia — Descarga Certificados Tributarios (No es Incidente TI)</div>
+        <div class="card-pct">~10%</div>
+        <div class="card-desc">Proveedores reportan error al descargar certificados de retención. Causa: información tributaria se carga bimestralmente y aún no está disponible. No es falla de plataforma.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~10</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~40</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Baja</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+    <!-- CR-7 -->
+    <div class="card">
+      <div class="card-inner p4">
+        <span class="priority-label p4">P4 — Baja</span>
+        <div class="card-title">SIAB / Adobe — Problemas Desktop para Descargar Planos</div>
+        <div class="card-pct">~8%</div>
+        <div class="card-desc">Usuarios no pueden descargar planos de SIAB por falla en Adobe Reader local. Se resuelve con reinstalación de Adobe. Problema de equipo, no de plataforma.</div>
+      </div>
+      <div class="card-footer">
+        <div class="fm"><div class="fm-val">~8</div><div class="fm-lbl"># Tickets</div></div>
+        <div class="fm"><div class="fm-val">~32</div><div class="fm-lbl"># Evitados / año</div></div>
+        <div class="fm"><div class="fm-val">Baja</div><div class="fm-lbl">Esfuerzo</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: Detalle Tecnico y Funcional -->
+<div id="detalle" class="tab-content">
+  <div class="detail-section" style="border-left-color:#1565c0">
+    <h2>CR-1: SIAB / Portal Asistencia — Acceso y Credenciales Proveedores</h2>
+    <div class="jira-ref"><span class="badge resolved">Resuelto (recurrente)</span> MDSB-1001575, MDSB-1016995 + ~23 relacionados · ~25% · Prioridad Media</div>
+    <div class="field"><label>Causa Raíz</label><p>Proveedores no pueden acceder a SIAB Web o Portal Asistencia por contraseña olvidada, usuario no registrado en el sistema, o falla en la sincronización de credenciales entre plataformas. Patrón recurrente que se resuelve manualmente con reset de contraseña o validación con Gestor de Usuarios.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Implementar portal de autogestión de contraseñas para proveedores. Automatizar sincronización de credenciales SIAB-Portal Asistencia. FAQ de acceso para proveedores. Reclasificar como solicitudes de servicio.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-1001575, MDSB-1016995</p></div>
+  </div>
+  <div class="detail-section" style="border-left-color:#e65100">
+    <h2>CR-2: Click Service Edge — Fallas Completar Tareas / Errores en Servicios</h2>
+    <div class="jira-ref"><span class="badge escalado">Escalado</span> MDSB-1013440, MDSB-1013424 + ~18 relacionados · ~20% · Prioridad Alta</div>
+    <div class="field"><label>Causa Raíz</label><p>Técnicos de asistencia (Hogar/Autos) no pueden completar tareas en Click. Errores al cerrar servicios, cargar evidencias fotográficas o actualizar estados de servicio. Afecta directamente la productividad de proveedores en campo y genera retrasos en la facturación.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Investigar errores recurrentes en Click Service Edge para completar tareas. Implementar modo offline para técnicos en campo. Mejorar manejo de errores con reintentos automáticos. Monitorear tasa de fallas por tipo de servicio.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-1013440, MDSB-1013424</p></div>
+  </div>
+  <div class="detail-section" style="border-left-color:#1565c0">
+    <h2>CR-3: Portal Proveedores — Error Acceso / Cargue Facturas</h2>
+    <div class="jira-ref"><span class="badge resolved">Resuelto (recurrente)</span> MDSB-1016995, MDSB-1016433 + ~13 relacionados · ~15% · Prioridad Media</div>
+    <div class="field"><label>Causa Raíz</label><p>Proveedores no pueden acceder al portal o cargar facturas. Causas identificadas: usuario no encontrado en sistema, falla en componentes de identidad, desconocimiento del proceso de cargue. Se resuelve caso a caso con intervención del Gestor de Usuarios.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Automatizar registro de proveedores en Portal. Mejorar mensajes de error con instrucciones claras. Implementar validación de NIT en tiempo real. FAQ de cargue de facturas.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-1016995, MDSB-1016433</p></div>
+  </div>
+  <div class="detail-section" style="border-left-color:#1565c0">
+    <h2>CR-4: Click — Falla Login MFA / SMS No Llega</h2>
+    <div class="jira-ref"><span class="badge resolved">Resuelto (recurrente)</span> MDSB-955288 + ~11 relacionados · ~12% · Prioridad Media</div>
+    <div class="field"><label>Causa Raíz</label><p>Técnicos no reciben SMS de MFA para acceder a Click. Problema asociado al operador móvil del técnico o al número registrado en RNE. Se ofrece como alternativa la configuración de Google Authenticator, pero no todos los técnicos lo adoptan.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Migrar MFA de SMS a Google Authenticator como método principal. Implementar fallback automático SMS→Email→App. Monitorear tasa de entrega SMS por operador.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-955288</p></div>
+  </div>
+  <div class="detail-section" style="border-left-color:#1565c0">
+    <h2>CR-5: SIAB — Datos Incorrectos / Placa Inexistente en Autorizaciones</h2>
+    <div class="jira-ref"><span class="badge open">Abierto</span> MDSB-992492 + ~9 relacionados · ~10% · Prioridad Media</div>
+    <div class="field"><label>Causa Raíz</label><p>Autorizaciones en SIAB no traen información de placa porque el tipo está registrado como 'inexistente'. Requiere actualización paramétrica directa en base de datos. Causa devolución de facturas a proveedores y reprocesos administrativos.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Implementar validación automática de tipo de placa al crear autorización. Alertar cuando se detecte tipo 'inexistente'. Automatizar corrección paramétrica sin intervención manual de BD.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-992492</p></div>
+  </div>
+  <div class="detail-section" style="border-left-color:#78909c">
+    <h2>CR-6: Portal Asistencia — Descarga Certificados Tributarios (No es Incidente TI)</h2>
+    <div class="jira-ref"><span class="badge noise">Ruido</span> MDSB-969966 + ~9 relacionados · ~10% · No es falla de plataforma</div>
+    <div class="field"><label>Causa Raíz</label><p>Proveedores reportan error al descargar certificados de retención en el Portal de Asistencia. La causa real es que la información tributaria se carga bimestralmente y aún no está disponible en el momento de la consulta. No es una falla de plataforma sino desconocimiento del calendario de carga.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Agregar mensaje informativo en portal indicando calendario de carga tributaria (bimestral). Notificar a proveedores cuando certificados estén disponibles. FAQ de certificados tributarios.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-969966</p></div>
+  </div>
+  <div class="detail-section" style="border-left-color:#2e7d32">
+    <h2>CR-7: SIAB / Adobe — Problemas Desktop para Descargar Planos</h2>
+    <div class="jira-ref"><span class="badge resolved">Resuelto</span> MDSB-980328 + ~7 relacionados · ~8% · Prioridad Baja</div>
+    <div class="field"><label>Causa Raíz</label><p>Usuarios no pueden descargar planos desde SIAB por falla en Adobe Reader instalado localmente. Se resuelve con reinstalación o actualización de Adobe Reader. Es un problema de equipo de escritorio, no de la plataforma SIAB.</p></div>
+    <div class="field"><label>Solución Definitiva</label><p>Incluir Adobe Reader en imagen estándar de equipos. Automatizar validación de versión de Adobe en login a SIAB. Ofrecer visor PDF alternativo integrado en la web.</p></div>
+    <div class="field"><label>Tickets Ejemplo</label><p>MDSB-980328</p></div>
+  </div>
+</div>
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
