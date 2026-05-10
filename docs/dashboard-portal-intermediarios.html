@@ -178,43 +178,168 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 <!-- TAB 5: RUTA CRITICA -->
 <div id="tab-riesgos" class="tab-content">
 <div class="informe">
-<h1>RUTA CR&#205;TICA Y RIESGOS</h1>
-<p class="subtitle">An&#225;lisis de dependencias, bloqueos y mitigaciones</p>
+<h1>AN&#193;LISIS DE DEPENDENCIAS Y RUTA CR&#205;TICA</h1>
+<p class="subtitle">Cruce: Alcance Fases III/IV &#215; Dependencias externas &#215; Capacidad de equipos</p>
 
-<h2>Bloqueador Primario &#8212; Backend Saghi</h2>
-<div class="risk-card" style="border-color:rgba(239,83,80,.4)">
-  <div class="risk-title" style="color:#ef5350">&#9888; Riesgo m&#225;s severo del proyecto</div>
-  <p>Bloqueador exclusivo para QA de E4/E5 e impedimento total para Pagos y Comisiones del E6. Equipo saturado (Luz Adriana, Ruby, Misael, Andrea). <strong style="color:#ef5350">Requiere intervenci&#243;n ejecutiva inminente.</strong></p>
+<h2>Resumen por Entregable</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0 28px">
+<div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">E4/E5</span>
+    <span style="color:#ef5350;font-weight:600">Empleados</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">3 capacidades</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:33;height:8px;background:#ffa726;border-radius:4px 0 0 4px"></div>
+    <div style="flex:67;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#ffa726">&#9679;</span> <strong>33%</strong> en desarrollo (Actualizaci&#243;n Datos)</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>67%</strong> bloqueado por Saghi (Creaci&#243;n/Eliminaci&#243;n)</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Bloqueador:</strong> Backend Saghi (roles, reglas accionarias).</div>
+    <div style="color:#ef5350"><strong>Ruta cr&#237;tica:</strong> No se puede eliminar Rep. Legal sin crear uno nuevo.</div>
+    <div><strong>Restricci&#243;n:</strong> Solo editar direcci&#243;n oficina y correo.</div>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid rgba(255,167,38,.3);border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#ff9800;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">E6</span>
+    <span style="color:#ff9800;font-weight:600">Gesti&#243;n Humana</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">4 capacidades</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:50;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:25;height:8px;background:#ffa726"></div>
+    <div style="flex:25;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>50%</strong> sin dep. externa (Calendarios, PILA)</div>
+    <div><span style="color:#ffa726">&#9679;</span> <strong>25%</strong> dep. interna (Certificados &#8212; reintento)</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>25%</strong> bloqueado Saghi (Pagos/Comisiones)</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Paquete indivisible:</strong> Pesta&#241;a &#8220;Mi Cuenta&#8221;.</div>
+    <div style="color:#ef5350"><strong>Ruta cr&#237;tica:</strong> Pagos/Comisiones (dep. total Saghi).</div>
+    <div><strong>Ventana:</strong> 4 Mayo &#8211; 31 Agosto 2026.</div>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid rgba(171,71,188,.3);border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#ab47bc;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">ExOp</span>
+    <span style="color:#ab47bc;font-weight:600">Excelencia Op.</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">31 &#237;tems &#8226; 3 ecosistemas</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:70;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:30;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>70%</strong> evolutivos en curso</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>30%</strong> bloqueado por integraciones (FileNet)</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Riesgo:</strong> 3 integraciones paralelas masivas.</div>
+    <div style="color:#ef5350"><strong>N&#250;cleo:</strong> Portal 100% orientado a FileNet hoy.</div>
+    <div><strong>Migraci&#243;n:</strong> Carpeta &#218;nica + Gestor Doc + Gestor Flujos.</div>
+  </div>
+</div>
 </div>
 
-<h2>Degradaci&#243;n Sistemas Legacy</h2>
-<div class="risk-card">
-  <div class="risk-title">&#9881; Oracle + FileNet: Causa ra&#237;z confirmada</div>
-  <p>Conectividad intermitente responsable directa del impacto en presupuesto de errores y latencia elevada.</p>
+<div style="background:rgba(100,181,246,.04);border:1px solid #1a3a70;border-radius:10px;padding:18px 22px;margin-bottom:28px">
+  <div style="font-size:14px;font-weight:600;color:#64b5f6;margin-bottom:10px">Lectura ejecutiva</div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8">
+    <p>El proyecto tiene <strong>5 entregables activos</strong> con <strong>16 capacidades</strong> distribuidas en Fases III/IV y Excelencia Operativa. El <strong>40% de las capacidades est&#225;n bloqueadas</strong> por dependencias externas.</p>
+    <p style="margin-top:8px"><strong style="color:#ef5350">Backend Saghi es el bloqueador primario:</strong> Impacta directamente E4/E5 (Creaci&#243;n/Eliminaci&#243;n Empleados) y E6 (Pagos/Comisiones). Equipo saturado: Luz Adriana, Ruby, Misael, Andrea. <strong>Requiere intervenci&#243;n ejecutiva inminente.</strong></p>
+    <p style="margin-top:8px"><strong style="color:#ffa726">Secuencia cr&#237;tica sin holgura:</strong> Saghi (Junio) &#8594; Desarrollo E6 (Jun-Jul) &#8594; QA (Julio) &#8594; Producci&#243;n (Agosto). Cualquier retraso de Saghi compromete toda la ventana.</p>
+    <p style="margin-top:8px"><strong style="color:#78909c">Degradaci&#243;n Legacy:</strong> Oracle (Tronador) y FileNet generan conectividad intermitente, errores 500 y latencia elevada. Causa ra&#237;z confirmada del impacto en presupuesto de errores.</p>
+    <p style="margin-top:8px"><strong style="color:#ab47bc">Integraciones paralelas:</strong> Carpeta &#218;nica + Gestor Documental + Gestor de Flujos consumir&#225;n capacidad cr&#237;tica. Portal orientado 100% a FileNet hoy.</p>
+  </div>
 </div>
 
-<h2>Microfront Precobros</h2>
-<div class="risk-card">
-  <div class="risk-title" style="color:#ffa726">&#128274; Estado: BLOQUEADO</div>
-  <p>Depende de certificaci&#243;n visual del equipo de Precobros con apoyo de Cloud.</p>
-</div>
+<h2>Estatus Bloqueantes &#8212; Ruta Cr&#237;tica</h2>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Seguimiento de dependencias cr&#237;ticas que impactan la entrega. <strong style="color:#ef5350">4 de 7 bloqueantes son responsabilidad de Saghi.</strong></p>
 
-<h2>Integraciones Transversales Paralelas</h2>
-<div class="risk-card">
-  <div class="risk-title" style="color:#ffa726">&#9888; 3 integraciones masivas</div>
-  <p>Carpeta &#218;nica, Gestor Documental y Gestor de Flujos. Afectar&#225;n n&#250;cleo del portal (hoy 100% FileNet).</p>
-</div>
-
-<h2>Matriz de Riesgos</h2>
 <table class="info-table">
-<thead><tr><th>#</th><th>Riesgo</th><th>Impacto</th><th>Prob.</th><th>Mitigaci&#243;n</th></tr></thead>
+<thead><tr><th>#</th><th>Dependencia</th><th>Impacta</th><th>Equipo</th><th>Estado</th><th>Responsable</th><th>Observaciones</th></tr></thead>
 <tbody>
-<tr><td>1</td><td style="color:#ef5350;font-weight:600">Saghi (E4/E5/E6)</td><td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alto</span></td><td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alta</span></td><td style="font-size:12px">Intervenci&#243;n ejecutiva</td></tr>
-<tr><td>2</td><td style="color:#ef5350;font-weight:600">Oracle &amp; FileNet</td><td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alto</span></td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td><td style="font-size:12px">Circuit breakers + Datadog</td></tr>
-<tr><td>3</td><td style="color:#ffa726;font-weight:600">Precobros</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Medio</span></td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td><td style="font-size:12px">Cert. visual con Cloud</td></tr>
-<tr><td>4</td><td style="color:#ffa726;font-weight:600">3 integraciones</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Medio</span></td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td><td style="font-size:12px">Secuenciar entregas</td></tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>1</td><td style="font-weight:600">Backend Saghi &#8212; Creaci&#243;n Empleados</td><td>E4/E5</td>
+  <td style="color:#ef5350;font-weight:600">Saghi</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Bloqueado</span></td>
+  <td>Luz Adriana / Ruby</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Orquesta roles y reglas de participaci&#243;n accionaria (suma 100%). No se puede eliminar Rep. Legal sin crear uno nuevo.</td>
+</tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>2</td><td style="font-weight:600">Backend Saghi &#8212; Eliminaci&#243;n Empleados</td><td>E4/E5</td>
+  <td style="color:#ef5350;font-weight:600">Saghi</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Bloqueado</span></td>
+  <td>Misael / Andrea</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Validaci&#243;n de reglas de negocio para eliminaci&#243;n. Dep. directa de backend Saghi.</td>
+</tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>3</td><td style="font-weight:600">Backend Saghi &#8212; Pagos/Comisiones</td><td>E6</td>
+  <td style="color:#ef5350;font-weight:600">Saghi</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Bloqueado</span></td>
+  <td>Equipo Saghi</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Impedimento total para preliquidaci&#243;n por compa&#241;&#237;a. Extractos Excel con filtros quincena/mes/a&#241;o.</td>
+</tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>4</td><td style="font-weight:600">Backend Saghi &#8212; Perfiles</td><td>E4/E5</td>
+  <td style="color:#ef5350;font-weight:600">Saghi</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Bloqueado</span></td>
+  <td>Equipo Saghi</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Gesti&#243;n de perfiles restringida. Solo direcci&#243;n oficina y correo electr&#243;nico editables.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>5</td><td style="font-weight:600">Microfront Precobros</td><td>ExOp</td>
+  <td style="color:#ffa726;font-weight:600">Cloud / Precobros</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Bloqueado</span></td>
+  <td>Equipo Cloud</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Certificaci&#243;n visual pendiente. Dep. exclusiva de equipo Precobros + Cloud.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>6</td><td style="font-weight:600">Oracle Tronador (Legacy)</td><td>Transversal</td>
+  <td style="color:#78909c;font-weight:600">Infra / DBA</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Degradado</span></td>
+  <td>Equipo Infra</td>
+  <td style="font-size:12px">Conectividad intermitente. Errores 500 forzados. Causa ra&#237;z confirmada. Mitigaci&#243;n: circuit breakers + Datadog APM.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>7</td><td style="font-weight:600">FileNet (Legacy)</td><td>ExOp</td>
+  <td style="color:#78909c;font-weight:600">Infra / DBA</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Degradado</span></td>
+  <td>Equipo Infra</td>
+  <td style="font-size:12px">Latencia elevada. Portal 100% orientado a FileNet. 3 integraciones nuevas en paralelo para reemplazo.</td>
+</tr>
 </tbody>
 </table>
+
+<div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+  <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ef5350;font-weight:700;font-size:22px">4 / 7</div>
+    <div style="color:#7a8bb5;font-size:11px">Bloqueados por Saghi</div>
+  </div>
+  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ffa726;font-weight:700;font-size:22px">1</div>
+    <div style="color:#7a8bb5;font-size:11px">Bloqueado Cloud</div>
+  </div>
+  <div style="background:rgba(120,144,156,.08);border:1px solid rgba(120,144,156,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#78909c;font-weight:700;font-size:22px">2</div>
+    <div style="color:#7a8bb5;font-size:11px">Legacy degradado</div>
+  </div>
+  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#4caf50;font-weight:700;font-size:22px">0 sem</div>
+    <div style="color:#7a8bb5;font-size:11px">Holgura E6</div>
+  </div>
+  <div style="background:rgba(126,87,194,.08);border:1px solid rgba(126,87,194,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#7e57c2;font-weight:700;font-size:22px">Jun 2026</div>
+    <div style="color:#7a8bb5;font-size:11px">Deadline Saghi</div>
+  </div>
+</div>
+
 </div>
 </div>
 
