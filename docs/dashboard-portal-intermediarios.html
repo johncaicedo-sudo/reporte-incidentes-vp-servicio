@@ -240,90 +240,140 @@ function addText(parent,x,y,text,opts){const t=svgEl('text',{x,y,fill:opts.fill|
 
 function initDependencias(){
   const container=document.getElementById('dep-container');
-  const W=container.clientWidth||1200,H=container.clientHeight||700;
+  const W=container.clientWidth||1200,H=container.clientHeight||750;
   const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
   const cx=W/2,cy=H/2;
 
-  /* Grid background */
-  const gridG=svgEl('g',{opacity:'0.08'});
-  for(let i=0;i<W;i+=60)gridG.appendChild(svgEl('line',{x1:i,y1:0,x2:i,y2:H,stroke:'#fff','stroke-width':'0.5'}));
-  for(let i=0;i<H;i+=60)gridG.appendChild(svgEl('line',{x1:0,y1:i,x2:W,y2:i,stroke:'#fff','stroke-width':'0.5'}));
-  svg.appendChild(gridG);
-
-  /* Defs: arrow marker */
+  /* Defs */
   const defs=svgEl('defs',{});
-  defs.innerHTML='<marker id="arrowD" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#90a4ae"/></marker><marker id="arrowR" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ef5350"/></marker>';
+  defs.innerHTML='<filter id="glowC"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="coreG"><stop offset="0%" stop-color="#90caf9"/><stop offset="100%" stop-color="#1565c0"/></radialGradient>';
   svg.appendChild(defs);
 
-  /* Node definitions — star layout like reference image */
-  const nodes=[
-    {id:'portal',label:'Portal de\nIntermediarios',x:cx,y:cy,r:70,main:true},
-    {id:'e45',label:'Creaci\u00f3n y Eliminaci\u00f3n\nde Empleados\n(Entregables 4 y 5)',x:cx-220,y:cy-200,r:55},
-    {id:'e6',label:'Migraci\u00f3n de Gesti\u00f3n\nHumana\n(Entregable 6)',x:cx+60,y:cy-260,r:55},
-    {id:'e7',label:'Gesti\u00f3n de Cartera\nEntregable 7',x:cx+300,y:cy-120,r:50},
-    {id:'e8',label:'Consulta de Siniestros\nEntregable 8',x:cx+240,y:cy+200,r:50},
-    {id:'exop',label:'Excelencia Operativa',x:cx-160,y:cy+180,r:60},
-    {id:'cuc',label:'CUC\nGestor\nDocumental',x:cx-400,y:cy+140,r:45},
-    {id:'gestor',label:'Gestor de\nFlujos\nFilenet / Bizagi',x:cx-260,y:cy+320,r:45},
-    {id:'saghi',label:'Backend Saghi\n(Bloqueador)',x:cx-380,y:cy-80,r:45,bloqueador:true},
-    {id:'oracle',label:'Oracle Legacy\n(Tronador)',x:cx+360,y:cy+60,r:42,legacy:true},
-    {id:'filenet',label:'FileNet\n(Legacy)',x:cx-60,y:cy+300,r:40,legacy:true}
+  /* Central node — Portal de Intermediarios */
+  svg.appendChild(svgEl('circle',{cx,cy,r:52,fill:'url(#coreG)',filter:'url(#glowC)',opacity:'0.3'}));
+  svg.appendChild(svgEl('circle',{cx,cy,r:42,fill:'url(#coreG)'}));
+  addText(svg,cx,cy-8,'Portal de',{fill:'#fff',size:11,weight:'700'});
+  addText(svg,cx,cy+8,'Intermediarios',{fill:'#fff',size:11,weight:'700'});
+
+  /* N1: Entregables (medium circles, colored, around center) */
+  const n1=[
+    {id:'e45',label:'E4/E5',sub:'Empleados',color:'#ef5350',angle:-60},
+    {id:'e6',label:'E6',sub:'Gesti\u00f3n Humana',color:'#ff9800',angle:-20},
+    {id:'e7',label:'E7',sub:'Cartera',color:'#7e57c2',angle:30},
+    {id:'e8',label:'E8',sub:'Siniestros',color:'#26a69a',angle:80},
+    {id:'exop',label:'ExOp',sub:'Excelencia Op.',color:'#ab47bc',angle:150},
+    {id:'saghi_e',label:'Saghi',sub:'Bloqueador',color:'#ef5350',angle:210}
   ];
+  const r1=160;
+  const n1Pos={};
+  n1.forEach(n=>{
+    const rad=(n.angle-90)*Math.PI/180;
+    const nx=cx+r1*Math.cos(rad),ny=cy+r1*Math.sin(rad);
+    n1Pos[n.id]={x:nx,y:ny};
+    /* Line to center */
+    svg.appendChild(svgEl('line',{x1:cx,y1:cy,x2:nx,y2:ny,stroke:n.color,'stroke-width':'2','stroke-opacity':'0.7'}));
+    /* Circle */
+    svg.appendChild(svgEl('circle',{cx:nx,cy:ny,r:28,fill:n.color,opacity:'0.15'}));
+    svg.appendChild(svgEl('circle',{cx:nx,cy:ny,r:22,fill:n.color,opacity:'0.85'}));
+    addText(svg,nx,ny-4,n.label,{fill:'#fff',size:10,weight:'700'});
+    addText(svg,nx,ny+10,n.sub,{fill:'rgba(255,255,255,0.7)',size:8,weight:'400'});
+  });
 
-  /* Edges with arrows */
-  const edges=[
-    {from:'portal',to:'e45'},{from:'portal',to:'e6'},{from:'portal',to:'e7'},{from:'portal',to:'e8'},{from:'portal',to:'exop'},
-    {from:'exop',to:'cuc'},{from:'exop',to:'gestor'},
-    {from:'saghi',to:'e45',crit:true},{from:'saghi',to:'e6',crit:true},
-    {from:'portal',to:'saghi',crit:true},
-    {from:'oracle',to:'portal',crit:true},{from:'filenet',to:'exop'}
+  /* N2: Capacidades (small circles connected to N1) */
+  const n2=[
+    /* E4/E5 capacidades */
+    {parent:'e45',label:'Creaci\u00f3n Empleados',angle:-90,color:'#ef5350'},
+    {parent:'e45',label:'Eliminaci\u00f3n Empleados',angle:-50,color:'#ef5350'},
+    {parent:'e45',label:'Actualizaci\u00f3n Datos',angle:-130,color:'#ef5350'},
+    /* E6 capacidades */
+    {parent:'e6',label:'Calendarios',angle:-50,color:'#ff9800'},
+    {parent:'e6',label:'Certificados',angle:-20,color:'#ff9800'},
+    {parent:'e6',label:'Pagos/Comisiones',angle:10,color:'#ff9800'},
+    {parent:'e6',label:'Planilla PILA',angle:40,color:'#ff9800'},
+    /* E7 capacidades */
+    {parent:'e7',label:'Facturaci\u00f3n',angle:10,color:'#7e57c2'},
+    {parent:'e7',label:'Pre-rastrillo',angle:40,color:'#7e57c2'},
+    {parent:'e7',label:'Conservaci\u00f3n',angle:70,color:'#7e57c2'},
+    /* E8 capacidades */
+    {parent:'e8',label:'Siniestros Autos',angle:60,color:'#26a69a'},
+    {parent:'e8',label:'Siniestros Vida',angle:100,color:'#26a69a'},
+    /* ExOp capacidades */
+    {parent:'exop',label:'Carpeta \u00danica',angle:120,color:'#ab47bc'},
+    {parent:'exop',label:'Gestor Documental',angle:150,color:'#ab47bc'},
+    {parent:'exop',label:'Gestor de Flujos',angle:180,color:'#ab47bc'},
+    {parent:'exop',label:'M\u00f3dulo P\u00f3lizas',angle:210,color:'#ab47bc'}
   ];
-
-  /* Draw edges */
-  const edgesG=svgEl('g',{});
-  edges.forEach(e=>{
-    const a=nodes.find(n=>n.id===e.from),b=nodes.find(n=>n.id===e.to);
-    if(!a||!b)return;
-    const dx=b.x-a.x,dy=b.y-a.y,dist=Math.sqrt(dx*dx+dy*dy);
-    const ux=dx/dist,uy=dy/dist;
-    const x1=a.x+ux*(a.r+2),y1=a.y+uy*(a.r+2);
-    const x2=b.x-ux*(b.r+12),y2=b.y-uy*(b.r+12);
-    const line=svgEl('line',{x1,y1,x2,y2,stroke:e.crit?'#ef5350':'#90a4ae','stroke-width':e.crit?'2.5':'1.8','marker-end':e.crit?'url(#arrowR)':'url(#arrowD)'});
-    edgesG.appendChild(line);
+  const r2=90;
+  const n2Pos={};
+  n2.forEach((n,i)=>{
+    const p=n1Pos[n.parent];if(!p)return;
+    const rad=(n.angle-90)*Math.PI/180;
+    const nx=p.x+r2*Math.cos(rad),ny=p.y+r2*Math.sin(rad);
+    n2Pos[i]=({x:nx,y:ny,parent:n.parent});
+    /* Dashed line to parent */
+    svg.appendChild(svgEl('line',{x1:p.x,y1:p.y,x2:nx,y2:ny,stroke:n.color,'stroke-width':'1.2','stroke-opacity':'0.5','stroke-dasharray':'4,3'}));
+    /* Small node */
+    svg.appendChild(svgEl('circle',{cx:nx,cy:ny,r:12,fill:'#0d1230',stroke:n.color,'stroke-width':'1.5'}));
+    addText(svg,nx,ny+20,n.label,{fill:'#8899bb',size:8,weight:'400'});
   });
-  svg.appendChild(edgesG);
 
-  /* Draw nodes */
-  const nodesG=svgEl('g',{});
-  nodes.forEach(n=>{
-    const g=svgEl('g',{cursor:'pointer'});
-    const strokeColor=n.bloqueador?'#ef5350':n.legacy?'#78909c':n.main?'#42a5f6':'#90a4ae';
-    const fillColor=n.main?'#0a1440':'#0d1230';
-    const strokeW=n.main?'3':n.bloqueador?'2.5':'1.8';
-    g.appendChild(svgEl('circle',{cx:n.x,cy:n.y,r:n.r,fill:fillColor,stroke:strokeColor,'stroke-width':strokeW}));
-    /* Multi-line text */
-    const lines=n.label.split('\n');
-    const lineH=14;
-    const startY=n.y-((lines.length-1)*lineH)/2;
-    lines.forEach((line,i)=>{
-      addText(g,n.x,startY+i*lineH,line,{fill:n.bloqueador?'#ef5350':n.legacy?'#90a4ae':'#e0e8f0',size:n.main?13:11,weight:n.main?'700':'500'});
-    });
-    nodesG.appendChild(g);
+  /* N3: Dependencias (tiny squares/diamonds connected to N2) */
+  const n3=[
+    /* Dependencias de E4/E5 */
+    {parentIdx:0,label:'Backend Saghi',shape:'diamond',color:'#ef5350'},
+    {parentIdx:1,label:'Reglas Accionarias',shape:'square',color:'#ff9800'},
+    {parentIdx:2,label:'Saghi Perfiles',shape:'diamond',color:'#ef5350'},
+    /* Dependencias de E6 */
+    {parentIdx:3,label:'Equipo Servicio',shape:'square',color:'#4caf50'},
+    {parentIdx:4,label:'Reintento Descarga',shape:'square',color:'#ff9800'},
+    {parentIdx:5,label:'Backend Saghi',shape:'diamond',color:'#ef5350'},
+    {parentIdx:6,label:'Intranet Actual',shape:'square',color:'#78909c'},
+    /* Dependencias de E7 */
+    {parentIdx:7,label:'FCA',shape:'square',color:'#ff9800'},
+    {parentIdx:8,label:'Sistemas Cobro',shape:'square',color:'#78909c'},
+    /* Dependencias de ExOp */
+    {parentIdx:12,label:'CUC',shape:'square',color:'#42a5f5'},
+    {parentIdx:13,label:'FileNet (Legacy)',shape:'diamond',color:'#ef5350'},
+    {parentIdx:14,label:'Bizagi / FileNet',shape:'diamond',color:'#ef5350'},
+    {parentIdx:15,label:'Oracle Tronador',shape:'diamond',color:'#ef5350'}
+  ];
+  const r3=55;
+  n3.forEach(n=>{
+    const p=n2Pos[n.parentIdx];if(!p)return;
+    /* Position outward from parent */
+    const px=n1Pos[p.parent]?.x||cx,py=n1Pos[p.parent]?.y||cy;
+    const dx=p.x-px,dy=p.y-py;
+    const dist=Math.sqrt(dx*dx+dy*dy)||1;
+    const nx=p.x+(dx/dist)*r3,ny=p.y+(dy/dist)*r3;
+    /* Dotted line */
+    svg.appendChild(svgEl('line',{x1:p.x,y1:p.y,x2:nx,y2:ny,stroke:n.color,'stroke-width':'1','stroke-opacity':'0.4','stroke-dasharray':'3,3'}));
+    /* Shape */
+    if(n.shape==='diamond'){
+      const s=8;
+      svg.appendChild(svgEl('polygon',{points:nx+','+(ny-s)+' '+(nx+s)+','+ny+' '+nx+','+(ny+s)+' '+(nx-s)+','+ny,fill:'#0d1230',stroke:n.color,'stroke-width':'1.5','stroke-dasharray':'3,2'}));
+    } else {
+      svg.appendChild(svgEl('rect',{x:nx-7,y:ny-7,width:14,height:14,rx:2,fill:'#0d1230',stroke:n.color,'stroke-width':'1.5'}));
+    }
+    addText(svg,nx,ny+18,n.label,{fill:'#667799',size:7,weight:'400'});
   });
-  svg.appendChild(nodesG);
+
   container.appendChild(svg);
 
-  /* Title */
-  const title=document.createElement('div');
-  title.style.cssText='position:absolute;top:20px;left:28px;font-size:18px;font-weight:700;color:#fff;letter-spacing:0.3px;';
-  title.textContent='Mapa de Dependencias \u2014 Portal de Intermediarios';
-  container.appendChild(title);
+  /* KPI bar */
+  const kpi=document.createElement('div');kpi.className='kpi-bar';
+  [{v:'5',l:'Entregables',c:'#42a5f5'},{v:'16',l:'Capacidades',c:'#ff9800'},{v:'13',l:'Dependencias',c:'#ef5350'},{v:'31',l:'ExOp Items',c:'#4caf50'}].forEach(k=>{const d=document.createElement('div');d.className='kpi-card';d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';kpi.appendChild(d);});
+  container.appendChild(kpi);
 
-  /* Subtitle */
-  const sub=document.createElement('div');
-  sub.style.cssText='position:absolute;top:46px;left:28px;font-size:12px;color:#7a8bb5;';
-  sub.textContent='Nodos principales y relaciones entre entregables, integraciones y sistemas legacy';
-  container.appendChild(sub);
+  /* Legend */
+  const leg=document.createElement('div');leg.className='legend-bar';
+  [{c:'#64b5f6',l:'Central',shape:'circle'},{c:'#ff9800',l:'N1 Entregable',shape:'circle'},{c:'#8899bb',l:'N2 Capacidad',shape:'circle'},{c:'#ef5350',l:'N3 Bloqueador',shape:'diamond'},{c:'#4caf50',l:'N3 Disponible',shape:'square'}].forEach(it=>{
+    const el=document.createElement('div');el.className='legend-item';
+    if(it.shape==='diamond')el.innerHTML='<span style="width:10px;height:10px;transform:rotate(45deg);border:1.5px solid '+it.c+';flex-shrink:0;background:#0d1230"></span>'+it.l;
+    else if(it.shape==='square')el.innerHTML='<span style="width:10px;height:10px;border:1.5px solid '+it.c+';border-radius:2px;flex-shrink:0;background:#0d1230"></span>'+it.l;
+    else el.innerHTML='<span class="legend-dot" style="background:'+it.c+'"></span>'+it.l;
+    leg.appendChild(el);
+  });
+  container.appendChild(leg);
 }
 
 function initArquitectura(){
