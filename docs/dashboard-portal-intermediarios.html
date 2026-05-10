@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Portal Intermediarios — VP TI</title>
+<title>Dashboard Portal Intermediarios â€” VP TI</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -35,9 +35,6 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 .risk-card{background:rgba(255,255,255,.03);border:1px solid #1a2550;border-radius:8px;padding:16px 20px;margin:10px 0}
 .risk-card .risk-title{font-weight:600;color:#e0e8f0;font-size:14px;margin-bottom:6px}
 .risk-card p{font-size:13px;color:#a0b0c8;margin:0}
-.coherence-card{background:rgba(255,167,38,.04);border:1px solid rgba(255,167,38,.2);border-radius:8px;padding:14px 18px;margin:10px 0}
-.coherence-card .coherence-title{font-weight:600;color:#ffa726;font-size:13px;margin-bottom:6px}
-.coherence-card p{font-size:13px;color:#a0b0c8;margin:0}
 .svg-container{width:100%;height:100%;position:relative}
 .svg-container svg{width:100%;height:100%}
 .kpi-bar{position:absolute;top:16px;right:20px;display:flex;gap:10px;z-index:10}
@@ -51,14 +48,19 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 .svg-tooltip .tt-title{font-weight:700;color:#fff;font-size:13px;margin-bottom:4px}
 .svg-tooltip .tt-sub{color:#7a8bb5;font-size:11px}
 .svg-tooltip .tt-line{color:#a0b0c8}
+.detail-card{background:rgba(255,255,255,.02);border:1px solid #1a2550;border-radius:10px;padding:18px 22px;margin:12px 0}
+.detail-card h4{font-size:13px;font-weight:700;color:#90caf9;margin-bottom:8px}
+.detail-card ul{margin:6px 0 0 16px}
+.detail-card ul li{font-size:12.5px;color:#b0bdd0;margin-bottom:3px}
 </style>
 </head>
 <body>
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('informe')">Informe Maestro</button>
-  <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura TO-BE</button>
+  <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura</button>
+  <button class="tab-btn" onclick="switchTab('dependencias')">Dependencias</button>
   <button class="tab-btn" onclick="switchTab('roadmap')">Roadmap</button>
-  <button class="tab-btn" onclick="switchTab('riesgos')">Dependencias y Riesgos</button>
+  <button class="tab-btn" onclick="switchTab('riesgos')">Ruta Cr&#237;tica</button>
 </div>
 
 <!-- TAB 1: INFORME MAESTRO -->
@@ -77,17 +79,58 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
   <li><strong>Ventana cr&#237;tica:</strong> Entregable 6 (Gesti&#243;n Humana) entre <span class="highlight">4 Mayo &#8211; 31 Agosto 2026</span>.</li>
 </ul>
 
-<h2>2. Alcance del Proyecto</h2>
-<table class="info-table">
-<thead><tr><th>Entregable</th><th>Descripci&#243;n</th></tr></thead>
-<tbody>
-<tr><td style="font-weight:700;color:#42a5f5;vertical-align:top">Entregables 4 y 5</td><td>Creaci&#243;n/Eliminaci&#243;n de Empleados, Actualizaci&#243;n de Datos. Dependencia directa de backends Saghi.</td></tr>
-<tr><td style="font-weight:700;color:#42a5f5;vertical-align:top">Entregable 6</td><td>Migraci&#243;n Gesti&#243;n Humana: Calendarios, Certificados, Perfil, Pagos/Comisiones v&#237;a Saghi. Ventana: Mayo&#8211;Agosto 2026.</td></tr>
-<tr><td style="font-weight:700;color:#ff9800;vertical-align:top">Entregable 7</td><td>Gesti&#243;n de Cartera. Integraci&#243;n con FCA y sistemas de facturaci&#243;n.</td></tr>
-<tr><td style="font-weight:700;color:#ff9800;vertical-align:top">Entregable 8</td><td>Consulta de Siniestros. Integraci&#243;n con sistemas de reclamaciones.</td></tr>
-<tr><td style="font-weight:700;color:#ef5350;vertical-align:top">Excelencia Operativa 2026</td><td>31 &#237;tems activos en 3 ecosistemas. Mantenimiento de estabilidad &gt;99.9%.</td></tr>
-</tbody>
-</table>
+<h2>2. Alcance Detallado</h2>
+<p>El proyecto opera bajo dos grandes frentes: <strong>entregables Core (Fases III y IV)</strong> y un portafolio de <strong>Excelencia Operativa</strong>.</p>
+
+<h3>Fase III y IV &#8212; Entregables Core</h3>
+
+<div class="detail-card">
+  <h4>Entregables 4 y 5 (Ajustes Saghi)</h4>
+  <ul>
+    <li>Capacidades de <strong>Creaci&#243;n y Eliminaci&#243;n de Empleados</strong>, y Actualizaci&#243;n de Datos de agencias.</li>
+    <li>Gesti&#243;n de perfiles altamente restringida: intermediarios solo pueden editar <span class="highlight">direcci&#243;n de oficina y correo electr&#243;nico</span>.</li>
+    <li>Saghi orquesta roles, reglas de participaci&#243;n accionaria (exige suma del 100%).</li>
+    <li>No se puede eliminar un Representante Legal sin crear antes uno nuevo.</li>
+  </ul>
+</div>
+
+<div class="detail-card">
+  <h4>Entregable 6 &#8212; Migraci&#243;n de Gesti&#243;n Humana (pesta&#241;a &#8220;Mi Cuenta&#8221;)</h4>
+  <p style="font-size:12px;color:#a0b0c8;margin-bottom:10px">Paquete robusto e indivisible alojado en la pesta&#241;a &#8220;Mi Cuenta&#8221;.</p>
+  <ul>
+    <li><strong>Administrador de Calendarios:</strong> Deja de ser PDF est&#225;tico; gestionado anualmente por equipo de Servicio.</li>
+    <li><strong>Certificados:</strong> Idoneidad, Vinculaci&#243;n, Comisiones y Tributarios (IVA, ICA, Renta). 1 &#250;nico reintento de descarga; si falla, caso autom&#225;tico interno.</li>
+    <li><strong>Pagos y Comisiones:</strong> Preliquidaci&#243;n por compa&#241;&#237;a (grabadas/no grabadas). Extractos en <span class="highlight">formato Excel</span> con filtros por quincena, mes y a&#241;o.</li>
+    <li><strong>Planilla PILA:</strong> Migraci&#243;n id&#233;ntica a intranet actual. Ingresos mes anterior, valida 40% base m&#237;nima cotizaci&#243;n.</li>
+  </ul>
+</div>
+
+<div class="detail-card">
+  <h4>Entregables 7 y 8 (Fase IV)</h4>
+  <ul>
+    <li><strong>Entregable 7:</strong> Gesti&#243;n de Cartera &#8212; Facturaci&#243;n, pre-rastrillo y conservaci&#243;n.</li>
+    <li><strong>Entregable 8:</strong> Consulta de Siniestros &#8212; Autos y Vida.</li>
+  </ul>
+</div>
+
+<h3>Excelencia Operativa 2026</h3>
+<p>~31 &#237;tems activos sobre <strong>Portal de Intermediarios</strong>, <strong>Intranet (Mi Compa&#241;&#237;a)</strong> y <strong>Mi Compa&#241;&#237;a Nueva</strong>.</p>
+
+<div class="detail-card">
+  <h4>Evolutivos</h4>
+  <ul>
+    <li>Modernizaci&#243;n UX, PopUp de Novedades, M&#243;dulo P&#243;lizas.</li>
+    <li>Integraciones: Carpeta &#218;nica, Gestor Documental, Gestor de Flujos.</li>
+    <li>Migraci&#243;n &#8220;Consulta de Conocimiento al Cliente&#8221;.</li>
+  </ul>
+</div>
+<div class="detail-card">
+  <h4>Incidencias / Estabilizaci&#243;n</h4>
+  <ul>
+    <li>Embebido tablero siniestralidad autos, ajustes encuestas.</li>
+    <li>Migraci&#243;n datamart de ventas hacia GoAnywhere.</li>
+  </ul>
+</div>
 
 <h2>3. Cronograma Maestro</h2>
 <table class="info-table">
@@ -102,503 +145,201 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </tbody>
 </table>
 
-<h2>4. Contenido Estrat&#233;gico</h2>
-<ul>
-  <li><strong>Diagn&#243;stico Cr&#237;tico:</strong> Fase III bloqueada por dependencia externa de Saghi para backends de Gesti&#243;n Humana.</li>
-  <li><strong>Transici&#243;n Arquitect&#243;nica:</strong> Legacy (Oracle + FileNet) &#8594; Moderno (PostgreSQL + AWS + MicroFrontends).</li>
-  <li><strong>Modelo de Entrega:</strong> Entregables incrementales con validaci&#243;n en QA antes de producci&#243;n.</li>
-  <li><strong>Excelencia Operativa:</strong> 31 &#237;tems activos en 3 ecosistemas para mantener estabilidad &gt;99.9%.</li>
-</ul>
-
-<h2>5. Matriz de Coherencia (Puntos de Atenci&#243;n)</h2>
-<div class="coherence-card">
-  <div class="coherence-title">&#9888; Contradicci&#243;n visual Slide 6</div>
-  <p>M&#243;dulos marcados en amarillo (pendientes) en la presentaci&#243;n que ya est&#225;n en producci&#243;n. Genera confusi&#243;n sobre el estado real del proyecto.</p>
-</div>
-<div class="coherence-card">
-  <div class="coherence-title">&#9888; Riesgo temporal Entregable 6</div>
-  <p>La dependencia de Saghi en Junio con pruebas en Julio es una secuencia fr&#225;gil. Cualquier retraso de Saghi elimina el margen de maniobra para QA.</p>
-</div>
-
-<h2>6. Servicios / Tech Stack</h2>
+<h2>4. Tech Stack</h2>
 <table class="info-table">
-<thead><tr><th>Componente</th><th>Tecnolog&#237;a</th><th>Infraestructura</th></tr></thead>
+<thead><tr><th>Componente</th><th>Tecnolog&#237;a</th><th>Infra</th></tr></thead>
 <tbody>
-<tr><td><code>Portal Intermediarios</code></td><td>Angular 15.2.10 MicroFrontends</td><td style="color:#ff9800">AWS ECS</td></tr>
-<tr><td><code>Microservicios Backend</code></td><td>Java 11 + Spring Boot + Gradle</td><td style="color:#ff9800">AWS ECS Fargate</td></tr>
+<tr><td><code>Portal</code></td><td>Angular 15.2.10 MicroFrontends</td><td style="color:#ff9800">AWS ECS</td></tr>
+<tr><td><code>Backend</code></td><td>Java 11 + Spring Boot + Gradle</td><td style="color:#ff9800">ECS Fargate</td></tr>
 <tr><td><code>Lambdas</code></td><td>Python 3.9</td><td style="color:#ff9800">AWS Lambda</td></tr>
-<tr><td><code>API Gateway</code></td><td>AWS API Gateway</td><td style="color:#ff9800">AWS</td></tr>
-<tr><td><code>Base de Datos</code></td><td>PostgreSQL 14</td><td style="color:#ff9800">AWS RDS</td></tr>
-<tr><td><code>Oracle Legacy</code></td><td>Oracle DB (Tronador)</td><td style="color:#78909c">On-Premise</td></tr>
-<tr><td><code>Mensajer&#237;a</code></td><td>SNS + SQS</td><td style="color:#ff9800">AWS</td></tr>
-<tr><td><code>IaC</code></td><td>Terraform</td><td style="color:#ff9800">AWS</td></tr>
+<tr><td><code>API GW</code></td><td>AWS API Gateway</td><td style="color:#ff9800">AWS</td></tr>
+<tr><td><code>BD</code></td><td>PostgreSQL 14</td><td style="color:#ff9800">AWS RDS</td></tr>
+<tr><td><code>Legacy</code></td><td>Oracle DB (Tronador)</td><td style="color:#78909c">On-Premise</td></tr>
 </tbody>
 </table>
-
 </div>
 </div>
 
-<!-- TAB 2: ARQUITECTURA TO-BE -->
+<!-- TAB 2: ARQUITECTURA -->
 <div id="tab-arquitectura" class="tab-content">
   <div class="svg-container" id="arq-container"></div>
 </div>
 
-<!-- TAB 3: ROADMAP -->
+<!-- TAB 3: DEPENDENCIAS (GRAFO RADIAL) -->
+<div id="tab-dependencias" class="tab-content">
+  <div class="svg-container" id="dep-container"></div>
+</div>
+
+<!-- TAB 4: ROADMAP -->
 <div id="tab-roadmap" class="tab-content">
   <div class="svg-container" id="roadmap-container"></div>
 </div>
 
-<!-- TAB 4: DEPENDENCIAS Y RIESGOS -->
+<!-- TAB 5: RUTA CRITICA -->
 <div id="tab-riesgos" class="tab-content">
 <div class="informe">
-<h1>DEPENDENCIAS, RIESGOS Y TEMAS CR&#205;TICOS</h1>
-<p class="subtitle">Cruce: Arquitectura Confluence &#215; Cronograma &#215; Integraciones externas</p>
+<h1>RUTA CR&#205;TICA Y RIESGOS</h1>
+<p class="subtitle">An&#225;lisis de dependencias, bloqueos y mitigaciones</p>
 
-<h2>Dependencias Cr&#237;ticas (Bloqueos Externos)</h2>
-
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0 28px">
-<div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-    <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">ALTO</span>
-    <span style="color:#ef5350;font-weight:600">Backend Saghi</span>
-  </div>
-  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-    <p>Dependencia alta que hace parte de la ruta cr&#237;tica para los Entregables 4, 5 y 6. Sin backend de Gesti&#243;n Humana, no se puede desarrollar Calendarios, Certificados, Perfil ni Pagos/Comisiones. Fecha l&#237;mite: Junio 2026.</p>
-  </div>
-  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-    <strong>Fecha l&#237;mite:</strong> Junio 2026
-  </div>
-</div>
-<div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-    <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">CR&#205;TICO</span>
-    <span style="color:#ef5350;font-weight:600">FileNet / Oracle Legacy</span>
-  </div>
-  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-    <p>Sistemas legacy con latencia elevada y errores 500 forzados. Tronador (Oracle) es el core de p&#243;lizas. FileNet maneja gesti&#243;n documental legacy. Ambos generan inestabilidad en integraciones.</p>
-  </div>
-  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-    <strong>Mitigaci&#243;n:</strong> Circuit breakers + Datadog APM
-  </div>
-</div>
-<div style="background:#0d1230;border:1px solid rgba(255,167,38,.3);border-radius:10px;padding:18px 20px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-    <span style="background:#ffa726;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">PENDIENTE</span>
-    <span style="color:#ffa726;font-weight:600">Microfront Precobros</span>
-  </div>
-  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-    <p>Certificaci&#243;n visual pendiente del microfrontend de Precobros. Bloquea la integraci&#243;n visual completa del portal. Requiere validaci&#243;n de UX y QA visual.</p>
-  </div>
-  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-    <strong>Responsable:</strong> Equipo Frontend + QA
-  </div>
-</div>
+<h2>Bloqueador Primario &#8212; Backend Saghi</h2>
+<div class="risk-card" style="border-color:rgba(239,83,80,.4)">
+  <div class="risk-title" style="color:#ef5350">&#9888; Riesgo m&#225;s severo del proyecto</div>
+  <p>Bloqueador exclusivo para QA de E4/E5 e impedimento total para Pagos y Comisiones del E6. Equipo saturado (Luz Adriana, Ruby, Misael, Andrea). <strong style="color:#ef5350">Requiere intervenci&#243;n ejecutiva inminente.</strong></p>
 </div>
 
-<h2>Dependencias T&#233;cnicas</h2>
-
+<h2>Degradaci&#243;n Sistemas Legacy</h2>
 <div class="risk-card">
-  <div class="risk-title">&#9881; Integraci&#243;n Saghi (Gesti&#243;n Humana)</div>
-  <p>Backend principal para Entregable 6. Provee APIs de Calendarios, Certificados, Perfil y Pagos/Comisiones. Dependencia externa cr&#237;tica con fecha l&#237;mite en Junio 2026.</p>
-</div>
-<div class="risk-card">
-  <div class="risk-title">&#128279; Carpeta &#218;nica + Gestor Documental + Gestor de Flujos</div>
-  <p>3 integraciones nuevas en paralelo. Carpeta &#218;nica unifica documentos, Gestor Documental reemplaza FileNet, Gestor de Flujos orquesta procesos. </p>
-</div>
-<div class="risk-card">
-  <div class="risk-title">&#128274; FCA (Facturaci&#243;n y Cartera)</div>
-  <p>Integraci&#243;n requerida para Entregable 7 (Gesti&#243;n de Cartera). Sistema de facturaci&#243;n central con APIs existentes pero que requieren adaptaci&#243;n.</p>
-</div>
-<div class="risk-card">
-  <div class="risk-title">&#128196; Tronador (Oracle Legacy)</div>
-  <p>Core de p&#243;lizas On-Premise. Genera latencia y errores 500 intermitentes. Requiere circuit breakers y fallbacks para mantener estabilidad del portal.</p>
+  <div class="risk-title">&#9881; Oracle + FileNet: Causa ra&#237;z confirmada</div>
+  <p>Conectividad intermitente responsable directa del impacto en presupuesto de errores y latencia elevada.</p>
 </div>
 
-<h2>Riesgos Identificados</h2>
+<h2>Microfront Precobros</h2>
+<div class="risk-card">
+  <div class="risk-title" style="color:#ffa726">&#128274; Estado: BLOQUEADO</div>
+  <p>Depende de certificaci&#243;n visual del equipo de Precobros con apoyo de Cloud.</p>
+</div>
 
+<h2>Integraciones Transversales Paralelas</h2>
+<div class="risk-card">
+  <div class="risk-title" style="color:#ffa726">&#9888; 3 integraciones masivas</div>
+  <p>Carpeta &#218;nica, Gestor Documental y Gestor de Flujos. Afectar&#225;n n&#250;cleo del portal (hoy 100% FileNet).</p>
+</div>
+
+<h2>Matriz de Riesgos</h2>
 <table class="info-table">
-<thead><tr><th>#</th><th>Riesgo</th><th>Impacto</th><th>Probabilidad</th><th>Mitigaci&#243;n</th></tr></thead>
+<thead><tr><th>#</th><th>Riesgo</th><th>Impacto</th><th>Prob.</th><th>Mitigaci&#243;n</th></tr></thead>
 <tbody>
-<tr>
-  <td>1</td>
-  <td style="color:#ef5350;font-weight:600">Bloqueador Saghi (backends E4/E5/E6)</td>
-  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alto</span></td>
-  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alta</span></td>
-  <td style="font-size:12px">Escalamiento a gerencia. Fecha l&#237;mite Junio 2026 con penalizaci&#243;n.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td style="color:#ef5350;font-weight:600">Legacy Oracle &amp; FileNet (latencia, errores 500)</td>
-  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alto</span></td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td>
-  <td style="font-size:12px">Circuit breakers, fallbacks, monitoreo Datadog APM.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td style="color:#ffa726;font-weight:600">Microfront Precobros (certificaci&#243;n visual)</td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Medio</span></td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td>
-  <td style="font-size:12px">Priorizar certificaci&#243;n visual en sprint actual.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td style="color:#ffa726;font-weight:600">3 integraciones paralelas nuevas</td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Medio</span></td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td>
-  <td style="font-size:12px">Secuenciar integraciones. No iniciar las 3 simult&#225;neamente.</td>
-</tr>
-
+<tr><td>1</td><td style="color:#ef5350;font-weight:600">Saghi (E4/E5/E6)</td><td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alto</span></td><td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alta</span></td><td style="font-size:12px">Intervenci&#243;n ejecutiva</td></tr>
+<tr><td>2</td><td style="color:#ef5350;font-weight:600">Oracle &amp; FileNet</td><td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Alto</span></td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td><td style="font-size:12px">Circuit breakers + Datadog</td></tr>
+<tr><td>3</td><td style="color:#ffa726;font-weight:600">Precobros</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Medio</span></td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td><td style="font-size:12px">Cert. visual con Cloud</td></tr>
+<tr><td>4</td><td style="color:#ffa726;font-weight:600">3 integraciones</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Medio</span></td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Media</span></td><td style="font-size:12px">Secuenciar entregas</td></tr>
 </tbody>
 </table>
-
-<h2>Lectura Ejecutiva</h2>
-<div style="background:rgba(100,181,246,.04);border:1px solid #1a3a70;border-radius:10px;padding:18px 22px;margin-bottom:28px">
-  <div style="font-size:13px;color:#c0cce0;line-height:1.8">
-    <p>El Portal de Intermediarios mantiene una <strong>estabilidad superior al 99.9%</strong> en producci&#243;n. La arquitectura TO-BE migra de Legacy (Oracle + FileNet) a <strong>AWS (ECS + Lambda + RDS PostgreSQL)</strong> con MicroFrontends Angular.</p>
-    <p style="margin-top:8px"><strong style="color:#ef5350">Riesgo principal:</strong> Dependencia de Saghi para backends de Gesti&#243;n Humana. Sin entrega en Junio 2026, el Entregable 6 no puede completarse en la ventana definida.</p>
-    <p style="margin-top:8px"><strong style="color:#ffa726">Dependencia cr&#237;tica:</strong> Legacy Oracle (Tronador) y FileNet generan latencia y errores 500 que afectan la estabilidad de integraciones.</p>
-    <p style="margin-top:8px"><strong style="color:#4caf50">Fortaleza:</strong> Estabilidad operativa &gt;99.9% + 31 &#237;tems de excelencia operativa activos en 3 ecosistemas.</p>
-    <p style="margin-top:8px"><strong style="color:#42a5f5">Repo de referencia:</strong> <code>segurosbolivar/refactoring-portal-arl-infra</code></p>
-  </div>
-</div>
-
-<div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
-  <div style="background:rgba(66,165,245,.08);border:1px solid rgba(66,165,245,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
-    <div style="color:#42a5f5;font-weight:700;font-size:22px">99.9%</div>
-    <div style="color:#7a8bb5;font-size:11px">Estabilidad</div>
-  </div>
-  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
-    <div style="color:#ffa726;font-weight:700;font-size:22px">5</div>
-    <div style="color:#7a8bb5;font-size:11px">Entregables activos</div>
-  </div>
-  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
-    <div style="color:#4caf50;font-weight:700;font-size:22px">31</div>
-    <div style="color:#7a8bb5;font-size:11px">Items Excelencia Op.</div>
-  </div>
-  <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
-    <div style="color:#ef5350;font-weight:700;font-size:22px">1</div>
-    <div style="color:#7a8bb5;font-size:11px">Bloqueante externo</div>
-  </div>
-  <div style="background:rgba(171,71,188,.08);border:1px solid rgba(171,71,188,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
-    <div style="color:#ab47bc;font-weight:700;font-size:22px">8</div>
-    <div style="color:#7a8bb5;font-size:11px">Integraciones</div>
-  </div>
-</div>
-
 </div>
 </div>
 
 <div class="svg-tooltip" id="tooltip"></div>
 
 <script>
-/* Tab switching */
-const tabInited={informe:true,arquitectura:false,roadmap:false,riesgos:true};
+const tabInited={informe:true,arquitectura:false,dependencias:false,roadmap:false,riesgos:true};
 function switchTab(name){
   document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    const tabs=['informe','arquitectura','roadmap','riesgos'];
+    const tabs=['informe','arquitectura','dependencias','roadmap','riesgos'];
     b.classList.toggle('active',tabs[i]===name);
   });
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  if(!tabInited[name]){tabInited[name]=true;if(name==='arquitectura')initArquitectura();else if(name==='roadmap')initRoadmap();}
+  if(!tabInited[name]){tabInited[name]=true;if(name==='arquitectura')initArquitectura();else if(name==='dependencias')initDependencias();else if(name==='roadmap')initRoadmap();}
 }
-
-/* Tooltip */
 const tip=document.getElementById('tooltip');
 function showTip(e,html){tip.innerHTML=html;tip.style.display='block';moveTip(e);}
 function moveTip(e){let x=e.clientX+14,y=e.clientY+14;if(x+320>window.innerWidth)x=e.clientX-330;if(y+200>window.innerHeight)y=e.clientY-210;tip.style.left=x+'px';tip.style.top=y+'px';}
 function hideTip(){tip.style.display='none';}
-
-/* SVG helpers */
 function svgEl(tag,attrs){const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs||{}))el.setAttribute(k,v);return el;}
-function addText(parent,x,y,text,opts){
-  const t=svgEl('text',{x,y,fill:opts.fill||'#c0cce0','font-size':opts.size||12,'font-family':"'Segoe UI',system-ui,sans-serif",'text-anchor':opts.anchor||'middle','dominant-baseline':opts.baseline||'central','font-weight':opts.weight||'400','pointer-events':'none'});
-  t.textContent=text;parent.appendChild(t);return t;
+function addText(parent,x,y,text,opts){const t=svgEl('text',{x,y,fill:opts.fill||'#c0cce0','font-size':opts.size||12,'font-family':"'Segoe UI',system-ui,sans-serif",'text-anchor':opts.anchor||'middle','dominant-baseline':opts.baseline||'central','font-weight':opts.weight||'400','pointer-events':'none'});t.textContent=text;parent.appendChild(t);return t;}
+
+function initDependencias(){
+  const container=document.getElementById('dep-container');
+  const W=container.clientWidth||1200,H=container.clientHeight||700;
+  const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
+  const cx=W/2,cy=H/2;
+  const defs=svgEl('defs',{});
+  defs.innerHTML='<filter id="glowD"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="coreGrad"><stop offset="0%" stop-color="#64b5f6"/><stop offset="100%" stop-color="#1565c0"/></radialGradient>';
+  svg.appendChild(defs);
+  svg.appendChild(svgEl('rect',{x:20,y:20,width:W-40,height:H-40,rx:0,fill:'none',stroke:'#ef5350','stroke-width':'2.5','stroke-dasharray':'8,4'}));
+  svg.appendChild(svgEl('circle',{cx:cx,cy:cy,r:60,fill:'url(#coreGrad)',filter:'url(#glowD)'}));
+  addText(svg,cx,cy-8,'Portal',{fill:'#fff',size:13,weight:'700'});
+  addText(svg,cx,cy+10,'Intermediarios',{fill:'#fff',size:11,weight:'500'});
+  const cats={entregable:{color:'#4caf50'},bloqueador:{color:'#ef5350'},integracion:{color:'#ff9800'},legacy:{color:'#78909c'},equipo:{color:'#ab47bc'}};
+  const nodes=[
+    {id:'saghi',label:'Backend Saghi',cat:'bloqueador',desc:'Bloqueador E4/E5/E6. Equipo saturado.',ring:1,angle:0},
+    {id:'e45',label:'E4/E5 Empleados',cat:'entregable',desc:'Creaci\u00f3n/Eliminaci\u00f3n Empleados + Datos agencias.',ring:1,angle:45},
+    {id:'e6',label:'E6 Gesti\u00f3n Humana',cat:'entregable',desc:'Mi Cuenta: Calendarios, Certificados, Pagos, PILA.',ring:1,angle:90},
+    {id:'e7',label:'E7 Cartera',cat:'entregable',desc:'Facturaci\u00f3n, pre-rastrillo y conservaci\u00f3n.',ring:1,angle:135},
+    {id:'e8',label:'E8 Siniestros',cat:'entregable',desc:'Consulta Siniestros Autos y Vida.',ring:1,angle:180},
+    {id:'oracle',label:'Oracle (Tronador)',cat:'legacy',desc:'Core p\u00f3lizas On-Premise. Errores 500.',ring:1,angle:225},
+    {id:'filenet',label:'FileNet',cat:'legacy',desc:'Gesti\u00f3n documental legacy. Latencia elevada.',ring:1,angle:270},
+    {id:'precobros',label:'Microfront Precobros',cat:'bloqueador',desc:'Bloqueado. Certificaci\u00f3n visual pendiente.',ring:1,angle:315},
+    {id:'carpeta',label:'Carpeta \u00danica',cat:'integracion',desc:'Nueva integraci\u00f3n documental unificada.',ring:2,angle:240},
+    {id:'gestor_doc',label:'Gestor Documental',cat:'integracion',desc:'Reemplazo de FileNet.',ring:2,angle:260},
+    {id:'gestor_flujos',label:'Gestor de Flujos',cat:'integracion',desc:'Orquestaci\u00f3n de procesos.',ring:2,angle:280},
+    {id:'fca',label:'FCA',cat:'integracion',desc:'Facturaci\u00f3n y Cartera para E7.',ring:2,angle:155},
+    {id:'calendarios',label:'Calendarios',cat:'entregable',desc:'Admin anual por equipo Servicio.',ring:2,angle:70},
+    {id:'certificados',label:'Certificados',cat:'entregable',desc:'Idoneidad, Vinculaci\u00f3n, Comisiones, Tributarios.',ring:2,angle:85},
+    {id:'pagos',label:'Pagos y Comisiones',cat:'entregable',desc:'Preliquidaci\u00f3n Excel. Bloqueado por Saghi.',ring:2,angle:100},
+    {id:'pila',label:'Planilla PILA',cat:'entregable',desc:'40% base m\u00ednima cotizaci\u00f3n.',ring:2,angle:115},
+    {id:'exop',label:'Excelencia Op. (31)',cat:'equipo',desc:'31 \u00edtems en 3 ecosistemas.',ring:2,angle:0},
+    {id:'cloud',label:'Equipo Cloud',cat:'equipo',desc:'Apoyo certificaci\u00f3n Precobros.',ring:2,angle:330},
+    {id:'eq_saghi',label:'Equipo Saghi',cat:'equipo',desc:'Luz Adriana, Ruby, Misael, Andrea.',ring:2,angle:20}
+  ];
+  const edges=[
+    {from:null,to:'saghi',crit:true},{from:null,to:'e45'},{from:null,to:'e6'},{from:null,to:'e7'},{from:null,to:'e8'},
+    {from:null,to:'oracle'},{from:null,to:'filenet'},{from:null,to:'precobros'},
+    {from:'saghi',to:'e45',crit:true},{from:'saghi',to:'pagos',crit:true},
+    {from:'e6',to:'calendarios'},{from:'e6',to:'certificados'},{from:'e6',to:'pagos'},{from:'e6',to:'pila'},
+    {from:'e7',to:'fca'},{from:'filenet',to:'carpeta'},{from:'filenet',to:'gestor_doc'},{from:'filenet',to:'gestor_flujos'},
+    {from:'precobros',to:'cloud'},{from:'saghi',to:'eq_saghi',crit:true}
+  ];
+  const ring1R=180,ring2R=300,positions={};
+  nodes.forEach(n=>{const r=n.ring===1?ring1R:ring2R;const rad=(n.angle-90)*Math.PI/180;positions[n.id]={x:cx+r*Math.cos(rad),y:cy+r*Math.sin(rad)};});
+  const edgesG=svgEl('g',{});
+  edges.forEach(e=>{const fp=e.from?positions[e.from]:{x:cx,y:cy};const tp=positions[e.to];if(!tp)return;const l=svgEl('line',{x1:fp.x,y1:fp.y,x2:tp.x,y2:tp.y,stroke:e.crit?'#ef5350':'#3a4a80','stroke-width':e.crit?'2.5':'1.2','stroke-opacity':e.crit?'0.8':'0.4'});if(!e.crit)l.setAttribute('stroke-dasharray','4,3');edgesG.appendChild(l);});
+  svg.appendChild(edgesG);
+  const nodesG=svgEl('g',{});
+  nodes.forEach(n=>{const pos=positions[n.id];const cat=cats[n.cat];const g=svgEl('g',{cursor:'pointer'});
+    if(n.cat==='bloqueador'){const s=22;g.appendChild(svgEl('polygon',{points:pos.x+','+(pos.y-s)+' '+(pos.x+s)+','+pos.y+' '+pos.x+','+(pos.y+s)+' '+(pos.x-s)+','+pos.y,fill:cat.color,stroke:'#b71c1c','stroke-width':'2',filter:'url(#glowD)'}));}
+    else if(n.cat==='legacy'){g.appendChild(svgEl('circle',{cx:pos.x,cy:pos.y,r:18,fill:cat.color,stroke:'#455a64','stroke-width':'2'}));}
+    else if(n.cat==='integracion'){g.appendChild(svgEl('circle',{cx:pos.x,cy:pos.y,r:16,fill:'none',stroke:cat.color,'stroke-width':'2.5','stroke-dasharray':'4,2'}));g.appendChild(svgEl('circle',{cx:pos.x,cy:pos.y,r:8,fill:cat.color}));}
+    else if(n.cat==='equipo'){g.appendChild(svgEl('rect',{x:pos.x-16,y:pos.y-16,width:32,height:32,rx:6,fill:cat.color,stroke:'#6a1b9a','stroke-width':'1.5'}));}
+    else{g.appendChild(svgEl('rect',{x:pos.x-18,y:pos.y-14,width:36,height:28,rx:5,fill:cat.color,stroke:'#2e7d32','stroke-width':'1.5'}));}
+    addText(g,pos.x,pos.y+28,n.label,{fill:'#c0cce0',size:9,weight:'500'});
+    g.addEventListener('mousemove',ev=>showTip(ev,'<div class="tt-title">'+n.label+'</div><div class="tt-sub">'+n.cat.toUpperCase()+'</div><div class="tt-line" style="margin-top:6px">'+n.desc+'</div>'));
+    g.addEventListener('mouseleave',hideTip);nodesG.appendChild(g);});
+  svg.appendChild(nodesG);container.appendChild(svg);
+  const kpi=document.createElement('div');kpi.className='kpi-bar';
+  [{v:'19',l:'Dependencias',c:'#42a5f5'},{v:'4',l:'Bloqueadores',c:'#ef5350'},{v:'3',l:'Integraciones',c:'#ff9800'},{v:'31',l:'ExOp Items',c:'#4caf50'}].forEach(k=>{const d=document.createElement('div');d.className='kpi-card';d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';kpi.appendChild(d);});
+  container.appendChild(kpi);
+  const leg=document.createElement('div');leg.className='legend-bar';
+  [{c:'#4caf50',l:'Entregable'},{c:'#ff9800',l:'Integraci\u00f3n'},{c:'#78909c',l:'Legacy'},{c:'#ef5350',l:'Bloqueador'},{c:'#ab47bc',l:'Equipo'},{c:'#ef5350',l:'Ruta cr\u00edtica',dash:true}].forEach(it=>{const el=document.createElement('div');el.className='legend-item';if(it.dash)el.innerHTML='<span style="width:16px;height:2px;background:'+it.c+';flex-shrink:0"></span>'+it.l;else el.innerHTML='<span class="legend-dot" style="background:'+it.c+'"></span>'+it.l;leg.appendChild(el);});
+  container.appendChild(leg);
 }
 
-/* --------------------------------------------------------------
-   TAB 2: ARQUITECTURA TO-BE — Hierarchical Top-Down Layout
-   4 capas: Presentacion > Logica > Integraciones > Persistencia
-   -------------------------------------------------------------- */
 function initArquitectura(){
   const container=document.getElementById('arq-container');
   const W=container.clientWidth||1200,H=container.clientHeight||700;
   const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
-
-  const defs=svgEl('defs',{});
-  defs.innerHTML='<filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-  svg.appendChild(defs);
-
-  const layers=[
-    {label:'CAPA 1 \u2014 PRESENTACI\u00D3N',color:'#42a5f5',y:30,h:120},
-    {label:'CAPA 2 \u2014 L\u00D3GICA DE NEGOCIO',color:'#ab47bc',y:170,h:120},
-    {label:'CAPA 3 \u2014 INTEGRACIONES',color:'#ff9800',y:310,h:140},
-    {label:'CAPA 4 \u2014 PERSISTENCIA',color:'#78909c',y:470,h:120}
-  ];
-
-  layers.forEach(l=>{
-    svg.appendChild(svgEl('rect',{x:20,y:l.y,width:W-40,height:l.h,rx:12,fill:l.color,opacity:'0.06',stroke:l.color,'stroke-width':'1','stroke-opacity':'0.2'}));
-    addText(svg,36,l.y+14,l.label,{fill:l.color,size:10,weight:'700',anchor:'start'});
-  });
-
-  const nw=160,nh=56;
-  const rc={Alto:'#ef5350',Medio:'#ffa726',Bajo:'#66bb6a'};
-  const cc={AWS:'#ff9800','On-Prem':'#78909c',Cloud:'#5c6bc0'};
-
-  function drawNode(g,id,x,y,name,cloud,risk,components,desc){
-    const rx=x-nw/2,ry=y-nh/2;
-    const rect=svgEl('rect',{x:rx,y:ry,width:nw,height:nh,rx:10,fill:'#0d1230',stroke:cc[cloud]||'#555','stroke-width':'1.8',filter:'url(#glow2)',cursor:'pointer'});
-    g.appendChild(rect);
-    addText(g,x,y-12,name,{fill:'#fff',size:10.5,weight:'600'});
-    g.appendChild(svgEl('rect',{x:x-20,y:y+4,width:40,height:15,rx:7,fill:cc[cloud]||'#555',opacity:'0.85'}));
-    addText(g,x,y+11,cloud,{fill:'#fff',size:8,weight:'700'});
-    g.appendChild(svgEl('rect',{x:rx+nw-40,y:ry+2,width:38,height:14,rx:7,fill:rc[risk],opacity:'0.9'}));
-    addText(g,rx+nw-21,ry+9,risk,{fill:'#fff',size:8,weight:'700'});
-    rect.addEventListener('mousemove',e=>showTip(e,'<div class="tt-title">'+name+'</div><div class="tt-sub">'+cloud+' | Riesgo: '+risk+'</div><div class="tt-line" style="margin-top:6px"><strong>Componentes:</strong> '+components+'</div><div class="tt-line" style="margin-top:4px">'+desc+'</div>'));
-    rect.addEventListener('mouseleave',hideTip);
-    return {id,cx:x,cy:y,top:ry,bot:ry+nh,left:rx,right:rx+nw};
-  }
-
-  const nodesG=svgEl('g',{});
-  const bp={};
-
-  /* CAPA 1 */
-  const c1y=layers[0].y+layers[0].h/2;
-  bp.front=drawNode(nodesG,'front',W/2,c1y,'Portal Intermediarios','AWS','Bajo','Angular 15.2.10, MicroFrontends, TypeScript','Portal unificado para intermediarios. Autogestion, comercial y talento humano.');
-
-  /* CAPA 2 */
-  const c2y=layers[1].y+layers[1].h/2;
-  const c2gap=200;
-  bp.micro=drawNode(nodesG,'micro',W/2-c2gap,c2y,'Microservicios Java','AWS','Medio','Java 11, Spring Boot, Gradle, ECS Fargate','Backend principal. Logica de negocio para empleados, cartera, siniestros.');
-  bp.lambda=drawNode(nodesG,'lambda',W/2,c2y,'Lambdas Python','AWS','Bajo','Python 3.9, AWS Lambda, SNS/SQS','Funciones serverless para procesamiento asincrono y eventos.');
-  bp.apigw=drawNode(nodesG,'apigw',W/2+c2gap,c2y,'API Gateway','AWS','Bajo','AWS API Gateway, Rate Limiting','Punto de entrada unificado. Autenticacion, throttling, routing.');
-
-  /* CAPA 3 */
-  const c3y=layers[2].y+layers[2].h/2;
-  const c3gap=170;
-  const c3start=W/2-2.5*c3gap;
-  bp.Saghi=drawNode(nodesG,'Saghi',c3start,c3y,'Saghi','Cloud','Alto','Gestion Humana, Calendarios, Certificados, Pagos','Backend Saghi para Entregable 6. Dependencia ALTA - pendiente entrega Junio.');
-  bp.fca=drawNode(nodesG,'fca',c3start+c3gap,c3y,'FCA','Cloud','Medio','Facturacion, Cartera, Cobros','Sistema de facturacion y cartera. Requerido para Entregable 7.');
-  bp.filenet=drawNode(nodesG,'filenet',c3start+2*c3gap,c3y,'FileNet','On-Prem','Alto','Gestion Documental Legacy, Errores 500','Sistema documental legacy. Latencia elevada y errores intermitentes.');
-  bp.tronador2=drawNode(nodesG,'tronador2',c3start+3*c3gap,c3y,'Tronador (Oracle)','On-Prem','Alto','Core Polizas, Stored Procedures','Core legacy On-Premise. Genera errores 500 forzados.');
-  bp.carpeta=drawNode(nodesG,'carpeta',c3start+4*c3gap,c3y,'Carpeta Unica','Cloud','Medio','Documentos Unificados','Nueva integracion. Reemplaza FileNet a futuro.');
-  bp.gestor=drawNode(nodesG,'gestor',c3start+5*c3gap,c3y,'Gestor Documental','Cloud','Medio','Gestion Documental Nuevo','Nueva integracion documental moderna.');
-
-  /* CAPA 4 */
-  const c4y=layers[3].y+layers[3].h/2;
-  const c4gap=240;
-  bp.postgres=drawNode(nodesG,'postgres',W/2-c4gap/2,c4y,'PostgreSQL RDS','AWS','Bajo','PostgreSQL 14, AWS RDS','Base de datos principal para nuevos servicios.');
-  bp.oracle=drawNode(nodesG,'oracle',W/2+c4gap/2,c4y,'Oracle Legacy','On-Prem','Alto','Oracle DB, Datos historicos','Base de datos legacy. Solo lectura via APIs.');
-
-  /* Edges */
-  const edgesG=svgEl('g',{});
-  [{from:'front',to:'micro',label:'APIs'},{from:'front',to:'apigw',label:'Gateway'},{from:'front',to:'lambda',label:'Eventos'},
-   {from:'micro',to:'Saghi',label:'Saghi'},{from:'micro',to:'fca',label:'Cartera'},{from:'micro',to:'filenet',label:'Docs'},
-   {from:'micro',to:'tronador2',label:'Polizas'},{from:'lambda',to:'carpeta',label:'Docs'},{from:'lambda',to:'gestor',label:'Flujos'},
-   {from:'micro',to:'postgres',label:'CRUD'},{from:'tronador2',to:'oracle',label:'Legacy'}
-  ].forEach(e=>{
-    const a=bp[e.from],b=bp[e.to];
-    const midY=(a.bot+b.top)/2;
-    edgesG.appendChild(svgEl('path',{d:'M'+a.cx+' '+a.bot+' L'+a.cx+' '+midY+' L'+b.cx+' '+midY+' L'+b.cx+' '+b.top,fill:'none',stroke:'#5c6bc0','stroke-width':'1.5','stroke-dasharray':'6,4',opacity:'0.5'}));
-    edgesG.appendChild(svgEl('polygon',{points:(b.cx-4)+','+(b.top-6)+' '+b.cx+','+b.top+' '+(b.cx+4)+','+(b.top-6),fill:'#5c6bc0',opacity:'0.6'}));
-    addText(edgesG,(a.cx+b.cx)/2,midY-8,e.label,{fill:'#7986cb',size:9,weight:'500'});
-  });
-
-  svg.appendChild(edgesG);svg.appendChild(nodesG);container.appendChild(svg);
-
-  const kpiBar=document.createElement('div');kpiBar.className='kpi-bar';
-  [{v:'99.9%',l:'Estabilidad',c:'#4caf50'},{v:'8',l:'Integraciones',c:'#ff9800'},{v:'5',l:'Entregables',c:'#42a5f5'},{v:'31',l:'Items ExOp',c:'#ffd54f'}].forEach(k=>{
-    const d=document.createElement('div');d.className='kpi-card';
-    d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';
-    kpiBar.appendChild(d);
-  });
-  container.appendChild(kpiBar);
-
-  const leg=document.createElement('div');leg.className='legend-bar';
-  [{c:'#ff9800',l:'AWS'},{c:'#78909c',l:'On-Prem'},{c:'#5c6bc0',l:'Cloud'},{c:'#ef5350',l:'Riesgo Alto'},{c:'#ffa726',l:'Riesgo Medio'},{c:'#66bb6a',l:'Riesgo Bajo'}].forEach(it=>{
-    const el=document.createElement('div');el.className='legend-item';
-    el.innerHTML='<span class="legend-dot" style="background:'+it.c+'"></span>'+it.l;
-    leg.appendChild(el);
-  });
-  container.appendChild(leg);
+  const defs=svgEl('defs',{});defs.innerHTML='<filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';svg.appendChild(defs);
+  const layers=[{label:'PRESENTACI\u00d3N',color:'#42a5f5',y:30,h:120},{label:'L\u00d3GICA DE NEGOCIO',color:'#ab47bc',y:170,h:120},{label:'INTEGRACIONES',color:'#ff9800',y:310,h:140},{label:'PERSISTENCIA',color:'#78909c',y:470,h:120}];
+  layers.forEach(l=>{svg.appendChild(svgEl('rect',{x:20,y:l.y,width:W-40,height:l.h,rx:12,fill:l.color,opacity:'0.06',stroke:l.color,'stroke-width':'1','stroke-opacity':'0.2'}));addText(svg,36,l.y+14,l.label,{fill:l.color,size:10,weight:'700',anchor:'start'});});
+  const nw=160,nh=56,rc={Alto:'#ef5350',Medio:'#ffa726',Bajo:'#66bb6a'},cc={AWS:'#ff9800','On-Prem':'#78909c',Cloud:'#5c6bc0'};
+  function dn(g,x,y,name,cloud,risk,desc){const rx=x-nw/2,ry=y-nh/2;const rect=svgEl('rect',{x:rx,y:ry,width:nw,height:nh,rx:10,fill:'#0d1230',stroke:cc[cloud],'stroke-width':'1.8',filter:'url(#glow2)',cursor:'pointer'});g.appendChild(rect);addText(g,x,y-12,name,{fill:'#fff',size:10.5,weight:'600'});g.appendChild(svgEl('rect',{x:x-20,y:y+4,width:40,height:15,rx:7,fill:cc[cloud],opacity:'0.85'}));addText(g,x,y+11,cloud,{fill:'#fff',size:8,weight:'700'});g.appendChild(svgEl('rect',{x:rx+nw-40,y:ry+2,width:38,height:14,rx:7,fill:rc[risk],opacity:'0.9'}));addText(g,rx+nw-21,ry+9,risk,{fill:'#fff',size:8,weight:'700'});rect.addEventListener('mousemove',e=>showTip(e,'<div class="tt-title">'+name+'</div><div class="tt-sub">'+cloud+' | '+risk+'</div><div class="tt-line">'+desc+'</div>'));rect.addEventListener('mouseleave',hideTip);return{cx:x,cy:y,top:ry,bot:ry+nh};}
+  const ng=svgEl('g',{}),bp={};
+  bp.f=dn(ng,W/2,layers[0].y+60,'Portal Intermediarios','AWS','Bajo','Angular 15.2.10 MicroFrontends');
+  bp.m=dn(ng,W/2-200,layers[1].y+60,'Microservicios Java','AWS','Medio','Java 11 + Spring Boot');bp.l=dn(ng,W/2,layers[1].y+60,'Lambdas Python','AWS','Bajo','Python 3.9 + SNS/SQS');bp.a=dn(ng,W/2+200,layers[1].y+60,'API Gateway','AWS','Bajo','Rate Limiting');
+  const c3y=layers[2].y+70,c3g=170,c3s=W/2-2.5*c3g;bp.s=dn(ng,c3s,c3y,'Saghi','Cloud','Alto','BLOQUEADOR');bp.fc=dn(ng,c3s+c3g,c3y,'FCA','Cloud','Medio','Facturaci\u00f3n');bp.fn=dn(ng,c3s+2*c3g,c3y,'FileNet','On-Prem','Alto','Docs Legacy');bp.tr=dn(ng,c3s+3*c3g,c3y,'Tronador','On-Prem','Alto','Oracle Core');bp.cu=dn(ng,c3s+4*c3g,c3y,'Carpeta \u00danica','Cloud','Medio','Docs Nuevos');bp.gd=dn(ng,c3s+5*c3g,c3y,'Gestor Doc','Cloud','Medio','Reemplazo FN');
+  bp.pg=dn(ng,W/2-120,layers[3].y+60,'PostgreSQL','AWS','Bajo','BD principal');bp.or=dn(ng,W/2+120,layers[3].y+60,'Oracle Legacy','On-Prem','Alto','Hist\u00f3ricos');
+  const eg=svgEl('g',{});[{f:'f',t:'m'},{f:'f',t:'a'},{f:'f',t:'l'},{f:'m',t:'s'},{f:'m',t:'fc'},{f:'m',t:'fn'},{f:'m',t:'tr'},{f:'l',t:'cu'},{f:'l',t:'gd'},{f:'m',t:'pg'},{f:'tr',t:'or'}].forEach(e=>{const a=bp[e.f],b=bp[e.t];const my=(a.bot+b.top)/2;eg.appendChild(svgEl('path',{d:'M'+a.cx+' '+a.bot+' L'+a.cx+' '+my+' L'+b.cx+' '+my+' L'+b.cx+' '+b.top,fill:'none',stroke:'#5c6bc0','stroke-width':'1.5','stroke-dasharray':'6,4',opacity:'0.5'}));});
+  svg.appendChild(eg);svg.appendChild(ng);container.appendChild(svg);
+  const kpi=document.createElement('div');kpi.className='kpi-bar';[{v:'99.9%',l:'Estabilidad',c:'#4caf50'},{v:'8',l:'Integraciones',c:'#ff9800'},{v:'5',l:'Entregables',c:'#42a5f5'}].forEach(k=>{const d=document.createElement('div');d.className='kpi-card';d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';kpi.appendChild(d);});container.appendChild(kpi);
 }
 
-/* --------------------------------------------------------------
-   TAB 3: ROADMAP + RUTA CRITICA — Gantt SVG + HTML Cards
-   5 meses (Abril-Agosto), 20 semanas
-   -------------------------------------------------------------- */
 function initRoadmap(){
-  const container=document.getElementById('roadmap-container');
-  container.style.overflowY='auto';
-  const W=container.clientWidth||1200;
-  const ganttH=580;
+  const container=document.getElementById('roadmap-container');container.style.overflowY='auto';
+  const W=container.clientWidth||1200,ganttH=480;
   const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+ganttH,width:W,height:ganttH,style:'display:block'});
-
-  const mL=140,mR=30,mT=70;
-  const chartW=W-mL-mR;
-  const weeks=20,weekW=chartW/weeks;
-  const months=[{name:'Abril',w:4},{name:'Mayo',w:4},{name:'Junio',w:4},{name:'Julio',w:4},{name:'Agosto',w:4}];
-
-  /* Title */
-  addText(svg,mL,22,'RoadMap \u2014 Portal Intermediarios',{fill:'#fff',size:18,weight:'700',anchor:'start'});
-
-  /* Header */
-  svg.appendChild(svgEl('rect',{x:0,y:mT-30,width:mL,height:24,rx:4,fill:'#555',opacity:'0.5'}));
-  addText(svg,mL/2,mT-18,'Entregable',{fill:'#fff',size:10,weight:'600'});
-
-  /* Month + week headers */
-  let wx=0;
-  months.forEach(m=>{
-    const x=mL+wx*weekW;
-    svg.appendChild(svgEl('rect',{x,y:mT-30,width:m.w*weekW,height:24,fill:'#111940',rx:4}));
-    addText(svg,x+m.w*weekW/2,mT-18,m.name,{fill:'#90caf9',size:12,weight:'700'});
-    for(let i=0;i<m.w;i++){
-      const lx=mL+(wx+i)*weekW;
-      addText(svg,lx+weekW/2,mT-2,'S'+(wx+i+1),{fill:'#667',size:9,weight:'400'});
-    }
-    wx+=m.w;
-  });
-
-  /* Grid lines */
-  for(let i=0;i<=weeks;i++){
-    const lx=mL+i*weekW;
-    svg.appendChild(svgEl('line',{x1:lx,y1:mT+6,x2:lx,y2:ganttH-10,stroke:'#1a2550','stroke-width':'0.5'}));
-  }
-
-  /* Task bar helper */
-  const barH=22,gap=3;
-  function bar(y,s,e,color,label,sub,critical){
-    const x=mL+(s-1)*weekW+2,w=(e-s)*weekW-4;
-    const h=sub?16:barH;
-    const r=svgEl('rect',{x,y,width:w,height:h,rx:4,fill:color,opacity:critical?'1':'0.85',cursor:'pointer'});
-    if(critical){r.setAttribute('stroke','#ef5350');r.setAttribute('stroke-width','2');}
-    svg.appendChild(r);
-    const fs=sub?8:9.5;
-    if(w>40)addText(svg,x+w/2,y+h/2,label,{fill:sub?'#333':'#fff',size:fs,weight:sub?'400':'600'});
-    r.addEventListener('mousemove',ev=>showTip(ev,'<div class="tt-title">'+label+'</div><div class="tt-line">Semana '+s+' \u2013 Semana '+e+' ('+(e-s)+' sem)</div>'+(critical?'<div class="tt-line" style="color:#ef5350;font-weight:600;margin-top:4px">\u26A0 RUTA CR\u00CDTICA</div>':'')));
-    r.addEventListener('mouseleave',hideTip);
-  }
-  function milestone(y,weekPos,label){
-    const x=mL+(weekPos-0.5)*weekW,my=y+barH/2;
-    svg.appendChild(svgEl('circle',{cx:x,cy:my,r:12,fill:'#4caf50',stroke:'#fff','stroke-width':'2'}));
-    addText(svg,x,my,'\u2713',{fill:'#fff',size:10,weight:'700'});
-    addText(svg,x+18,my,label,{fill:'#4caf50',size:9,weight:'700',anchor:'start'});
-  }
-
-  /* -- ENTREGABLES 4/5 -- */
-  let ry=mT+14;
-  svg.appendChild(svgEl('rect',{x:0,y:ry-4,width:mL,height:80,fill:'#42a5f5',opacity:'0.08'}));
-  addText(svg,mL/2,ry+36,'E4/E5',{fill:'#42a5f5',size:13,weight:'800'});
-  bar(ry,1,4,'#2e7d32','Desarrollo (Saghi dep.)',false,true);
-  bar(ry,4,6,'#f9a825','QA + Testing',false,false);
-  milestone(ry,7,'Prod E4/E5');
-  bar(ry+barH+gap,7,10,'#bdbdbd','Estabilizacion',false,false);
-
-  /* -- ENTREGABLE 6 -- */
-  ry+=90;
-  svg.appendChild(svgEl('rect',{x:0,y:ry-4,width:mL,height:110,fill:'#ef5350',opacity:'0.08'}));
-  addText(svg,mL/2,ry+50,'E6',{fill:'#ef5350',size:13,weight:'800'});
-  addText(svg,mL/2,ry+65,'Gestion Humana',{fill:'#ef5350',size:9,weight:'500'});
-  bar(ry,5,9,'#e65100','Espera Saghi backends',false,true);
-  bar(ry+barH+gap,9,13,'#2e7d32','Desarrollo E6',false,true);
-  bar(ry+2*(barH+gap),13,16,'#f9a825','QA Entregable 6',false,true);
-  milestone(ry+2*(barH+gap),17,'Prod E6');
-  bar(ry+3*(barH+gap),17,20,'#bdbdbd','Estabilizacion E6',false,false);
-
-  /* -- ENTREGABLE 7 -- */
-  ry+=120;
-  svg.appendChild(svgEl('rect',{x:0,y:ry-4,width:mL,height:80,fill:'#ff9800',opacity:'0.08'}));
-  addText(svg,mL/2,ry+36,'E7',{fill:'#ff9800',size:13,weight:'800'});
-  addText(svg,mL/2,ry+51,'Cartera',{fill:'#ff9800',size:9,weight:'500'});
-  bar(ry,5,9,'#2e7d32','Desarrollo Cartera',false,false);
-  bar(ry,9,12,'#f9a825','QA + Testing',false,false);
-  milestone(ry,13,'Prod E7');
-  bar(ry+barH+gap,13,16,'#bdbdbd','Estabilizacion',false,false);
-
-  /* -- ENTREGABLE 8 -- */
-  ry+=90;
-  svg.appendChild(svgEl('rect',{x:0,y:ry-4,width:mL,height:80,fill:'#7e57c2',opacity:'0.08'}));
-  addText(svg,mL/2,ry+36,'E8',{fill:'#7e57c2',size:13,weight:'800'});
-  addText(svg,mL/2,ry+51,'Siniestros',{fill:'#7e57c2',size:9,weight:'500'});
-  bar(ry,5,9,'#2e7d32','Desarrollo Siniestros',false,false);
-  bar(ry,9,12,'#f9a825','QA + Testing',false,false);
-  milestone(ry,13,'Prod E8');
-  bar(ry+barH+gap,13,16,'#bdbdbd','Estabilizacion',false,false);
-
-  /* -- EXCELENCIA OPERATIVA -- */
-  ry+=90;
-  svg.appendChild(svgEl('rect',{x:0,y:ry-4,width:mL,height:50,fill:'#26a69a',opacity:'0.08'}));
-  addText(svg,mL/2,ry+22,'ExOp 2026',{fill:'#26a69a',size:11,weight:'800'});
-  bar(ry,1,20,'#26a69a','31 items activos \u2014 3 ecosistemas (continuo)',false,false);
-
-  /* -- TODAY marker (week 5 = May 4) -- */
-  const todayX=mL+(5-0.5)*weekW;
-  svg.appendChild(svgEl('line',{x1:todayX,y1:mT+6,x2:todayX,y2:ganttH-10,stroke:'#ef5350','stroke-width':'2.5','stroke-dasharray':'6,4'}));
-  addText(svg,todayX,ganttH-4,'Hoy (4 May)',{fill:'#ef5350',size:11,weight:'700'});
-
+  const mL=140,mT=70,chartW=W-mL-30,weeks=20,weekW=chartW/weeks;
+  addText(svg,mL,22,'Roadmap \u2014 Abr\u2013Ago 2026',{fill:'#fff',size:16,weight:'700',anchor:'start'});
+  let wx=0;['Abril','Mayo','Junio','Julio','Agosto'].forEach(m=>{const x=mL+wx*weekW;svg.appendChild(svgEl('rect',{x,y:mT-30,width:4*weekW,height:24,fill:'#111940',rx:4}));addText(svg,x+2*weekW,mT-18,m,{fill:'#90caf9',size:12,weight:'700'});wx+=4;});
+  for(let i=0;i<=weeks;i++)svg.appendChild(svgEl('line',{x1:mL+i*weekW,y1:mT+6,x2:mL+i*weekW,y2:ganttH-10,stroke:'#1a2550','stroke-width':'0.5'}));
+  const bH=22;
+  function bar(y,s,e,color,label,crit){const x=mL+(s-1)*weekW+2,w=(e-s)*weekW-4;const r=svgEl('rect',{x,y,width:w,height:bH,rx:4,fill:color,opacity:crit?'1':'0.85',cursor:'pointer'});if(crit){r.setAttribute('stroke','#ef5350');r.setAttribute('stroke-width','2');}svg.appendChild(r);if(w>40)addText(svg,x+w/2,y+bH/2,label,{fill:'#fff',size:9.5,weight:'600'});r.addEventListener('mousemove',ev=>showTip(ev,'<div class="tt-title">'+label+'</div><div class="tt-line">Sem '+s+'\u2013'+e+'</div>'+(crit?'<div style="color:#ef5350;font-weight:600">\u26A0 RUTA CR\u00cdTICA</div>':'')));r.addEventListener('mouseleave',hideTip);}
+  function ms(y,wk,l){const x=mL+(wk-0.5)*weekW;svg.appendChild(svgEl('circle',{cx:x,cy:y+bH/2,r:10,fill:'#4caf50',stroke:'#fff','stroke-width':'2'}));addText(svg,x+14,y+bH/2,l,{fill:'#4caf50',size:9,weight:'700',anchor:'start'});}
+  let ry=mT+14;addText(svg,mL/2,ry+12,'E4/E5',{fill:'#42a5f5',size:12,weight:'800'});bar(ry,1,4,'#2e7d32','Desarrollo',true);bar(ry,4,6,'#f9a825','QA',false);ms(ry,7,'Prod');
+  ry+=55;addText(svg,mL/2,ry+35,'E6',{fill:'#ef5350',size:12,weight:'800'});bar(ry,5,9,'#e65100','Espera Saghi',true);bar(ry+bH+3,9,13,'#2e7d32','Desarrollo',true);bar(ry+2*(bH+3),13,16,'#f9a825','QA',true);ms(ry+2*(bH+3),17,'Prod');
+  ry+=90;addText(svg,mL/2,ry+12,'E7/E8',{fill:'#ff9800',size:12,weight:'800'});bar(ry,5,9,'#2e7d32','Desarrollo',false);bar(ry,9,12,'#f9a825','QA',false);ms(ry,13,'Prod');
+  ry+=50;addText(svg,mL/2,ry+12,'ExOp',{fill:'#26a69a',size:11,weight:'800'});bar(ry,1,20,'#26a69a','31 items continuo',false);
+  const tx=mL+(5-0.5)*weekW;svg.appendChild(svgEl('line',{x1:tx,y1:mT+6,x2:tx,y2:ganttH-10,stroke:'#ef5350','stroke-width':'2.5','stroke-dasharray':'6,4'}));addText(svg,tx,ganttH-4,'Hoy',{fill:'#ef5350',size:11,weight:'700'});
   container.appendChild(svg);
-
-  /* -- LEGEND (compact inline) -- */
-  const legRow=document.createElement('div');
-  legRow.style.cssText='display:flex;gap:14px;padding:8px 20px;flex-wrap:wrap;align-items:center;background:rgba(10,15,42,0.5);';
-  [{c:'#2e7d32',l:'Desarrollo'},{c:'#f9a825',l:'Pruebas/QA'},{c:'#e65100',l:'Definicion/Espera'},{c:'#bdbdbd',l:'Estabilizacion'},{c:'#26a69a',l:'Excelencia Op.'},{c:'#4caf50',l:'Produccion'},{c:'#ef5350',l:'Ruta Critica'}].forEach(it=>{
-    const el=document.createElement('div');
-    el.style.cssText='display:flex;align-items:center;gap:5px;font-size:11px;color:#8899bb;';
-    el.innerHTML='<span style="width:10px;height:10px;border-radius:3px;flex-shrink:0;background:'+it.c+';"></span>'+it.l;
-    legRow.appendChild(el);
-  });
-  container.appendChild(legRow);
-
-  /* --------------------------------------------------------------
-     RUTA CRITICA — HTML card layout (below SVG)
-     -------------------------------------------------------------- */
-  const cpSection=document.createElement('div');
-  cpSection.style.cssText='padding:24px 28px 40px;max-width:960px;margin:0 auto;';
-
-  const cpTitle=document.createElement('div');
-  cpTitle.style.cssText='display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid rgba(239,83,80,0.3);';
-  cpTitle.innerHTML='<span style="font-size:28px;">\u26A0\uFE0F</span><span style="font-size:20px;font-weight:700;color:#ef5350;letter-spacing:0.5px;">AN\u00C1LISIS DE RUTA CR\u00CDTICA</span><span style="font-size:13px;color:#7a8bb5;margin-left:auto;">Dependencia cr\u00EDtica: <strong style=color:#ef5350>Saghi (Junio)</strong></span>';
-  cpSection.appendChild(cpTitle);
-
-  const cpCards=[
-    {icon:'\u{1F6D1}',color:'#ef5350',title:'Backend Saghi (ALTO)',desc:'Dependencia alta que hace parte de la ruta cr\u00EDtica para los Entregables 4, 5 y 6. Sin backend de Gesti\u00F3n Humana, no se puede desarrollar Calendarios, Certificados, Perfil ni Pagos/Comisiones. Fecha l\u00EDmite: Junio 2026.',tag:'ALTO'},
-    {icon:'\u{1F4A5}',color:'#ef5350',title:'Legacy Oracle & FileNet (ALTO)',desc:'Tronador (Oracle) y FileNet generan latencia elevada y errores HTTP 500 forzados. Afectan estabilidad de integraciones. Requieren circuit breakers y monitoreo Datadog.',tag:'ALTO'},
-    {icon:'\u{1F517}',color:'#ffa726',title:'Integraciones paralelas (ALTO)',desc:'3 integraciones nuevas simult\u00E1neas: Carpeta \u00DAnica, Gestor Documental, Gestor de Flujos.',tag:'ALTO'},
-    {icon:'\u{1F4C5}',color:'#7e57c2',title:'Secuencia cr\u00EDtica: Saghi Jun \u2192 Dev E6 \u2192 QA Jul \u2192 Prod Ago',desc:'La cadena Saghi (Junio) \u2192 Desarrollo E6 (Jun-Jul) \u2192 QA (Julio) \u2192 Producci\u00F3n (Agosto) no tiene holgura. Cualquier retraso de Saghi compromete toda la ventana.',tag:'CADENA'}
-  ];
-
-  const cpGrid=document.createElement('div');
-  cpGrid.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:14px;';
-
-  cpCards.forEach(c=>{
-    const card=document.createElement('div');
-    card.style.cssText='background:rgba(255,255,255,0.03);border:1px solid #1a2550;border-left:4px solid '+c.color+';border-radius:8px;padding:16px 18px;';
-    card.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><span style="font-size:22px;">'+c.icon+'</span><span style="font-size:15px;font-weight:700;color:#e0e8f0;">'+c.title+'</span><span style="margin-left:auto;background:'+c.color+';color:#fff;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;">'+c.tag+'</span></div><p style="font-size:13px;color:#a0b0c8;line-height:1.6;margin:0;">'+c.desc+'</p>';
-    cpGrid.appendChild(card);
-  });
-  cpSection.appendChild(cpGrid);
-
-  /* Summary bar */
-  const sumBar=document.createElement('div');
-  sumBar.style.cssText='display:flex;gap:14px;margin-top:18px;flex-wrap:wrap;';
-  [{v:'0 sem',l:'Holgura E6',c:'#ef5350'},{v:'1',l:'Bloqueante externo',c:'#ef5350'},{v:'3',l:'Integraciones nuevas',c:'#ffa726'},{v:'5',l:'Entregables activos',c:'#42a5f5'},{v:'20 sem',l:'Ventana total',c:'#4caf50'}].forEach(k=>{
-    const d=document.createElement('div');
-    d.style.cssText='flex:1;min-width:120px;background:rgba('+(k.c==='#ef5350'?'239,83,80':k.c==='#ffa726'?'255,167,38':k.c==='#42a5f5'?'66,165,245':'76,175,80')+',0.08);border:1px solid rgba('+(k.c==='#ef5350'?'239,83,80':k.c==='#ffa726'?'255,167,38':k.c==='#42a5f5'?'66,165,245':'76,175,80')+',0.3);border-radius:8px;padding:12px 16px;text-align:center;';
-    d.innerHTML='<div style="color:'+k.c+';font-weight:700;font-size:24px;">'+k.v+'</div><div style="color:#7a8bb5;font-size:11px;margin-top:2px;">'+k.l+'</div>';
-    sumBar.appendChild(d);
-  });
-  cpSection.appendChild(sumBar);
-
-  container.appendChild(cpSection);
-
-  /* KPI bar (top right) */
-  const kpiBar=document.createElement('div');kpiBar.className='kpi-bar';
-  [{v:'May',l:'Prod E4/E5',c:'#42a5f5'},{v:'Jun',l:'Saghi Entrega',c:'#ef5350'},{v:'Jul',l:'QA E6',c:'#ffa726'},{v:'Ago',l:'Prod E6',c:'#4caf50'}].forEach(k=>{
-    const d=document.createElement('div');d.className='kpi-card';
-    d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';
-    kpiBar.appendChild(d);
-  });
-  container.appendChild(kpiBar);
 }
 </script>
 </body>
