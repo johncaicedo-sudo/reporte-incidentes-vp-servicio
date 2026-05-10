@@ -257,13 +257,13 @@ function initDependencias(){
 
   /* N1: Entregables (medium circles, colored, around center) */
   const n1=[
-    {id:'e45',label:'E4/E5',sub:'Empleados',color:'#ef5350',angle:-50},
-    {id:'e6',label:'E6',sub:'Gesti\u00f3n Humana',color:'#ff9800',angle:-10},
-    {id:'e7',label:'E7',sub:'Cartera',color:'#7e57c2',angle:30},
-    {id:'e8',label:'E8',sub:'Siniestros',color:'#26a69a',angle:75},
-    {id:'exop',label:'ExOp',sub:'Excelencia Op.',color:'#ab47bc',angle:140}
+    {id:'e45',label:'E4/E5',sub:'Empleados',color:'#ef5350',angle:-70},
+    {id:'e6',label:'E6',sub:'Gesti\u00f3n Humana',color:'#ff9800',angle:-25},
+    {id:'e7',label:'E7',sub:'Cartera',color:'#7e57c2',angle:20},
+    {id:'e8',label:'E8',sub:'Siniestros',color:'#26a69a',angle:65},
+    {id:'exop',label:'ExOp',sub:'Excelencia Op.',color:'#ab47bc',angle:130}
   ];
-  const r1=160;
+  const r1=150;
   const n1Pos={};
   n1.forEach(n=>{
     const rad=(n.angle-90)*Math.PI/180;
@@ -280,29 +280,29 @@ function initDependencias(){
 
   /* N2: Capacidades (small circles connected to N1) */
   const n2=[
-    /* E4/E5 capacidades */
-    {parent:'e45',label:'Creaci\u00f3n Empleados',angle:-90,color:'#ef5350'},
-    {parent:'e45',label:'Eliminaci\u00f3n Empleados',angle:-50,color:'#ef5350'},
-    {parent:'e45',label:'Actualizaci\u00f3n Datos',angle:-130,color:'#ef5350'},
-    /* E6 capacidades */
-    {parent:'e6',label:'Calendarios',angle:-50,color:'#ff9800'},
-    {parent:'e6',label:'Certificados',angle:-20,color:'#ff9800'},
-    {parent:'e6',label:'Pagos/Comisiones',angle:10,color:'#ff9800'},
-    {parent:'e6',label:'Planilla PILA',angle:40,color:'#ff9800'},
-    /* E7 capacidades */
-    {parent:'e7',label:'Facturaci\u00f3n',angle:10,color:'#7e57c2'},
-    {parent:'e7',label:'Pre-rastrillo',angle:40,color:'#7e57c2'},
-    {parent:'e7',label:'Conservaci\u00f3n',angle:70,color:'#7e57c2'},
-    /* E8 capacidades */
-    {parent:'e8',label:'Siniestros Autos',angle:60,color:'#26a69a'},
-    {parent:'e8',label:'Siniestros Vida',angle:100,color:'#26a69a'},
-    /* ExOp capacidades */
-    {parent:'exop',label:'Carpeta \u00danica',angle:120,color:'#ab47bc'},
-    {parent:'exop',label:'Gestor Documental',angle:150,color:'#ab47bc'},
-    {parent:'exop',label:'Gestor de Flujos',angle:180,color:'#ab47bc'},
-    {parent:'exop',label:'M\u00f3dulo P\u00f3lizas',angle:210,color:'#ab47bc'}
+    /* E4/E5 capacidades — spread toward upper-left */
+    {parent:'e45',label:'Creaci\u00f3n Empleados',angle:-120,color:'#ef5350'},
+    {parent:'e45',label:'Eliminaci\u00f3n Empleados',angle:-80,color:'#ef5350'},
+    {parent:'e45',label:'Actualizaci\u00f3n Datos',angle:-160,color:'#ef5350'},
+    /* E6 capacidades — spread toward top */
+    {parent:'e6',label:'Calendarios',angle:-80,color:'#ff9800'},
+    {parent:'e6',label:'Certificados',angle:-50,color:'#ff9800'},
+    {parent:'e6',label:'Pagos/Comisiones',angle:-20,color:'#ff9800'},
+    {parent:'e6',label:'Planilla PILA',angle:10,color:'#ff9800'},
+    /* E7 capacidades — spread toward right */
+    {parent:'e7',label:'Facturaci\u00f3n',angle:-20,color:'#7e57c2'},
+    {parent:'e7',label:'Pre-rastrillo',angle:15,color:'#7e57c2'},
+    {parent:'e7',label:'Conservaci\u00f3n',angle:50,color:'#7e57c2'},
+    /* E8 capacidades — spread toward right */
+    {parent:'e8',label:'Siniestros Autos',angle:30,color:'#26a69a'},
+    {parent:'e8',label:'Siniestros Vida',angle:70,color:'#26a69a'},
+    /* ExOp capacidades — spread toward bottom */
+    {parent:'exop',label:'Carpeta \u00danica',angle:80,color:'#ab47bc'},
+    {parent:'exop',label:'Gestor Documental',angle:115,color:'#ab47bc'},
+    {parent:'exop',label:'Gestor de Flujos',angle:150,color:'#ab47bc'},
+    {parent:'exop',label:'M\u00f3dulo P\u00f3lizas',angle:185,color:'#ab47bc'}
   ];
-  const r2=90;
+  const r2=100;
   const n2Pos={};
   n2.forEach((n,i)=>{
     const p=n1Pos[n.parent];if(!p)return;
@@ -359,15 +359,15 @@ function initDependencias(){
     if(n.label.indexOf('Saghi')>=0)saghiNodes.push({x:nx,y:ny});
   });
 
-  /* SAGHI — Big blocker box (N3 special node) connected to all Saghi dependencies */
-  const saghiX=cx-200,saghiY=cy+220;
+  /* SAGHI — Big blocker box (N3 special node) positioned BEHIND E4/E5 and E6 */
+  const saghiX=cx-340,saghiY=cy-60;
   const bw=100,bh=50;
   svg.appendChild(svgEl('rect',{x:saghiX-bw/2,y:saghiY-bh/2,width:bw,height:bh,rx:6,fill:'#1a0a0a',stroke:'#ef5350','stroke-width':'3'}));
   addText(svg,saghiX,saghiY-8,'Saghi',{fill:'#ef5350',size:14,weight:'700'});
   addText(svg,saghiX,saghiY+10,'Bloqueador',{fill:'#ef5350',size:10,weight:'500'});
   /* Red lines from Saghi box to each Saghi N3 node */
   saghiNodes.forEach(sn=>{
-    svg.appendChild(svgEl('line',{x1:saghiX,y1:saghiY-bh/2,x2:sn.x,y2:sn.y,stroke:'#ef5350','stroke-width':'2','stroke-opacity':'0.6'}));
+    svg.appendChild(svgEl('line',{x1:saghiX+bw/2,y1:saghiY,x2:sn.x,y2:sn.y,stroke:'#ef5350','stroke-width':'2','stroke-opacity':'0.6'}));
   });
 
   container.appendChild(svg);
