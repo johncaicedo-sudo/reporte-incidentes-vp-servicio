@@ -257,12 +257,11 @@ function initDependencias(){
 
   /* N1: Entregables (medium circles, colored, around center) */
   const n1=[
-    {id:'e45',label:'E4/E5',sub:'Empleados',color:'#ef5350',angle:-60},
-    {id:'e6',label:'E6',sub:'Gesti\u00f3n Humana',color:'#ff9800',angle:-20},
+    {id:'e45',label:'E4/E5',sub:'Empleados',color:'#ef5350',angle:-50},
+    {id:'e6',label:'E6',sub:'Gesti\u00f3n Humana',color:'#ff9800',angle:-10},
     {id:'e7',label:'E7',sub:'Cartera',color:'#7e57c2',angle:30},
-    {id:'e8',label:'E8',sub:'Siniestros',color:'#26a69a',angle:80},
-    {id:'exop',label:'ExOp',sub:'Excelencia Op.',color:'#ab47bc',angle:150},
-    {id:'saghi_e',label:'Saghi',sub:'Bloqueador',color:'#ef5350',angle:210}
+    {id:'e8',label:'E8',sub:'Siniestros',color:'#26a69a',angle:75},
+    {id:'exop',label:'ExOp',sub:'Excelencia Op.',color:'#ab47bc',angle:140}
   ];
   const r1=160;
   const n1Pos={};
@@ -319,11 +318,12 @@ function initDependencias(){
 
   /* N3: Dependencias (tiny squares/diamonds connected to N2) */
   const n3=[
-    /* Dependencias de E4/E5 */
+    /* Dependencias de E4/E5 — Saghi es backend */
     {parentIdx:0,label:'Backend Saghi',shape:'diamond',color:'#ef5350'},
-    {parentIdx:1,label:'Reglas Accionarias',shape:'square',color:'#ff9800'},
+    {parentIdx:1,label:'Backend Saghi',shape:'diamond',color:'#ef5350'},
     {parentIdx:2,label:'Saghi Perfiles',shape:'diamond',color:'#ef5350'},
-    /* Dependencias de E6 */
+    {parentIdx:1,label:'Reglas Accionarias',shape:'square',color:'#ff9800'},
+    /* Dependencias de E6 — Saghi es backend */
     {parentIdx:3,label:'Equipo Servicio',shape:'square',color:'#4caf50'},
     {parentIdx:4,label:'Reintento Descarga',shape:'square',color:'#ff9800'},
     {parentIdx:5,label:'Backend Saghi',shape:'diamond',color:'#ef5350'},
@@ -338,6 +338,7 @@ function initDependencias(){
     {parentIdx:15,label:'Oracle Tronador',shape:'diamond',color:'#ef5350'}
   ];
   const r3=55;
+  const saghiNodes=[];/* Track Saghi N3 positions for the big Saghi box */
   n3.forEach(n=>{
     const p=n2Pos[n.parentIdx];if(!p)return;
     /* Position outward from parent */
@@ -355,6 +356,18 @@ function initDependencias(){
       svg.appendChild(svgEl('rect',{x:nx-7,y:ny-7,width:14,height:14,rx:2,fill:'#0d1230',stroke:n.color,'stroke-width':'1.5'}));
     }
     addText(svg,nx,ny+18,n.label,{fill:'#667799',size:7,weight:'400'});
+    if(n.label.indexOf('Saghi')>=0)saghiNodes.push({x:nx,y:ny});
+  });
+
+  /* SAGHI — Big blocker box (N3 special node) connected to all Saghi dependencies */
+  const saghiX=cx-200,saghiY=cy+220;
+  const bw=100,bh=50;
+  svg.appendChild(svgEl('rect',{x:saghiX-bw/2,y:saghiY-bh/2,width:bw,height:bh,rx:6,fill:'#1a0a0a',stroke:'#ef5350','stroke-width':'3'}));
+  addText(svg,saghiX,saghiY-8,'Saghi',{fill:'#ef5350',size:14,weight:'700'});
+  addText(svg,saghiX,saghiY+10,'Bloqueador',{fill:'#ef5350',size:10,weight:'500'});
+  /* Red lines from Saghi box to each Saghi N3 node */
+  saghiNodes.forEach(sn=>{
+    svg.appendChild(svgEl('line',{x1:saghiX,y1:saghiY-bh/2,x2:sn.x,y2:sn.y,stroke:'#ef5350','stroke-width':'2','stroke-opacity':'0.6'}));
   });
 
   container.appendChild(svg);
