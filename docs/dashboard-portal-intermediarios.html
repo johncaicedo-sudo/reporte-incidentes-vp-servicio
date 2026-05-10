@@ -359,15 +359,16 @@ function initDependencias(){
     if(n.label.indexOf('Saghi')>=0)saghiNodes.push({x:nx,y:ny});
   });
 
-  /* SAGHI — Big blocker box (N3 special node) positioned BEHIND E4/E5 and E6 */
-  const saghiX=cx-340,saghiY=cy-60;
-  const bw=100,bh=50;
-  svg.appendChild(svgEl('rect',{x:saghiX-bw/2,y:saghiY-bh/2,width:bw,height:bh,rx:6,fill:'#1a0a0a',stroke:'#ef5350','stroke-width':'3'}));
-  addText(svg,saghiX,saghiY-8,'Saghi',{fill:'#ef5350',size:14,weight:'700'});
-  addText(svg,saghiX,saghiY+10,'Bloqueador',{fill:'#ef5350',size:10,weight:'500'});
-  /* Red lines from Saghi box to each Saghi N3 node */
+  /* SAGHI — Big blocker circle (like reference image) positioned upper-left behind E4/E5 and E6 */
+  const saghiX=120,saghiY=120;
+  const saghiR=45;
+  svg.appendChild(svgEl('circle',{cx:saghiX,cy:saghiY,r:saghiR+10,fill:'#ef5350',opacity:'0.2'}));
+  svg.appendChild(svgEl('circle',{cx:saghiX,cy:saghiY,r:saghiR,fill:'#ef5350',opacity:'0.85'}));
+  addText(svg,saghiX,saghiY-8,'Saghi',{fill:'#fff',size:14,weight:'700'});
+  addText(svg,saghiX,saghiY+10,'Bloqueador',{fill:'rgba(255,255,255,0.7)',size:10,weight:'500'});
+  /* Red lines from Saghi circle to each Saghi N3 node */
   saghiNodes.forEach(sn=>{
-    svg.appendChild(svgEl('line',{x1:saghiX+bw/2,y1:saghiY,x2:sn.x,y2:sn.y,stroke:'#ef5350','stroke-width':'2','stroke-opacity':'0.6'}));
+    svg.appendChild(svgEl('line',{x1:saghiX+saghiR,y1:saghiY+saghiR*0.5,x2:sn.x,y2:sn.y,stroke:'#ef5350','stroke-width':'2','stroke-opacity':'0.6'}));
   });
 
   container.appendChild(svg);
