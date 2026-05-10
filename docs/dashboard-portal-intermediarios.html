@@ -243,65 +243,87 @@ function initDependencias(){
   const W=container.clientWidth||1200,H=container.clientHeight||700;
   const svg=svgEl('svg',{viewBox:'0 0 '+W+' '+H,width:W,height:H});
   const cx=W/2,cy=H/2;
+
+  /* Grid background */
+  const gridG=svgEl('g',{opacity:'0.08'});
+  for(let i=0;i<W;i+=60)gridG.appendChild(svgEl('line',{x1:i,y1:0,x2:i,y2:H,stroke:'#fff','stroke-width':'0.5'}));
+  for(let i=0;i<H;i+=60)gridG.appendChild(svgEl('line',{x1:0,y1:i,x2:W,y2:i,stroke:'#fff','stroke-width':'0.5'}));
+  svg.appendChild(gridG);
+
+  /* Defs: arrow marker */
   const defs=svgEl('defs',{});
-  defs.innerHTML='<filter id="glowD"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><radialGradient id="coreGrad"><stop offset="0%" stop-color="#64b5f6"/><stop offset="100%" stop-color="#1565c0"/></radialGradient>';
+  defs.innerHTML='<marker id="arrowD" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#90a4ae"/></marker><marker id="arrowR" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ef5350"/></marker>';
   svg.appendChild(defs);
-  svg.appendChild(svgEl('rect',{x:20,y:20,width:W-40,height:H-40,rx:0,fill:'none',stroke:'#ef5350','stroke-width':'2.5','stroke-dasharray':'8,4'}));
-  svg.appendChild(svgEl('circle',{cx:cx,cy:cy,r:60,fill:'url(#coreGrad)',filter:'url(#glowD)'}));
-  addText(svg,cx,cy-8,'Portal',{fill:'#fff',size:13,weight:'700'});
-  addText(svg,cx,cy+10,'Intermediarios',{fill:'#fff',size:11,weight:'500'});
-  const cats={entregable:{color:'#4caf50'},bloqueador:{color:'#ef5350'},integracion:{color:'#ff9800'},legacy:{color:'#78909c'},equipo:{color:'#ab47bc'}};
+
+  /* Node definitions — star layout like reference image */
   const nodes=[
-    {id:'saghi',label:'Backend Saghi',cat:'bloqueador',desc:'Bloqueador E4/E5/E6. Equipo saturado.',ring:1,angle:0},
-    {id:'e45',label:'E4/E5 Empleados',cat:'entregable',desc:'Creaci\u00f3n/Eliminaci\u00f3n Empleados + Datos agencias.',ring:1,angle:45},
-    {id:'e6',label:'E6 Gesti\u00f3n Humana',cat:'entregable',desc:'Mi Cuenta: Calendarios, Certificados, Pagos, PILA.',ring:1,angle:90},
-    {id:'e7',label:'E7 Cartera',cat:'entregable',desc:'Facturaci\u00f3n, pre-rastrillo y conservaci\u00f3n.',ring:1,angle:135},
-    {id:'e8',label:'E8 Siniestros',cat:'entregable',desc:'Consulta Siniestros Autos y Vida.',ring:1,angle:180},
-    {id:'oracle',label:'Oracle (Tronador)',cat:'legacy',desc:'Core p\u00f3lizas On-Premise. Errores 500.',ring:1,angle:225},
-    {id:'filenet',label:'FileNet',cat:'legacy',desc:'Gesti\u00f3n documental legacy. Latencia elevada.',ring:1,angle:270},
-    {id:'precobros',label:'Microfront Precobros',cat:'bloqueador',desc:'Bloqueado. Certificaci\u00f3n visual pendiente.',ring:1,angle:315},
-    {id:'carpeta',label:'Carpeta \u00danica',cat:'integracion',desc:'Nueva integraci\u00f3n documental unificada.',ring:2,angle:240},
-    {id:'gestor_doc',label:'Gestor Documental',cat:'integracion',desc:'Reemplazo de FileNet.',ring:2,angle:260},
-    {id:'gestor_flujos',label:'Gestor de Flujos',cat:'integracion',desc:'Orquestaci\u00f3n de procesos.',ring:2,angle:280},
-    {id:'fca',label:'FCA',cat:'integracion',desc:'Facturaci\u00f3n y Cartera para E7.',ring:2,angle:155},
-    {id:'calendarios',label:'Calendarios',cat:'entregable',desc:'Admin anual por equipo Servicio.',ring:2,angle:70},
-    {id:'certificados',label:'Certificados',cat:'entregable',desc:'Idoneidad, Vinculaci\u00f3n, Comisiones, Tributarios.',ring:2,angle:85},
-    {id:'pagos',label:'Pagos y Comisiones',cat:'entregable',desc:'Preliquidaci\u00f3n Excel. Bloqueado por Saghi.',ring:2,angle:100},
-    {id:'pila',label:'Planilla PILA',cat:'entregable',desc:'40% base m\u00ednima cotizaci\u00f3n.',ring:2,angle:115},
-    {id:'exop',label:'Excelencia Op. (31)',cat:'equipo',desc:'31 \u00edtems en 3 ecosistemas.',ring:2,angle:0},
-    {id:'cloud',label:'Equipo Cloud',cat:'equipo',desc:'Apoyo certificaci\u00f3n Precobros.',ring:2,angle:330},
-    {id:'eq_saghi',label:'Equipo Saghi',cat:'equipo',desc:'Luz Adriana, Ruby, Misael, Andrea.',ring:2,angle:20}
+    {id:'portal',label:'Portal de\nIntermediarios',x:cx,y:cy,r:70,main:true},
+    {id:'e45',label:'Creaci\u00f3n y Eliminaci\u00f3n\nde Empleados\n(Entregables 4 y 5)',x:cx-220,y:cy-200,r:55},
+    {id:'e6',label:'Migraci\u00f3n de Gesti\u00f3n\nHumana\n(Entregable 6)',x:cx+60,y:cy-260,r:55},
+    {id:'e7',label:'Gesti\u00f3n de Cartera\nEntregable 7',x:cx+300,y:cy-120,r:50},
+    {id:'e8',label:'Consulta de Siniestros\nEntregable 8',x:cx+240,y:cy+200,r:50},
+    {id:'exop',label:'Excelencia Operativa',x:cx-160,y:cy+180,r:60},
+    {id:'cuc',label:'CUC\nGestor\nDocumental',x:cx-400,y:cy+140,r:45},
+    {id:'gestor',label:'Gestor de\nFlujos\nFilenet / Bizagi',x:cx-260,y:cy+320,r:45},
+    {id:'saghi',label:'Backend Saghi\n(Bloqueador)',x:cx-380,y:cy-80,r:45,bloqueador:true},
+    {id:'oracle',label:'Oracle Legacy\n(Tronador)',x:cx+360,y:cy+60,r:42,legacy:true},
+    {id:'filenet',label:'FileNet\n(Legacy)',x:cx-60,y:cy+300,r:40,legacy:true}
   ];
+
+  /* Edges with arrows */
   const edges=[
-    {from:null,to:'saghi',crit:true},{from:null,to:'e45'},{from:null,to:'e6'},{from:null,to:'e7'},{from:null,to:'e8'},
-    {from:null,to:'oracle'},{from:null,to:'filenet'},{from:null,to:'precobros'},
-    {from:'saghi',to:'e45',crit:true},{from:'saghi',to:'pagos',crit:true},
-    {from:'e6',to:'calendarios'},{from:'e6',to:'certificados'},{from:'e6',to:'pagos'},{from:'e6',to:'pila'},
-    {from:'e7',to:'fca'},{from:'filenet',to:'carpeta'},{from:'filenet',to:'gestor_doc'},{from:'filenet',to:'gestor_flujos'},
-    {from:'precobros',to:'cloud'},{from:'saghi',to:'eq_saghi',crit:true}
+    {from:'portal',to:'e45'},{from:'portal',to:'e6'},{from:'portal',to:'e7'},{from:'portal',to:'e8'},{from:'portal',to:'exop'},
+    {from:'exop',to:'cuc'},{from:'exop',to:'gestor'},
+    {from:'saghi',to:'e45',crit:true},{from:'saghi',to:'e6',crit:true},
+    {from:'portal',to:'saghi',crit:true},
+    {from:'oracle',to:'portal',crit:true},{from:'filenet',to:'exop'}
   ];
-  const ring1R=180,ring2R=300,positions={};
-  nodes.forEach(n=>{const r=n.ring===1?ring1R:ring2R;const rad=(n.angle-90)*Math.PI/180;positions[n.id]={x:cx+r*Math.cos(rad),y:cy+r*Math.sin(rad)};});
+
+  /* Draw edges */
   const edgesG=svgEl('g',{});
-  edges.forEach(e=>{const fp=e.from?positions[e.from]:{x:cx,y:cy};const tp=positions[e.to];if(!tp)return;const l=svgEl('line',{x1:fp.x,y1:fp.y,x2:tp.x,y2:tp.y,stroke:e.crit?'#ef5350':'#3a4a80','stroke-width':e.crit?'2.5':'1.2','stroke-opacity':e.crit?'0.8':'0.4'});if(!e.crit)l.setAttribute('stroke-dasharray','4,3');edgesG.appendChild(l);});
+  edges.forEach(e=>{
+    const a=nodes.find(n=>n.id===e.from),b=nodes.find(n=>n.id===e.to);
+    if(!a||!b)return;
+    const dx=b.x-a.x,dy=b.y-a.y,dist=Math.sqrt(dx*dx+dy*dy);
+    const ux=dx/dist,uy=dy/dist;
+    const x1=a.x+ux*(a.r+2),y1=a.y+uy*(a.r+2);
+    const x2=b.x-ux*(b.r+12),y2=b.y-uy*(b.r+12);
+    const line=svgEl('line',{x1,y1,x2,y2,stroke:e.crit?'#ef5350':'#90a4ae','stroke-width':e.crit?'2.5':'1.8','marker-end':e.crit?'url(#arrowR)':'url(#arrowD)'});
+    edgesG.appendChild(line);
+  });
   svg.appendChild(edgesG);
+
+  /* Draw nodes */
   const nodesG=svgEl('g',{});
-  nodes.forEach(n=>{const pos=positions[n.id];const cat=cats[n.cat];const g=svgEl('g',{cursor:'pointer'});
-    if(n.cat==='bloqueador'){const s=22;g.appendChild(svgEl('polygon',{points:pos.x+','+(pos.y-s)+' '+(pos.x+s)+','+pos.y+' '+pos.x+','+(pos.y+s)+' '+(pos.x-s)+','+pos.y,fill:cat.color,stroke:'#b71c1c','stroke-width':'2',filter:'url(#glowD)'}));}
-    else if(n.cat==='legacy'){g.appendChild(svgEl('circle',{cx:pos.x,cy:pos.y,r:18,fill:cat.color,stroke:'#455a64','stroke-width':'2'}));}
-    else if(n.cat==='integracion'){g.appendChild(svgEl('circle',{cx:pos.x,cy:pos.y,r:16,fill:'none',stroke:cat.color,'stroke-width':'2.5','stroke-dasharray':'4,2'}));g.appendChild(svgEl('circle',{cx:pos.x,cy:pos.y,r:8,fill:cat.color}));}
-    else if(n.cat==='equipo'){g.appendChild(svgEl('rect',{x:pos.x-16,y:pos.y-16,width:32,height:32,rx:6,fill:cat.color,stroke:'#6a1b9a','stroke-width':'1.5'}));}
-    else{g.appendChild(svgEl('rect',{x:pos.x-18,y:pos.y-14,width:36,height:28,rx:5,fill:cat.color,stroke:'#2e7d32','stroke-width':'1.5'}));}
-    addText(g,pos.x,pos.y+28,n.label,{fill:'#c0cce0',size:9,weight:'500'});
-    g.addEventListener('mousemove',ev=>showTip(ev,'<div class="tt-title">'+n.label+'</div><div class="tt-sub">'+n.cat.toUpperCase()+'</div><div class="tt-line" style="margin-top:6px">'+n.desc+'</div>'));
-    g.addEventListener('mouseleave',hideTip);nodesG.appendChild(g);});
-  svg.appendChild(nodesG);container.appendChild(svg);
-  const kpi=document.createElement('div');kpi.className='kpi-bar';
-  [{v:'19',l:'Dependencias',c:'#42a5f5'},{v:'4',l:'Bloqueadores',c:'#ef5350'},{v:'3',l:'Integraciones',c:'#ff9800'},{v:'31',l:'ExOp Items',c:'#4caf50'}].forEach(k=>{const d=document.createElement('div');d.className='kpi-card';d.innerHTML='<div class="kpi-val" style="color:'+k.c+'">'+k.v+'</div><div class="kpi-label">'+k.l+'</div>';kpi.appendChild(d);});
-  container.appendChild(kpi);
-  const leg=document.createElement('div');leg.className='legend-bar';
-  [{c:'#4caf50',l:'Entregable'},{c:'#ff9800',l:'Integraci\u00f3n'},{c:'#78909c',l:'Legacy'},{c:'#ef5350',l:'Bloqueador'},{c:'#ab47bc',l:'Equipo'},{c:'#ef5350',l:'Ruta cr\u00edtica',dash:true}].forEach(it=>{const el=document.createElement('div');el.className='legend-item';if(it.dash)el.innerHTML='<span style="width:16px;height:2px;background:'+it.c+';flex-shrink:0"></span>'+it.l;else el.innerHTML='<span class="legend-dot" style="background:'+it.c+'"></span>'+it.l;leg.appendChild(el);});
-  container.appendChild(leg);
+  nodes.forEach(n=>{
+    const g=svgEl('g',{cursor:'pointer'});
+    const strokeColor=n.bloqueador?'#ef5350':n.legacy?'#78909c':n.main?'#42a5f6':'#90a4ae';
+    const fillColor=n.main?'#0a1440':'#0d1230';
+    const strokeW=n.main?'3':n.bloqueador?'2.5':'1.8';
+    g.appendChild(svgEl('circle',{cx:n.x,cy:n.y,r:n.r,fill:fillColor,stroke:strokeColor,'stroke-width':strokeW}));
+    /* Multi-line text */
+    const lines=n.label.split('\n');
+    const lineH=14;
+    const startY=n.y-((lines.length-1)*lineH)/2;
+    lines.forEach((line,i)=>{
+      addText(g,n.x,startY+i*lineH,line,{fill:n.bloqueador?'#ef5350':n.legacy?'#90a4ae':'#e0e8f0',size:n.main?13:11,weight:n.main?'700':'500'});
+    });
+    nodesG.appendChild(g);
+  });
+  svg.appendChild(nodesG);
+  container.appendChild(svg);
+
+  /* Title */
+  const title=document.createElement('div');
+  title.style.cssText='position:absolute;top:20px;left:28px;font-size:18px;font-weight:700;color:#fff;letter-spacing:0.3px;';
+  title.textContent='Mapa de Dependencias \u2014 Portal de Intermediarios';
+  container.appendChild(title);
+
+  /* Subtitle */
+  const sub=document.createElement('div');
+  sub.style.cssText='position:absolute;top:46px;left:28px;font-size:12px;color:#7a8bb5;';
+  sub.textContent='Nodos principales y relaciones entre entregables, integraciones y sistemas legacy';
+  container.appendChild(sub);
 }
 
 function initArquitectura(){
