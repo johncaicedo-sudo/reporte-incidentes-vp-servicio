@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Motor de Suscripción — VP TI</title>
+<title>Dashboard Motor de Suscripci&#243;n &#8212; VP TI</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -80,6 +80,8 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
   <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura TO-BE</button>
   <button class="tab-btn" onclick="switchTab('roadmap')">Roadmap</button>
   <button class="tab-btn" onclick="switchTab('dependencias')">Dependencias y Riesgos</button>
+  <button class="tab-btn" onclick="switchTab('rutacritica')">Ruta Cr&#237;tica</button>
+  <button class="tab-btn" onclick="switchTab('grafo')">Grafo Dependencias</button>
 </div>
 
 <!-- TAB 1: INFORME MAESTRO -->
@@ -387,14 +389,312 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </div>
 </div>
 
+<!-- TAB 5: RUTA CRÍTICA -->
+<div id="tab-rutacritica" class="tab-content">
+<div class="informe">
+<h1>AN&#193;LISIS DE DEPENDENCIAS Y RUTA CR&#205;TICA</h1>
+<p class="subtitle">Cruce: Roadmap &#215; Arquitectura TO-BE &#215; Dependencias de Integraci&#243;n &#8212; Mayo 2026</p>
+
+<h2>Resumen por Release</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0 28px">
+<div style="background:#0d1230;border:1px solid #1a3a70;border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#42a5f5;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">R1</span>
+    <span style="color:#42a5f5;font-weight:600">Profundizaci&#243;n</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">6 misiones</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:60;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:30;height:8px;background:#ffa726"></div>
+    <div style="flex:10;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>60%</strong> completado</div>
+    <div><span style="color:#ffa726">&#9679;</span> <strong>30%</strong> en curso</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>10%</strong> bloqueado</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Concentraci&#243;n:</strong> IA Autos+Vida estabilizada.</div>
+    <div style="color:#ffa726"><strong>Ruta cr&#237;tica:</strong> Filenet carga docs (15min&#8594;3min).</div>
+    <div><strong>Dep:</strong> Weimar.</div>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid #1a3a50;border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#ff9800;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">R2</span>
+    <span style="color:#ff9800;font-weight:600">Expansi&#243;n</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">4 misiones</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:10;height:8px;background:#4caf50;border-radius:4px 0 0 4px"></div>
+    <div style="flex:40;height:8px;background:#ffa726"></div>
+    <div style="flex:50;height:8px;background:#ef5350;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#4caf50">&#9679;</span> <strong>10%</strong> completado</div>
+    <div><span style="color:#ffa726">&#9679;</span> <strong>40%</strong> en progreso</div>
+    <div><span style="color:#ef5350">&#9679;</span> <strong>50%</strong> bloqueado</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Concentraci&#243;n:</strong> IA Salud+Generales.</div>
+    <div style="color:#ef5350"><strong>Cuello botella:</strong> Latencia Vertex AI (10-49.8s).</div>
+    <div style="color:#ffa726"><strong>Dep externa:</strong> Fasecolda sin SLA.</div>
+  </div>
+</div>
+<div style="background:#0d1230;border:1px solid #1a2a40;border-radius:10px;padding:18px 20px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="background:#ab47bc;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">R3</span>
+    <span style="color:#ab47bc;font-weight:600">Parametrizaci&#243;n</span>
+    <span style="color:#666;font-size:12px;margin-left:auto">3 misiones</span>
+  </div>
+  <div style="display:flex;gap:4px;margin-bottom:10px">
+    <div style="flex:25;height:8px;background:#ffa726;border-radius:4px 0 0 4px"></div>
+    <div style="flex:75;height:8px;background:#78909c;border-radius:0 4px 4px 0"></div>
+  </div>
+  <div style="font-size:12px;color:#c0cce0;line-height:1.8">
+    <div><span style="color:#78909c">&#9679;</span> <strong>0%</strong> completado</div>
+    <div><span style="color:#ffa726">&#9679;</span> <strong>25%</strong> planificado</div>
+    <div><span style="color:#78909c">&#9679;</span> <strong>75%</strong> pendiente</div>
+  </div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9;line-height:1.7">
+    <div><strong>Concentraci&#243;n:</strong> Torre de Reglas + API F&#233;nix.</div>
+    <div style="color:#ef5350"><strong>Mayor riesgo:</strong> Reemplazo RPA sin fallback.</div>
+    <div><strong>Cross-cloud:</strong> AWS &#8594; GCP (Vertex AI).</div>
+  </div>
+</div>
+</div>
+
+<div style="background:rgba(100,181,246,.04);border:1px solid #1a3a70;border-radius:10px;padding:18px 22px;margin-bottom:28px">
+  <div style="font-size:14px;font-weight:600;color:#64b5f6;margin-bottom:10px">Lectura ejecutiva</div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8">
+    <p>El Motor de Suscripci&#243;n tiene <strong>6 misiones</strong> activas con <strong>13 hitos</strong> en el roadmap. El <strong>Score Datadog actual es 48/70</strong>, por debajo de la meta organizacional.</p>
+    <p style="margin-top:8px"><strong style="color:#ef5350">Filenet es el componente cr&#237;tico:</strong> La carga de documentos (15 min) impacta directamente la precisi&#243;n de IA en Autos y Vida. Optimizaci&#243;n a &lt;3 min es prerequisito para R2.</p>
+    <p style="margin-top:8px"><strong style="color:#ef5350">Latencias Vertex AI:</strong> Picos de 10 a 49.8 segundos vs meta &lt;5s. Bloquea estabilizaci&#243;n de IA Salud y Generales (R2).</p>
+    <p style="margin-top:8px"><strong style="color:#ab47bc">N8N sin logs en producci&#243;n:</strong> Meta de estabilidad 99.9% no es verificable sin trazabilidad. Equipo no puede aislar errores en bots productivos.</p>
+    <p style="margin-top:8px"><strong style="color:#ffa726">Fasecolda sin SLA:</strong> API externa sin acuerdo de nivel de servicio documentado. Contribuye significativamente al score bajo de Datadog.</p>
+  </div>
+</div>
+
+<h2>Estatus Componentes Bloqueantes</h2>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Seguimiento cruzado con roadmap y arquitectura TO-BE.</p>
+
+<table class="info-table">
+<thead><tr><th>#</th><th>Componente</th><th>Acci&#243;n</th><th>&#193;rea</th><th>Estado</th><th>Responsable</th><th>Observaciones</th></tr></thead>
+<tbody>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>1</td><td style="font-weight:600">Filenet Carga Docs</td><td>Optimizaci&#243;n 15min&#8594;3min</td>
+  <td style="color:#ef5350;font-weight:600">Infraestructura/Legacy</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Cr&#237;tico</span></td>
+  <td>Weimar</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Impacta precisi&#243;n IA Autos+Vida.</td>
+</tr>
+<tr style="background:rgba(239,83,80,.04)">
+  <td>2</td><td style="font-weight:600">Vertex AI Latencia</td><td>Optimizaci&#243;n respuesta</td>
+  <td style="color:#ef5350;font-weight:600">GCP/IA</td>
+  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Cr&#237;tico</span></td>
+  <td>Equipo IA</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Picos 10-49.8s vs meta &lt;5s.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>3</td><td style="font-weight:600">N8N Logs Producci&#243;n</td><td>Habilitar trazabilidad</td>
+  <td style="color:#ffa726;font-weight:600">Infraestructura</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Equipo Infra</td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Meta 99.9% no verificable.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>4</td><td style="font-weight:600">API Fasecolda</td><td>Definir SLA</td>
+  <td style="color:#ffa726;font-weight:600">Externo</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Externo</span></td>
+  <td>Fasecolda</td>
+  <td style="font-size:12px">Sin SLA documentado. Score Datadog impactado.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>5</td><td style="font-weight:600">Environments Prod</td><td>Habilitar botones bots</td>
+  <td style="color:#ffa726;font-weight:600">Portal Intermediarios</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
+  <td>Equipo Portal</td>
+  <td style="font-size:12px">Bloquea paso bots a producci&#243;n.</td>
+</tr>
+<tr style="background:rgba(171,71,188,.04)">
+  <td>6</td><td style="font-weight:600">IA Salud</td><td>Estabilizaci&#243;n precisi&#243;n</td>
+  <td style="color:#ab47bc;font-weight:600">GCP/IA</td>
+  <td><span style="background:rgba(171,71,188,.15);color:#ab47bc;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; En progreso</span></td>
+  <td>Equipo IA</td>
+  <td style="font-size:12px">L&#237;nea m&#225;s compleja. Sin baseline a&#250;n.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="kpi-grid" style="margin-top:24px">
+  <div class="kpi-box" style="border-color:rgba(239,83,80,.4)">
+    <div class="kpi-val" style="color:#ef5350">2/6</div>
+    <div class="kpi-label">Cr&#237;ticos</div>
+  </div>
+  <div class="kpi-box" style="border-color:rgba(255,167,38,.4)">
+    <div class="kpi-val" style="color:#ffa726">2/6</div>
+    <div class="kpi-label">Pdte Bol&#237;var</div>
+  </div>
+  <div class="kpi-box" style="border-color:rgba(255,167,38,.4)">
+    <div class="kpi-val" style="color:#ffa726">1/6</div>
+    <div class="kpi-label">Pdte Externo</div>
+  </div>
+  <div class="kpi-box" style="border-color:rgba(171,71,188,.4)">
+    <div class="kpi-val" style="color:#ab47bc">1/6</div>
+    <div class="kpi-label">En progreso</div>
+  </div>
+</div>
+
+<h2>Riesgo de Latencia y Observabilidad</h2>
+<div class="risk-card" style="border-color:rgba(239,83,80,.4)">
+  <div class="risk-title" style="color:#ef5350">&#9888; Latencia Vertex AI &#8212; Impacto en R2</div>
+  <p>Picos de <strong>10 a 49.8 segundos</strong> en inferencia IA. Meta arquitect&#243;nica: &lt;5s por servicio. Bloquea estabilizaci&#243;n de IA Salud (l&#237;nea m&#225;s compleja) y Generales. Sin optimizaci&#243;n, R2 no puede completarse en plazo. Cross-cloud AWS&#8594;GCP agrega latencia de red.</p>
+</div>
+<div class="risk-card" style="border-color:rgba(255,167,38,.4)">
+  <div class="risk-title" style="color:#ffa726">&#9888; Observabilidad Incompleta &#8212; Score 48/70</div>
+  <p>N8N sin logs en producci&#243;n impide verificar meta 99.9% de estabilidad. API Fasecolda sin SLA contribuye al score bajo. Sin trazabilidad end-to-end, el equipo no puede aislar errores ni medir mejoras reales en tiempo de suscripci&#243;n.</p>
+</div>
+
+</div>
+</div>
+
+<!-- TAB 6: GRAFO DEPENDENCIAS -->
+<div id="tab-grafo" class="tab-content">
+<div class="informe">
+<h1>GRAFO DE DEPENDENCIAS</h1>
+<p class="subtitle">Visualizaci&#243;n radial: Motor de Suscripci&#243;n &#215; Dominios &#215; Componentes &#215; Estado</p>
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:10px 18px;text-align:center;flex:1;min-width:120px">
+    <div style="font-size:20px;font-weight:700;color:#64b5f6">7</div>
+    <div style="font-size:10px;color:#7a8bb5;text-transform:uppercase">Dominios</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:10px 18px;text-align:center;flex:1;min-width:120px">
+    <div style="font-size:20px;font-weight:700;color:#fff">18</div>
+    <div style="font-size:10px;color:#7a8bb5;text-transform:uppercase">Componentes</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.4);border-radius:8px;padding:10px 18px;text-align:center;flex:1;min-width:120px">
+    <div style="font-size:20px;font-weight:700;color:#ef5350">3</div>
+    <div style="font-size:10px;color:#7a8bb5;text-transform:uppercase">Ruta Cr&#237;tica</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid rgba(255,167,38,.4);border-radius:8px;padding:10px 18px;text-align:center;flex:1;min-width:120px">
+    <div style="font-size:20px;font-weight:700;color:#ffa726">4</div>
+    <div style="font-size:10px;color:#7a8bb5;text-transform:uppercase">Deps. Externas</div>
+  </div>
+</div>
+
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:#7a8bb5">
+  <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#4caf50;margin-right:4px"></span>Completado</span>
+  <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffa726;margin-right:4px"></span>En progreso</span>
+  <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef5350;margin-right:4px"></span>Cr&#237;tico</span>
+  <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#78909c;margin-right:4px"></span>Pendiente</span>
+  <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ab47bc;margin-right:4px"></span>Bloqueado</span>
+</div>
+
+<div class="svg-container" id="grafo-container" style="background:#060a1a;border:1px solid #1a2550;border-radius:12px;padding:20px;min-height:560px;position:relative;overflow:hidden"></div>
+
+</div>
+</div>
+
 <script>
-function switchTab(name) {
-  document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    const tabs = ['informe','arquitectura','roadmap','dependencias'];
-    b.classList.toggle('active', tabs[i] === name);
+const tabInited={informe:true,arquitectura:true,roadmap:true,dependencias:true,rutacritica:true,grafo:false};
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    const tabs=['informe','arquitectura','roadmap','dependencias','rutacritica','grafo'];
+    b.classList.toggle('active',tabs[i]===name);
   });
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='grafo'&&!tabInited.grafo){tabInited.grafo=true;initGrafo();}
+}
+
+function initGrafo(){
+  var container=document.getElementById('grafo-container');
+  var W=container.clientWidth||880,H=540;
+  var cx=W/2,cy=H/2;
+
+  var categories=[
+    {id:'ia',label:'IA Generativa',color:'#26a69a',critical:true,children:[
+      {label:'Vertex AI Autos',status:'done'},{label:'Vertex AI Vida',status:'done'},{label:'Vertex AI Salud',status:'critical'}
+    ]},
+    {id:'filenet',label:'Filenet',color:'#ef5350',critical:true,children:[
+      {label:'Carga Docs',status:'critical'},{label:'Gestor Casos',status:'progress'}
+    ]},
+    {id:'tronador',label:'Tronador',color:'#78909c',critical:false,children:[
+      {label:'Triggers A20/A30',status:'progress'},{label:'Depuraci\u00f3n Datos',status:'pending'}
+    ]},
+    {id:'n8n',label:'N8N Bots',color:'#ab47bc',critical:false,children:[
+      {label:'Bot Exclusiones',status:'done'},{label:'Bot Cancelaciones',status:'progress'},{label:'Bot Inclusiones',status:'pending'}
+    ]},
+    {id:'portal',label:'Portal Interm.',color:'#42a5f5',critical:false,children:[
+      {label:'Environments',status:'blocked'},{label:'Tracking Web',status:'pending'}
+    ]},
+    {id:'apis',label:'APIs Externas',color:'#ff9800',critical:true,children:[
+      {label:'Fasecolda',status:'critical'},{label:'API F\u00e9nix',status:'progress'},{label:'Cotizaciones',status:'pending'}
+    ]},
+    {id:'reglas',label:'Reglas Negocio',color:'#66bb6a',critical:false,children:[
+      {label:'Torre Reglas',status:'done'},{label:'NLP Extracci\u00f3n',status:'progress'}
+    ]}
+  ];
+
+  var statusColors={done:'#4caf50',progress:'#ffa726',critical:'#ef5350',pending:'#78909c',blocked:'#ab47bc'};
+
+  var svg='<svg width="'+W+'" height="'+H+'" xmlns="http://www.w3.org/2000/svg">';
+  svg+='<defs>';
+  svg+='<radialGradient id="centerGrad"><stop offset="0%" stop-color="#1a4a8a"/><stop offset="100%" stop-color="#0d2040"/></radialGradient>';
+  svg+='<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  svg+='</defs>';
+
+  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="52" fill="url(#centerGrad)" stroke="#42a5f5" stroke-width="2.5" filter="url(#glow)"/>';
+  svg+='<text x="'+cx+'" y="'+(cy-6)+'" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">Motor</text>';
+  svg+='<text x="'+cx+'" y="'+(cy+10)+'" text-anchor="middle" fill="#90caf9" font-size="10">Suscripci\u00f3n</text>';
+
+  var catRadius=170,childRadius=80;
+  var angleStep=(2*Math.PI)/categories.length;
+
+  for(var i=0;i<categories.length;i++){
+    var cat=categories[i];
+    var angle=angleStep*i-Math.PI/2;
+    var catX=cx+catRadius*Math.cos(angle);
+    var catY=cy+catRadius*Math.sin(angle);
+
+    var lineColor=cat.critical?cat.color:'#2a3560';
+    var dashAttr=cat.critical?'':'stroke-dasharray="4,4"';
+    svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+catX+'" y2="'+catY+'" stroke="'+lineColor+'" stroke-width="'+(cat.critical?2:1)+'" opacity="0.6" '+dashAttr+'/>';
+
+    if(cat.critical){
+      svg+='<circle cx="'+catX+'" cy="'+catY+'" r="38" fill="none" stroke="'+cat.color+'" stroke-width="1" opacity="0.3"><animate attributeName="r" values="38;46;38" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite"/></circle>';
+    }
+
+    svg+='<circle cx="'+catX+'" cy="'+catY+'" r="32" fill="#0d1230" stroke="'+cat.color+'" stroke-width="2"/>';
+    var labelLines=cat.label.split(' ');
+    if(labelLines.length>1){
+      svg+='<text x="'+catX+'" y="'+(catY-5)+'" text-anchor="middle" fill="'+cat.color+'" font-size="9" font-weight="600">'+labelLines[0]+'</text>';
+      svg+='<text x="'+catX+'" y="'+(catY+7)+'" text-anchor="middle" fill="'+cat.color+'" font-size="9" font-weight="600">'+labelLines.slice(1).join(' ')+'</text>';
+    }else{
+      svg+='<text x="'+catX+'" y="'+(catY+3)+'" text-anchor="middle" fill="'+cat.color+'" font-size="9" font-weight="600">'+cat.label+'</text>';
+    }
+
+    var childAngleStep=cat.children.length>1?(Math.PI*0.6)/(cat.children.length-1):0;
+    var childStartAngle=angle-(Math.PI*0.3);
+    for(var j=0;j<cat.children.length;j++){
+      var child=cat.children[j];
+      var cAngle=cat.children.length>1?childStartAngle+childAngleStep*j:angle;
+      var cX=catX+childRadius*Math.cos(cAngle);
+      var cY=catY+childRadius*Math.sin(cAngle);
+
+      svg+='<line x1="'+catX+'" y1="'+catY+'" x2="'+cX+'" y2="'+cY+'" stroke="#1a2550" stroke-width="1"/>';
+      svg+='<circle cx="'+cX+'" cy="'+cY+'" r="16" fill="#0a0f2a" stroke="'+statusColors[child.status]+'" stroke-width="1.5"/>';
+      svg+='<circle cx="'+cX+'" cy="'+cY+'" r="4" fill="'+statusColors[child.status]+'"/>';
+
+      var labelY=cY>catY?cY+26:cY-20;
+      svg+='<text x="'+cX+'" y="'+labelY+'" text-anchor="middle" fill="#8899bb" font-size="8">'+child.label+'</text>';
+    }
+  }
+
+  svg+='</svg>';
+  container.innerHTML=svg;
 }
 </script>
 </body>
