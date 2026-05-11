@@ -29,11 +29,26 @@ El número de versión del changelog puede alinearse con `version` en `package.j
 
 ### Agregado
 
+- **Docs** Se actualizó dashboard Portal Intermediarios con alcance detallado (Entregables 4-8, Excelencia Operativa) y nueva pestaña "Dependencias" con grafo radial SVG interactivo (19 nodos, 4 bloqueadores, ruta crítica Saghi)
+
+- **Docs** Se creó plan de implementación (`tasks.md`) para la spec `incremental-weekly-sync` — 14 tareas principales con 21 property tests mapeados a requisitos
+
+- **Docs** Se publicó dashboard de deuda técnica MDSB-5 en GitHub Pages (`docs/dashboard-deuda-tecnica-mdsb-5.html`)
+
+- **Docs** Se agregó tab "Mapa de Dependencias" al dashboard Portal Intermediarios (`docs/dashboard-portal-intermediarios.html`) — visualización radial interactiva con nodo central Portal, 17 nodos orbitales agrupados por categoría (entregables, backend, legacy, externos, nuevas integraciones, infraestructura), ruta crítica resaltada (Saghi, Tronador, FileNet, E6), tooltips con prioridad y descripción, KPIs y leyenda de estados/prioridades
+- **Docs** Se agregó tab "Ruta Crítica" al dashboard CUC (`docs/dashboard-cuc.html`) — análisis de dependencias con resumen por fase (3 cards con barras de progreso), lectura ejecutiva, tabla de estatus de 6 componentes bloqueantes con responsables y observaciones, KPIs de estado, y sección de riesgo normativo/jurídico. Diseño replicado del dashboard Bizagi.
+
 - **Docs** Se agregó tab "Grafo Dependencias" al dashboard CUC (`docs/dashboard-cuc.html`) — visualización radial interactiva con nodo central CUC, 7 dominios orbitales, 15 componentes hijos, ruta crítica animada (OCR, Gestor Doc/DAM, Persistencia), tooltips con estado y descripción, KPIs y leyenda de estados
 - **Workspace** Se creó carpeta `Workspace/Motor de Suscripcion/` para el proyecto GD-902 (Transformación de Suscripción — Motor suscripción) con informe maestro (.md) y dashboard interactivo HTML (4 tabs: Informe Maestro, Cronograma, Riesgos y Dependencias, Matriz de Coherencia)
 - **Docs** Se publicó dashboard de Portal Intermediarios en GitHub Pages (`docs/dashboard-portal-intermediarios.html`) con enlace en `docs/reportes.html`
 - **Docs** Se agregó sección "Gestor Documental/DAM/O'Leary — Estado Actual" al informe maestro CUC con datos del reporte O'Leary ECM (funcionalidades, limitaciones, arquitectura desplegada, próximos pasos)
 - **Docs** Se agregó diagrama de ruta de migración (FileNet + Stellent → Gestor Documental/DAM/O'Leary) en informe maestro
+- **Workspace** Se creó documento HTML de análisis de ingeniería inversa — Reglas de Negocio Simón Ventas Individuales (`Workspace/Simon Ventas/analisis-reglas-negocio-simon-ventas.html`) con 7 secciones: Cotización, Solicitud, Emisión, Modificaciones, Firma Electrónica, Reglas Transversales y Pendientes
+- **Workspace** Se creó documento de requerimientos del módulo de Modificaciones de Autos (`Workspace/Simon Ventas/simon-cotizadores-core-wl/.kiro/specs/autos-quotation-new/requirements_modificaciones.md`) — consolida HU GD903-317, GD903-237 y reglas de negocio con 66 requisitos funcionales y 13 no funcionales
+- **Workspace** Se inicializó proyecto Node.js 20.x para sincronización incremental semanal (`Workspace/Informe de Incidentes VP de Servicio/`) — package.json con ESM, dependencias exactas (pg, csv-parse, dotenv), devDependencies (vitest, fast-check, testcontainers), estructura de carpetas (src/ con 8 módulos, tests/ con 5 categorías), vitest.config.js y .env.example
+- **Workspace** Se implementó jerarquía de errores personalizados (`src/errors.js`) — SyncError base con 7 subclases (ConfigError, JqlError, ExtractionError, TransformError, PersistenceError, RcaError, SnapshotError), cada una con stage, context y timestamp
+- **Workspace** Se implementó módulo de utilidades de fecha (`src/utils/date-utils.js`) — función `calculateDays` para diferencia en días calendario con soporte para resolutiondate null
+- **Workspace** Se implementó módulo de correlation ID (`src/utils/correlation-id.js`) — generación de UUID v4 usando `crypto.randomUUID()` nativo de Node.js 20.x
 
 ### Cambiado
 
@@ -57,6 +72,7 @@ El número de versión del changelog puede alinearse con `version` en `package.j
 - **Docs** Se creó presentación HTML interactiva para Presidencia (`docs/presentacion-presidencia-simon-ventas.html`) — Informe de avance Simon Ventas con 6 slides + portada + cierre, colores corporativos ONDA S y navegación por teclado/botones
 - **Workspace** Se completó dashboard CUC (`Workspace/Carpeta Unica y Gestor Documental/dashboard-cuc.html`) — agregados tabs 2-4 (Arquitectura TO-BE con 4 capas SVG, Roadmap Gantt 24 semanas con ruta crítica, Dependencias y Riesgos) y script interactivo completo con tooltips y switchTab
 - **Config** Se agregó MCP de Draw.io (`@drawio/mcp`) en `.kiro/settings/mcp.json` — servidor oficial de JGraph para crear y abrir diagramas desde el editor
+- **Workspace** Se clonó repositorio `simon-cotizadores-core-wl` en `Workspace/Simon Ventas/` y se generó estructura de gobernanza completa (`.kiro/steering/` con 8 archivos de convenciones, `.kiro/specs/` para especificaciones) — documentación del stack legacy (Java 1.8, Struts 1.2.7, DWR, JSP, jQuery, Maven, WebLogic), arquitectura MVC+Facade+Service, naming conventions, reglas de mantenimiento y deuda técnica
 - **Workspace** Se creó carpeta `Workspace/Simon Ventas/` para el proyecto GD-903 (PRY Autogestión Pólizas Individuales — Simón Ventas) con informe maestro markdown y dashboard HTML interactivo
 - **Workspace** Se creó `Workspace/Simon Ventas/informe-maestro-proyecto.md` — resumen ejecutivo, alcance detallado (6 módulos), cronograma nuevo abordaje (Abril-Julio 2026), contenido estratégico, matriz de coherencia (4 discrepancias), dependencias críticas, arquitectura TO-BE y volumen de negocio (~145K txn/año)
 - **Workspace** Se creó `Workspace/Simon Ventas/dashboard-simon-ventas.html` — dashboard ejecutivo con 4 tabs: Informe Maestro (alcance, cronograma, servicios Datadog, matriz de coherencia), Arquitectura TO-BE (diagrama radial SVG interactivo con 8 bloques: OpenL, Tronador, Firma+SARLAFT, Fasecolda, Motor IA, Modificaciones, Documental, Bizagi), Roadmap (Gantt SVG con 4 ramos y marcador HOY), Dependencias y Riesgos (3 pendientes negocio, 4 dependencias técnicas, 5 riesgos con matriz impacto/probabilidad)
