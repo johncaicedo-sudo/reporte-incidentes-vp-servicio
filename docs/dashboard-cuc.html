@@ -62,7 +62,6 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
   <button class="tab-btn active" onclick="switchTab('informe')">Informe Maestro</button>
   <button class="tab-btn" onclick="switchTab('arquitectura')">Arquitectura TO-BE</button>
   <button class="tab-btn" onclick="switchTab('roadmap')">Roadmap</button>
-  <button class="tab-btn" onclick="switchTab('riesgos')">Dependencias y Riesgos</button>
   <button class="tab-btn" onclick="switchTab('rutacritica')">Ruta Cr&#237;tica</button>
   <button class="tab-btn" onclick="switchTab('grafo')">Grafo Dependencias</button>
 </div>
@@ -216,108 +215,7 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 <div class="svg-container" id="roadmap-container"></div>
 </div>
 
-<!-- TAB 4: DEPENDENCIAS Y RIESGOS -->
-<div id="tab-riesgos" class="tab-content">
-<div class="informe">
-<h1>DEPENDENCIAS Y RIESGOS — CUC</h1>
-<p class="subtitle">Matriz de riesgos, dependencias cr&#237;ticas y plan de mitigaci&#243;n</p>
-
-<h2>Matriz de Riesgos</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0 28px">
-  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">ALTO</span>
-      <span style="color:#ef5350;font-weight:600">Recurso OCR bloqueado (Pdte Definici&#243;n Arquitectura)</span>
-    </div>
-    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-      <p>Dada la capacidad del equipo de arquitectura, ha sido un componente que se tiene pendiente realizar las valoraciones pertinentes a los OCR actuales y definir el componente definitivo para el uso de este proyecto.</p>
-    </div>
-    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-      <strong>Mitigaci&#243;n:</strong> Cerrar r&#225;pidamente la definici&#243;n t&#233;cnica.
-    </div>
-  </div>
-  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">CR&#205;TICO</span>
-      <span style="color:#ef5350;font-weight:600">Transici&#243;n Gestor Documental/DAM/O'Leary</span>
-    </div>
-    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-      <p>Convivencia con FileNet/Stellent. Migraci&#243;n gradual con per&#237;odo de convivencia obligatorio. FileNet y Stellent son AS-IS a decomisionar.</p>
-    </div>
-    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-      <strong>Mitigaci&#243;n:</strong> Plan de migraci&#243;n gradual con rollback.
-    </div>
-  </div>
-  <div style="background:#0d1230;border:1px solid rgba(255,167,38,.3);border-radius:10px;padding:18px 20px">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <span style="background:#ffa726;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">ALTO</span>
-      <span style="color:#ffa726;font-weight:600">Taxonom&#237;a — Riesgo de duplicaci&#243;n</span>
-    </div>
-    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-      <p>Inconsistencias en nomenclatura entre canales. Riesgo de documentos duplicados por falta de cat&#225;logo unificado.</p>
-    </div>
-    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-      <strong>Mitigaci&#243;n:</strong> Definir cat&#225;logo &#250;nico con reglas de deduplicaci&#243;n.
-    </div>
-  </div>
-  <div style="background:#0d1230;border:1px solid rgba(158,158,158,.3);border-radius:10px;padding:18px 20px">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <span style="background:#9e9e9e;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">MEDIO</span>
-      <span style="color:#9e9e9e;font-weight:600">Ambiente Stage no liberado</span>
-    </div>
-    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-      <p>URLs de prueba estables no liberadas. Bloquea validaci&#243;n de integraciones con negocio.</p>
-    </div>
-    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-      <strong>Mitigaci&#243;n:</strong> Escalar con Infraestructura para aprovisionamiento.
-    </div>
-  </div>
-  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.3);border-radius:10px;padding:18px 20px">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <span style="background:#ef5350;color:#fff;padding:3px 10px;border-radius:6px;font-weight:700;font-size:12px">CR&#205;TICO</span>
-      <span style="color:#ef5350;font-weight:600">Riesgo normativo (privacidad/retenci&#243;n)</span>
-    </div>
-    <div style="font-size:12px;color:#c0cce0;line-height:1.8">
-      <p>Pol&#237;ticas de retenci&#243;n documental requieren validaci&#243;n jur&#237;dica. Cumplimiento de Habeas Data obligatorio.</p>
-    </div>
-    <div style="margin-top:12px;padding-top:10px;border-top:1px solid #1a2550;font-size:12px;color:#90caf9">
-      <strong>Mitigaci&#243;n:</strong> Validaci&#243;n jur&#237;dica de pol&#237;ticas de retenci&#243;n. Cumplimiento Habeas Data.
-    </div>
-  </div>
-</div>
-
-<h2>Dependencias Cr&#237;ticas</h2>
-<div class="risk-card">
-  <div class="risk-title">&#128274; FileNet (8M+ documentos) — AS-IS, Decomiso</div>
-  <p>Repositorio principal legacy a decomisionar. Convivencia obligatoria durante migraci&#243;n al Gestor Documental/DAM/O'Leary. Todos los documentos deben migrarse.</p>
-</div>
-<div class="risk-card">
-  <div class="risk-title">&#128274; Stellent (27+ TB) — AS-IS, Decomiso</div>
-  <p>Segundo repositorio legacy a decomisionar. Volumen masivo requiere estrategia de migraci&#243;n por fases al Gestor Documental/DAM/O'Leary con validaci&#243;n de integridad.</p>
-</div>
-<div class="risk-card">
-  <div class="risk-title">&#128274; Motor OCR — Pdte Definici&#243;n Arquitectura</div>
-  <p>Dada la capacidad del equipo de arquitectura, ha sido un componente que se tiene pendiente realizar las valoraciones pertinentes a los OCR actuales y definir el componente definitivo para el uso de este proyecto.</p>
-</div>
-<div class="risk-card">
-  <div class="risk-title">&#128274; Canales (Portal Intermediarios, Correo, CORE)</div>
-  <p>Integraci&#243;n pendiente. Cada canal tiene formatos y metadatos distintos. Requiere adaptadores espec&#237;ficos.</p>
-</div>
-
-<h2>Lectura Ejecutiva</h2>
-<div style="background:rgba(100,181,246,.04);border:1px solid #1a3a70;border-radius:10px;padding:18px 22px;margin-bottom:28px">
-  <div style="font-size:13px;color:#c0cce0;line-height:1.8">
-    <p>El proyecto CUC impacta <strong>~70K transacciones/mes</strong> en suscripci&#243;n y emisi&#243;n. La arquitectura TO-BE centraliza documentos dispersos en <strong>FileNet + Stellent</strong> (AS-IS, a decomisionar) hacia el <strong>Gestor Documental/DAM/O'Leary</strong> (plataforma TO-BE en GCP) con OCR autom&#225;tico.</p>
-    <p style="margin-top:8px"><strong style="color:#ef5350">Riesgo principal:</strong> Recurso OCR pendiente de definici&#243;n arquitect&#243;nica y riesgo normativo de privacidad/retenci&#243;n documental.</p>
-    <p style="margin-top:8px"><strong style="color:#ffa726">Dependencia cr&#237;tica:</strong> Convivencia obligatoria con FileNet/Stellent durante transici&#243;n al Gestor Documental/DAM/O'Leary. Primera semana de mayo como deadline.</p>
-    <p style="margin-top:8px"><strong style="color:#4caf50">Mitigaci&#243;n:</strong> Escalamiento de recurso OCR, cat&#225;logo &#250;nico de taxonom&#237;a, validaci&#243;n jur&#237;dica de retenci&#243;n.</p>
-  </div>
-</div>
-
-</div>
-</div>
-
-<!-- TAB 5: RUTA CRÍTICA -->
+<!-- TAB 4: RUTA CRÍTICA -->
 <div id="tab-rutacritica" class="tab-content">
 <div class="informe">
 <h1>AN&#193;LISIS DE DEPENDENCIAS Y RUTA CR&#205;TICA</h1>
@@ -495,10 +393,10 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 
 <script>
 /* Tab switching */
-const tabInited={informe:true,arquitectura:false,roadmap:false,riesgos:true,rutacritica:true,grafo:false};
+const tabInited={informe:true,arquitectura:false,roadmap:false,rutacritica:true,grafo:false};
 function switchTab(name){
   document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    const tabs=['informe','arquitectura','roadmap','riesgos','rutacritica','grafo'];
+    const tabs=['informe','arquitectura','roadmap','rutacritica','grafo'];
     b.classList.toggle('active',tabs[i]===name);
   });
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
