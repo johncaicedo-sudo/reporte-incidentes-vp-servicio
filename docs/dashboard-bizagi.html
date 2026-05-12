@@ -245,70 +245,74 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </div>
 
 <h2>Estatus APIs Bloqueantes &#8212; Paquete 1</h2>
-<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Seguimiento cruzado con mapa de dependencias por squad. Datos de inmersión presencial 24/04/2026. <strong style="color:#ffa726">5 de 7 APIs son responsabilidad de Bolívar.</strong></p>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Seguimiento cruzado con mapa de dependencias por squad. <strong style="color:#4caf50">Actualizaci&#243;n: 12/05/2026.</strong> De 7 APIs, <strong style="color:#4caf50">4 solucionadas</strong>, 1 entregada pdte validaci&#243;n, <strong style="color:#ffa726">2 pendientes.</strong></p>
 
 <table class="info-table">
-<thead><tr><th>#</th><th>API</th><th>Acción</th><th>Squad</th><th>Estado</th><th>Responsable</th><th>Observaciones</th></tr></thead>
+<thead><tr><th>#</th><th>API</th><th>Squad</th><th>Fecha Entrega</th><th>En Fecha</th><th>Estado</th><th>Observaciones</th></tr></thead>
 <tbody>
 <tr>
-  <td>1</td><td>api-consulta-terceros-natural</td><td>Mod. nuevos campos</td>
-  <td style="color:#42a5f5;font-weight:600">Lago de Datos / Jur&#237;dico</td>
+  <td>1</td><td>api-consulta-terceros-natural</td>
+  <td style="color:#42a5f5;font-weight:600">Lago de Datos</td>
+  <td>24/04/26</td><td style="color:#4caf50">S&#237;</td>
   <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
-  <td>N/A</td>
-  <td style="font-size:12px">Entrega exitosa. Prueba confirmada por Gattaca.</td>
+  <td style="font-size:12px">Entrega exitosa en fecha.</td>
 </tr>
 <tr>
-  <td>2</td><td>api-consulta-terceros-juridico</td><td>Mod. nuevos campos</td>
-  <td style="color:#42a5f5;font-weight:600">Lago de Datos / Jur&#237;dico</td>
-  <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
-  <td>Leonel Pedrozo</td>
-  <td style="font-size:12px">Entrega exitosa. Pdte: Leonel revisar y comparar respuesta nueva versi&#243;n (JPineda).</td>
-</tr>
-<tr style="background:rgba(255,167,38,.04)">
-  <td>3</td><td>api-consulta-polizas</td><td>Mod. nuevos campos</td>
-  <td style="color:#7e57c2;font-weight:600">Core X</td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
-  <td>Daniel Pepinosa / Camilo Jim&#233;nez</td>
-  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pdte entrega sp-core Tronador (Leonel/Daniel Pepinosa) + construcci&#243;n v2 (equipo Camilo). Campos faltantes: Data, Nombre producto, Valor asegurado, N&#250;mero cr&#233;dito.</td>
-</tr>
-<tr style="background:rgba(255,167,38,.04)">
-  <td>4</td><td>api-gesti&#243;n-reserva-creacion</td><td>Completar request</td>
-  <td style="color:#7e57c2;font-weight:600">Core X</td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
-  <td>Doris Ram&#237;rez / Leonel Pedrozo</td>
-  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pdte reuni&#243;n con Doris para ajustes/construcci&#243;n de campos. Entregar param&#233;trica para conexi&#243;n y creaci&#243;n de reserva. Campo faltante: N&#250;mero cr&#233;dito.</td>
-</tr>
-<tr style="background:rgba(255,167,38,.04)">
-  <td>5</td><td>api-analitica-siniestros-graphql</td><td>Adapter GraphQL&#8594;REST</td>
+  <td>2</td><td>api-consulta-terceros-juridico</td>
   <td style="color:#42a5f5;font-weight:600">Lago de Datos</td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
-  <td>Weimar Avenda&#241;o B. / Gattaca</td>
-  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Campo &#171;coberturasAfectadas&#187; = json-string (query transversal, no modificable). Pdte validar con Gattaca si usan el campo en UI. In progress: env&#237;an URL API REST. Excluidos: Hist&#243;ricos p&#243;lizas, Sistema origen.</td>
+  <td>24/04/26</td><td style="color:#4caf50">S&#237;</td>
+  <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
+  <td style="font-size:12px">Entrega exitosa en fecha.</td>
 </tr>
-<tr style="background:rgba(239,83,80,.04)">
-  <td>6</td><td>api-o'leary (gestor documental)</td><td>Disponibilizar APIs</td>
+<tr>
+  <td>3</td><td>api-consulta-polizas</td>
+  <td style="color:#7e57c2;font-weight:600">Core X</td>
+  <td>12/05/26</td><td style="color:#ef5350">No (+18d)</td>
+  <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
+  <td style="font-size:12px">Entregada con retraso. sp-core Tronador + v2 completados.</td>
+</tr>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>4</td><td>api-gesti&#243;n-reserva-creacion</td>
+  <td style="color:#7e57c2;font-weight:600">Core X</td>
+  <td style="color:#ffa726;font-weight:600">22/05/26</td><td style="color:#ef5350">No (+28d)</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pendiente Bol&#237;var</span></td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> API existente. Pendiente entrega por Bol&#237;var. Fecha compromiso: 22/05/2026.</td>
+</tr>
+<tr>
+  <td>5</td><td>api-analitica-siniestros-graphql</td>
+  <td style="color:#42a5f5;font-weight:600">Lago de Datos</td>
+  <td>06/05/26</td><td style="color:#ef5350">No (+12d)</td>
+  <td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#10003; Solucionado</span></td>
+  <td style="font-size:12px">Entregada con retraso. Adapter GraphQL&#8594;REST completado.</td>
+</tr>
+<tr style="background:rgba(100,181,246,.04)">
+  <td>6</td><td>api-o'leary (gestor documental)</td>
   <td style="color:#ef5350;font-weight:600">Carpeta &#218;nica</td>
-  <td><span style="background:rgba(239,83,80,.15);color:#ef5350;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
-  <td>Weimar Avenda&#241;o B.</td>
-  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Equipo CUC-OLeary dedicado a disponibilizaci&#243;n. API Gestor Documental pendiente. Dep. directa con CUC-DAM (200h P3).</td>
+  <td>12/05/26</td><td style="color:#ef5350">No (+18d)</td>
+  <td><span style="background:rgba(100,181,246,.15);color:#64b5f6;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9889; Entregado - Pdte Validaci&#243;n</span></td>
+  <td style="font-size:12px">Entregado por CUC-OLeary. Pendiente validaci&#243;n por Gattaca.</td>
 </tr>
-<tr style="background:rgba(239,83,80,.04)">
-  <td>7</td><td>api-motor-ia-indem</td><td>Desarrollo Bizagi</td>
-  <td style="color:#26a69a;font-weight:600">Gattaca (IA Bizagi)</td>
-  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pdte Bol&#237;var</span></td>
-  <td>Leonel Pedrozo</td>
-  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pdte definici&#243;n interna para exponer API. Se usar&#225; IA para validar causa-consecuencia con URLs de documentos. Integraci&#243;n necesaria para creaci&#243;n de reserva.</td>
+<tr style="background:rgba(255,167,38,.04)">
+  <td>7</td><td>api-motor-ia-indem (Desarrollo Bizagi)</td>
+  <td style="color:#26a69a;font-weight:600">Gattaca</td>
+  <td style="color:#ef5350;font-weight:600">Pdte</td><td style="color:#ef5350">No</td>
+  <td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">&#9888; Pendiente Bol&#237;var</span></td>
+  <td style="font-size:12px"><strong>BLOQUEANTE.</strong> Pendiente definici&#243;n interna para exponer API. Desarrollo dentro de Bizagi.</td>
 </tr>
 </tbody>
 </table>
 
 <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
   <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
-    <div style="color:#4caf50;font-weight:700;font-size:22px">2 / 7</div>
+    <div style="color:#4caf50;font-weight:700;font-size:22px">4 / 7</div>
     <div style="color:#7a8bb5;font-size:11px">APIs solucionadas</div>
   </div>
+  <div style="background:rgba(100,181,246,.08);border:1px solid rgba(100,181,246,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
+    <div style="color:#64b5f6;font-weight:700;font-size:22px">1 / 7</div>
+    <div style="color:#7a8bb5;font-size:11px">Entregada pdte validaci&#243;n</div>
+  </div>
   <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
-    <div style="color:#ffa726;font-weight:700;font-size:22px">5 / 7</div>
+    <div style="color:#ffa726;font-weight:700;font-size:22px">2 / 7</div>
     <div style="color:#7a8bb5;font-size:11px">Pendientes Bol&#237;var</div>
   </div>
   <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
@@ -316,8 +320,8 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
     <div style="color:#7a8bb5;font-size:11px">Pendientes Gattaca</div>
   </div>
   <div style="background:rgba(126,87,194,.08);border:1px solid rgba(126,87,194,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:160px">
-    <div style="color:#7e57c2;font-weight:700;font-size:22px">2</div>
-    <div style="color:#7a8bb5;font-size:11px">Bloqueantes Core X</div>
+    <div style="color:#7e57c2;font-weight:700;font-size:22px">1</div>
+    <div style="color:#7a8bb5;font-size:11px">Bloqueante Core X</div>
   </div>
 </div>
 
