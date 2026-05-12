@@ -330,6 +330,30 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 <h1>AN&#193;LISIS DE CRONOGRAMA — ESTADO REAL vs. PLANEADO</h1>
 <p class="subtitle">Corte: 12 de mayo de 2026 | Proyecto: SBL &#8212; Proceso Indemnizaciones de Vida | Duraci&#243;n total planeada: 177,38 d&#237;as</p>
 
+<!-- KPI AVANCE GENERAL -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin:0 0 28px">
+<div style="background:#0d1230;border:1px solid #1a3a70;border-radius:10px;padding:16px 20px;text-align:center">
+  <div style="color:#64b5f6;font-size:28px;font-weight:700">53,6%</div>
+  <div style="color:#7a8bb5;font-size:11px;text-transform:uppercase;letter-spacing:.5px">Avance Planeado</div>
+  <div style="margin-top:8px;height:6px;background:#1a2550;border-radius:3px"><div style="width:53.6%;height:100%;background:#64b5f6;border-radius:3px"></div></div>
+</div>
+<div style="background:#0d1230;border:1px solid #ef5350;border-radius:10px;padding:16px 20px;text-align:center">
+  <div style="color:#ef5350;font-size:28px;font-weight:700">36,8%</div>
+  <div style="color:#7a8bb5;font-size:11px;text-transform:uppercase;letter-spacing:.5px">Avance Real</div>
+  <div style="margin-top:8px;height:6px;background:#1a2550;border-radius:3px"><div style="width:36.8%;height:100%;background:#ef5350;border-radius:3px"></div></div>
+</div>
+<div style="background:#0d1230;border:1px solid #ffa726;border-radius:10px;padding:16px 20px;text-align:center">
+  <div style="color:#ffa726;font-size:28px;font-weight:700">-16,8%</div>
+  <div style="color:#7a8bb5;font-size:11px;text-transform:uppercase;letter-spacing:.5px">Desviaci&#243;n</div>
+  <div style="margin-top:8px;font-size:11px;color:#c0cce0">749h de retraso</div>
+</div>
+<div style="background:#0d1230;border:1px solid #ffa726;border-radius:10px;padding:16px 20px;text-align:center">
+  <div style="color:#ffa726;font-size:28px;font-weight:700">68,7%</div>
+  <div style="color:#7a8bb5;font-size:11px;text-transform:uppercase;letter-spacing:.5px">Ratio Cumplimiento</div>
+  <div style="margin-top:8px;font-size:11px;color:#c0cce0">Se ejecut&#243; 68,7% de lo planeado</div>
+</div>
+</div>
+
 <h2>Resumen Ejecutivo de Desviaciones</h2>
 
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:16px 0 28px">
@@ -476,16 +500,148 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 <div style="padding-left:68px">&#9492;&#9472;&#9654; <span style="color:#ef5350;font-weight:700">Despliegue a Producci&#243;n impactado</span></div>
 </div>
 
-<h2>Estimaci&#243;n de Nuevo Fin de Proyecto</h2>
+<h2>Escenarios de Replanificaci&#243;n &#8212; Fecha Objetivo: 15/08/26</h2>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0 24px">
+<div style="background:#0d1230;border:2px solid #4caf50;border-radius:10px;padding:20px 22px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <span style="background:#4caf50;color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;font-size:12px">ESCENARIO A</span>
+    <span style="color:#4caf50;font-weight:600;font-size:14px">Optimista</span>
+  </div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8;margin-bottom:12px">
+    <div><strong style="color:#fff">Premisa:</strong> APIs desbloqueadas <strong style="color:#4caf50">inmediatamente</strong> (12/05/26)</div>
+    <div><strong style="color:#fff">GTK inicia implementaci&#243;n:</strong> 19/05/26</div>
+    <div><strong style="color:#fff">Fecha fin estimada:</strong> <span style="color:#4caf50;font-weight:700;font-size:16px">15/08/26</span></div>
+    <div><strong style="color:#fff">Retraso vs plan original:</strong> <span style="color:#ffa726">+45 d&#237;as</span></div>
+  </div>
+  <div style="font-size:11px;color:#7a8bb5;border-top:1px solid #1a2550;padding-top:10px">
+    Requiere resoluci&#243;n inmediata de las 7 APIs pendientes y m&#225;ximo paralelismo entre paquetes.
+  </div>
+</div>
+<div style="background:#0d1230;border:2px solid #ffa726;border-radius:10px;padding:20px 22px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <span style="background:#ffa726;color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;font-size:12px">ESCENARIO B</span>
+    <span style="color:#ffa726;font-weight:600;font-size:14px">Probable</span>
+  </div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8;margin-bottom:12px">
+    <div><strong style="color:#fff">Premisa:</strong> APIs resueltas al <strong style="color:#ffa726">12/06/26</strong></div>
+    <div><strong style="color:#fff">GTK inicia implementaci&#243;n:</strong> 15/06/26</div>
+    <div><strong style="color:#fff">Fecha fin estimada:</strong> <span style="color:#ffa726;font-weight:700;font-size:16px">15/08/26</span> (requiere compresi&#243;n)</div>
+    <div><strong style="color:#fff">Retraso vs plan original:</strong> <span style="color:#ef5350">+54 d&#237;as</span></div>
+  </div>
+  <div style="font-size:11px;color:#7a8bb5;border-top:1px solid #1a2550;padding-top:10px">
+    Requiere compresi&#243;n de certificaciones, paralelismo agresivo y reducci&#243;n de ciclos QA.
+  </div>
+</div>
+</div>
+
+<h3 style="color:#4caf50">Escenario A &#8212; Optimista: Desbloqueo Inmediato (12/05/26)</h3>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Todas las APIs se resuelven esta semana. GTK puede iniciar implementaci&#243;n de los 3 paquetes con m&#225;ximo paralelismo.</p>
+
 <table class="info-table">
-<thead><tr><th>Escenario</th><th>Desbloqueo</th><th>Nuevo Fin Estimado</th><th>Retraso vs Plan</th></tr></thead>
+<thead><tr><th>Hito Clave</th><th>Fecha L&#237;mite</th><th>Paquete</th><th>Condici&#243;n</th></tr></thead>
 <tbody>
-<tr style="background:rgba(76,175,80,.04)"><td style="color:#4caf50;font-weight:600">Optimista</td><td>Inmediato (12/05)</td><td>~15/08/26</td><td style="color:#ffa726">+45 d&#237;as</td></tr>
-<tr style="background:rgba(255,167,38,.04)"><td style="color:#ffa726;font-weight:600">Probable</td><td>2 semanas (26/05)</td><td>~01/09/26</td><td style="color:#ef5350">+60 d&#237;as</td></tr>
-<tr style="background:rgba(239,83,80,.04)"><td style="color:#ef5350;font-weight:600">Pesimista</td><td>1 mes (12/06)</td><td>~15/10/26</td><td style="color:#ef5350;font-weight:700">+90 d&#237;as</td></tr>
+<tr style="background:rgba(76,175,80,.04)"><td style="font-weight:600">APIs P1 resueltas y entregadas</td><td style="color:#4caf50;font-weight:600">16/05/26</td><td>P1</td><td>Core X entrega sp-core Tronador + v2 consulta-polizas. Lago de Datos entrega adapter GraphQL&#8594;REST.</td></tr>
+<tr><td>Completar Implementaci&#243;n P1 (24% restante)</td><td>30/05/26</td><td>P1</td><td>~12 d&#237;as h&#225;biles para finalizar PUs pendientes con integraciones resueltas.</td></tr>
+<tr><td>Certificaci&#243;n GTK P1 (3 entregas)</td><td>13/06/26</td><td>P1</td><td>~10 d&#237;as. Ciclos QA comprimidos a 1 ciclo por entrega.</td></tr>
+<tr><td>Certificaci&#243;n Cliente P1</td><td>27/06/26</td><td>P1</td><td>3 entregas en 10 d&#237;as (paralelismo entre entregas).</td></tr>
+<tr style="background:rgba(76,175,80,.04)"><td style="font-weight:600;color:#4caf50">Aprobaci&#243;n Paquete 1</td><td style="color:#4caf50;font-weight:600">27/06/26</td><td>P1</td><td>&#10003;</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td style="font-weight:600">APIs P2 resueltas (ARL-PCL)</td><td style="color:#ffa726;font-weight:600">19/05/26</td><td>P2</td><td>Nuevo servicio Consulta p&#243;lizas ARL-PCL entregado con codificaci&#243;n.</td></tr>
+<tr><td>Inicio Dise&#241;o T&#233;cnico + Implementaci&#243;n P2</td><td>19/05/26</td><td>P2</td><td>Inicia en paralelo con finalizaci&#243;n P1. Requiere recursos dedicados.</td></tr>
+<tr><td>Completar Implementaci&#243;n P2</td><td>20/06/26</td><td>P2</td><td>~22 d&#237;as. 7 PUs con 251h de trabajo.</td></tr>
+<tr><td>Certificaci&#243;n GTK + Cliente P2</td><td>11/07/26</td><td>P2</td><td>~15 d&#237;as comprimidos (GTK + Cliente en paralelo parcial).</td></tr>
+<tr style="background:rgba(76,175,80,.04)"><td style="font-weight:600;color:#4caf50">Aprobaci&#243;n Paquete 2</td><td style="color:#4caf50;font-weight:600">11/07/26</td><td>P2</td><td>&#10003;</td></tr>
+<tr style="background:rgba(239,83,80,.04)"><td style="font-weight:600">APIs P3 resueltas (6 APIs)</td><td style="color:#ef5350;font-weight:600">26/05/26</td><td>P3</td><td>Control t&#233;cnico reserva, Levantar control, Orden pago, Liberaci&#243;n reserva, Liquidaci&#243;n, OneSpam.</td></tr>
+<tr><td>Inicio Implementaci&#243;n P3</td><td>26/05/26</td><td>P3</td><td>Inicia tras resoluci&#243;n APIs P3. Puede solapar con P2 si hay recursos.</td></tr>
+<tr><td>Completar Implementaci&#243;n P3</td><td>27/06/26</td><td>P3</td><td>~22 d&#237;as. 5 PUs con 241h de trabajo.</td></tr>
+<tr><td>Certificaci&#243;n GTK + Cliente P3</td><td>18/07/26</td><td>P3</td><td>~15 d&#237;as comprimidos.</td></tr>
+<tr style="background:rgba(76,175,80,.04)"><td style="font-weight:600;color:#4caf50">Aprobaci&#243;n Paquete 3</td><td style="color:#4caf50;font-weight:600">18/07/26</td><td>P3</td><td>&#10003;</td></tr>
+<tr style="background:rgba(100,181,246,.06)"><td style="font-weight:600">Despliegue a Producci&#243;n</td><td>21/07 &#8212; 01/08/26</td><td>ALL</td><td>8,5 d&#237;as: comit&#233;, preparaci&#243;n, despliegue, estabilizaci&#243;n, acompa&#241;amiento.</td></tr>
+<tr style="background:rgba(100,181,246,.06)"><td style="font-weight:600">Inicio Garant&#237;a</td><td>01/08/26</td><td>ALL</td><td>Garant&#237;a de 3 meses inicia post-despliegue.</td></tr>
+<tr style="background:rgba(76,175,80,.08)"><td style="font-weight:700;color:#4caf50;font-size:14px">FIN PROYECTO (sin garant&#237;a)</td><td style="color:#4caf50;font-weight:700;font-size:14px">~15/08/26</td><td>ALL</td><td>Incluye 2 semanas de estabilizaci&#243;n post-despliegue.</td></tr>
 </tbody>
 </table>
-<p style="font-size:12px;color:#7a8bb5;margin-top:8px">Nota: El despliegue requiere aprobaci&#243;n de los 3 paquetes (predecesoras 362;40;201). La garant&#237;a es de 3 meses post-despliegue.</p>
+
+<h3 style="color:#ffa726">Escenario B &#8212; APIs resueltas al 12/06, GTK inicia 15/06</h3>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Las APIs se resuelven con 1 mes de retraso adicional. GTK (Gattaca) inicia implementaci&#243;n el 15/06. Fecha objetivo: 15/08/26. Requiere <strong style="color:#ffa726">compresi&#243;n agresiva</strong> de tiempos.</p>
+
+<table class="info-table">
+<thead><tr><th>Hito Clave</th><th>Fecha L&#237;mite</th><th>Paquete</th><th>Condici&#243;n / Riesgo</th></tr></thead>
+<tbody>
+<tr style="background:rgba(255,167,38,.04)"><td style="font-weight:600">Todas las APIs resueltas y entregadas</td><td style="color:#ffa726;font-weight:600">12/06/26</td><td>ALL</td><td>7 APIs P1 + ARL-PCL (P2) + 6 APIs P3 = 14 APIs entregadas y validadas.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td style="font-weight:600">GTK inicia implementaci&#243;n</td><td style="color:#ffa726;font-weight:600">15/06/26</td><td>ALL</td><td>Gattaca arranca los 3 paquetes en paralelo con equipo completo.</td></tr>
+<tr><td>Completar Implementaci&#243;n P1 (24% restante)</td><td>27/06/26</td><td>P1</td><td>~9 d&#237;as. Compresi&#243;n: solo PUs con integraciones, sin retrabajo.</td></tr>
+<tr><td>Completar Implementaci&#243;n P2</td><td>04/07/26</td><td>P2</td><td>~14 d&#237;as. <span style="color:#ef5350">Compresi&#243;n de 22 a 14 d&#237;as (&#8722;36%)</span>. Requiere 3 devs dedicados.</td></tr>
+<tr><td>Completar Implementaci&#243;n P3</td><td>07/07/26</td><td>P3</td><td>~16 d&#237;as. <span style="color:#ef5350">Compresi&#243;n de 22 a 16 d&#237;as (&#8722;27%)</span>. Requiere 2 devs dedicados.</td></tr>
+<tr><td>Certificaci&#243;n GTK P1 (comprimida)</td><td>04/07/26</td><td>P1</td><td><span style="color:#ef5350">1 solo ciclo QA</span>. Sin ciclo 2. Riesgo: defectos no detectados.</td></tr>
+<tr><td>Certificaci&#243;n GTK P2 + P3 (paralelo)</td><td>18/07/26</td><td>P2/P3</td><td>GTK P2 y P3 en paralelo. Requiere 2 analistas QA dedicados.</td></tr>
+<tr><td>Certificaci&#243;n Cliente (3 paquetes)</td><td>01/08/26</td><td>ALL</td><td><span style="color:#ef5350">Entregas unificadas por paquete</span> (no 3 entregas separadas). Riesgo: volumen alto para el cliente.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td style="font-weight:600;color:#ffa726">Aprobaci&#243;n 3 Paquetes</td><td style="color:#ffa726;font-weight:600">01/08/26</td><td>ALL</td><td>Aprobaci&#243;n conjunta. Requiere disponibilidad del cliente.</td></tr>
+<tr><td>Despliegue a Producci&#243;n</td><td>04/08 &#8212; 13/08/26</td><td>ALL</td><td>8,5 d&#237;as comprimidos a 7 d&#237;as. Comit&#233; + despliegue + estabilizaci&#243;n.</td></tr>
+<tr style="background:rgba(255,167,38,.08)"><td style="font-weight:700;color:#ffa726;font-size:14px">FIN PROYECTO (sin garant&#237;a)</td><td style="color:#ffa726;font-weight:700;font-size:14px">~15/08/26</td><td>ALL</td><td><span style="color:#ef5350">Margen: 0 d&#237;as.</span> Cualquier desviaci&#243;n adicional incumple la fecha.</td></tr>
+</tbody>
+</table>
+
+<div class="alert-card red" style="margin-top:16px">
+  <div class="alert-title">&#9888; Riesgos del Escenario B</div>
+  <p>&#8226; Compresi&#243;n de implementaci&#243;n (&#8722;27% a &#8722;36%) aumenta probabilidad de defectos.<br>
+  &#8226; Un solo ciclo QA en GTK reduce cobertura de pruebas.<br>
+  &#8226; Certificaci&#243;n cliente unificada (no por entregas) puede generar rechazo por volumen.<br>
+  &#8226; Margen cero: cualquier API que falle despu&#233;s del 12/06 invalida este escenario.<br>
+  &#8226; Requiere disponibilidad completa del equipo GTK + cliente durante julio.</p>
+</div>
+
+<h2>APIs Pendientes &#8212; Bloqueantes para Escenarios</h2>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Estas APIs deben resolverse para desbloquear la implementaci&#243;n. Sin ellas, ning&#250;n escenario es viable.</p>
+
+<table class="info-table">
+<thead><tr><th>#</th><th>Paq.</th><th>API / Servicio</th><th>Estado</th><th>Observaciones de Refinamiento</th></tr></thead>
+<tbody>
+<tr><td>12</td><td style="color:#ff9800;font-weight:600">P2</td><td>Consulta p&#243;liza Salud</td><td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px">Sin pendientes</span></td><td style="font-size:12px">Se aumentaron registros en servicio v2 de p&#243;liza. Exclusiones ya no debe ir.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>13</td><td style="color:#ff9800;font-weight:600">P2</td><td>Consulta p&#243;lizas ARL-PCL</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Nuevo servicio actualmente no existe. Pendiente por entregar. Debe venir una Codificaci&#243;n y si tiene P&#243;liza.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>14</td><td style="color:#f44336;font-weight:600">P3</td><td>Control t&#233;cnico reserva</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Despu&#233;s de creada la reserva, servicio existe pero no est&#225; entregado. Buscar por n&#250;m. reserva si hay control t&#233;cnico.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>15</td><td style="color:#f44336;font-weight:600">P3</td><td>Levantar control en Sim&#243;n</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Si existe control t&#233;cnico, se debe levantar el control de forma autom&#225;tica.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>16</td><td style="color:#f44336;font-weight:600">P3</td><td>Orden de pago asegurado</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">&#8212;</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>17</td><td style="color:#f44336;font-weight:600">P3</td><td>Liberaci&#243;n autom&#225;tica de reserva</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Pendiente recibir informaci&#243;n 05 de mayo junto con el de reserva.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>18</td><td style="color:#f44336;font-weight:600">P3</td><td>Liquidaci&#243;n autom&#225;tica orden de pago</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Pendiente confirmar y recibir API.</td></tr>
+<tr style="background:rgba(239,83,80,.04)"><td>19</td><td style="color:#f44336;font-weight:600">P3</td><td>OneSpam (firma digital)</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Validar si se puede integrar para firma digital. Necesario servicio OneSpam para validar.</td></tr>
+</tbody>
+</table>
+
+<div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+  <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#4caf50;font-weight:700;font-size:22px">1 / 8</div>
+    <div style="color:#7a8bb5;font-size:11px">Sin pendientes</div>
+  </div>
+  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ffa726;font-weight:700;font-size:22px">7 / 8</div>
+    <div style="color:#7a8bb5;font-size:11px">Pendientes</div>
+  </div>
+  <div style="background:rgba(255,167,38,.08);border:1px solid rgba(255,167,38,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ffa726;font-weight:700;font-size:22px">1</div>
+    <div style="color:#7a8bb5;font-size:11px">API P2 bloqueante</div>
+  </div>
+  <div style="background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.3);border-radius:8px;padding:12px 18px;flex:1;min-width:140px">
+    <div style="color:#ef5350;font-weight:700;font-size:22px">6</div>
+    <div style="color:#7a8bb5;font-size:11px">APIs P3 bloqueantes</div>
+  </div>
+</div>
+
+<h3 style="color:#64b5f6;margin-top:28px">Comparativa de Escenarios</h3>
+<table class="info-table">
+<thead><tr><th>Aspecto</th><th style="color:#4caf50">Escenario A (Optimista)</th><th style="color:#ffa726">Escenario B (Probable)</th></tr></thead>
+<tbody>
+<tr><td>APIs resueltas</td><td>12&#8211;26/05/26</td><td>12/06/26</td></tr>
+<tr><td>Inicio implementaci&#243;n GTK</td><td>19/05/26</td><td>15/06/26</td></tr>
+<tr><td>D&#237;as disponibles para implementar</td><td>~65 d&#237;as</td><td>~38 d&#237;as</td></tr>
+<tr><td>Compresi&#243;n requerida</td><td style="color:#4caf50">Baja (&#8722;10%)</td><td style="color:#ef5350">Alta (&#8722;27% a &#8722;36%)</td></tr>
+<tr><td>Ciclos QA</td><td>2 ciclos por PU</td><td style="color:#ef5350">1 ciclo por PU</td></tr>
+<tr><td>Entregas certificaci&#243;n cliente</td><td>3 entregas por paquete</td><td style="color:#ef5350">1 entrega unificada por paquete</td></tr>
+<tr><td>Margen de contingencia</td><td style="color:#4caf50">~10 d&#237;as</td><td style="color:#ef5350">0 d&#237;as</td></tr>
+<tr><td>Riesgo de incumplimiento</td><td style="color:#4caf50">Bajo</td><td style="color:#ef5350">Alto</td></tr>
+<tr><td>Fecha fin estimada</td><td style="color:#4caf50;font-weight:700">~15/08/26</td><td style="color:#ffa726;font-weight:700">~15/08/26 (sin margen)</td></tr>
+</tbody>
+</table>
 
 <h2>Recomendaciones</h2>
 <ol class="rec-list">
