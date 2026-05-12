@@ -29,6 +29,8 @@ El número de versión del changelog puede alinearse con `version` en `package.j
 
 ### Agregado
 
+- **Docs** Se agregó pestaña "Cronograma" al dashboard Bizagi (`docs/dashboard-bizagi.html`) — análisis de estado real vs. planeado al 12/05/26 con: resumen ejecutivo de desviaciones por paquete (cards con barras de progreso), tabla cronograma maestro plan vs. real, hitos detallados por paquete con estado, tabla de hitos incumplidos con días de retraso, diagrama de impacto en cadena, estimación de nuevo fin de proyecto (3 escenarios), y 5 recomendaciones accionables
+
 - **Docs** Se actualizó dashboard Portal Intermediarios con alcance detallado (Entregables 4-8, Excelencia Operativa) y nueva pestaña "Dependencias" con grafo radial SVG interactivo (19 nodos, 4 bloqueadores, ruta crítica Saghi)
 
 - **Docs** Se creó plan de implementación (`tasks.md`) para la spec `incremental-weekly-sync` — 14 tareas principales con 21 property tests mapeados a requisitos
