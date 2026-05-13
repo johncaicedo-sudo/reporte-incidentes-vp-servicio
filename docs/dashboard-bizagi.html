@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -59,6 +59,17 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 .svg-tooltip .tt-title{font-weight:700;color:#fff;font-size:13px;margin-bottom:4px}
 .svg-tooltip .tt-sub{color:#7a8bb5;font-size:11px}
 .svg-tooltip .tt-line{color:#a0b0c8}
+details.scenario{border:2px solid #1a2550;border-radius:10px;margin:16px 0;background:#0a0f2a}
+details.scenario[open]{border-color:#64b5f6}
+details.scenario.green{border-color:#4caf50}
+details.scenario.green[open]{border-color:#4caf50}
+details.scenario.orange{border-color:#ffa726}
+details.scenario.orange[open]{border-color:#ffa726}
+details.scenario summary{cursor:pointer;padding:16px 22px;font-size:15px;font-weight:600;color:#fff;list-style:none;display:flex;align-items:center;gap:12px}
+details.scenario summary::-webkit-details-marker{display:none}
+details.scenario summary::before{content:'▶';font-size:11px;color:#64b5f6;transition:transform .2s}
+details.scenario[open] summary::before{transform:rotate(90deg)}
+details.scenario .scenario-body{padding:0 22px 22px}
 </style>
 </head>
 <body>
@@ -565,7 +576,9 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </div>
 </div>
 
-<h2>ESCENARIO A &#8212; Optimista (APIs desbloqueadas 12/05)</h2>
+<details class="scenario green" open>
+<summary><span style="background:#4caf50;color:#fff;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:700">A</span> ESCENARIO A &#8212; Optimista: APIs desbloqueadas 12/05 | Fin: 15/08/26 | Margen: ~10 d&#237;as</summary>
+<div class="scenario-body">
 
 <h3 style="color:#42a5f5">Paquete 1 &#8212; Aviso (Objetivo: 27/06/26)</h3>
 <table class="info-table">
@@ -600,6 +613,77 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </tbody>
 </table>
 
+<h3 style="color:#f44336">Paquete 3 &#8212; Cierre (Objetivo: 18/07/26)</h3>
+<table class="info-table">
+<thead><tr><th>Etapa / Actividad</th><th>Fechas</th><th>Duraci&#243;n / Condici&#243;n</th></tr></thead>
+<tbody>
+<tr style="background:rgba(76,175,80,.04)"><td>Etapa 1: Dise&#241;o Funcional</td><td>27/03 &#8212; 24/04</td><td><span style="color:#4caf50">&#10003; Completada</span></td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>Etapa 2: Dise&#241;o T&#233;cnico e Implementaci&#243;n</td><td>26/05 &#8212; 27/06</td><td>~22 d&#237;as</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: Control t&#233;cnico reserva</td><td>26/05/26</td><td>Servicio existe, no entregado</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: Levantar control en Sim&#243;n</td><td>26/05/26</td><td>Autom&#225;tico si existe control</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: Orden de pago asegurado</td><td>26/05/26</td><td></td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: Liberaci&#243;n autom&#225;tica de reserva</td><td>26/05/26</td><td>Pdte info desde 05/05</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: Liquidaci&#243;n autom&#225;tica orden pago</td><td>26/05/26</td><td>Pdte confirmar</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: OneSpam (firma digital)</td><td>26/05/26</td><td>Validar integraci&#243;n</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Dise&#241;o T&#233;cnico</td><td>26/05 &#8212; 02/06</td><td>5 d&#237;as</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Implementaci&#243;n 5 PUs</td><td>02/06 &#8212; 27/06</td><td>18 d&#237;as, 241h, 2 devs</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Despliegue a QA</td><td>27/06/26</td><td></td></tr>
+<tr><td>Etapa 3: Certificaci&#243;n GTK</td><td>30/06 &#8212; 09/07</td><td>7 d&#237;as</td></tr>
+<tr><td>Etapa 4: Certificaci&#243;n Cliente (3 entregas)</td><td>09/07 &#8212; 18/07</td><td>7 d&#237;as</td></tr>
+<tr style="background:rgba(76,175,80,.06)"><td style="font-weight:600;color:#4caf50">Aprobaci&#243;n Paquete 3</td><td style="font-weight:600;color:#4caf50">18/07/26</td><td></td></tr>
+</tbody>
+</table>
+
+<div style="display:flex;gap:16px;margin:20px 0 12px;flex-wrap:wrap">
+  <div style="background:rgba(76,175,80,.06);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:14px 20px;flex:1;min-width:200px">
+    <div style="color:#4caf50;font-weight:600;font-size:13px">Despliegue</div>
+    <div style="color:#c0cce0;font-size:13px;margin-top:4px">21/07 &#8212; 01/08 (8.5 d&#237;as)</div>
+  </div>
+  <div style="background:rgba(76,175,80,.06);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:14px 20px;flex:1;min-width:200px">
+    <div style="color:#4caf50;font-weight:700;font-size:13px">Fin Proyecto: ~15/08/26</div>
+    <div style="color:#c0cce0;font-size:13px;margin-top:4px">Margen: ~10 d&#237;as &#10003;</div>
+  </div>
+</div>
+
+</div>
+</details>
+
+<details class="scenario orange">
+<summary><span style="background:#ffa726;color:#fff;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:700">B</span> ESCENARIO B &#8212; Probable: APIs resueltas 12/06, GTK inicia 15/06 | Fin: 15/08/26 | Margen: 0 d&#237;as &#9888;&#65039;</summary>
+<div class="scenario-body">
+
+<h3 style="color:#42a5f5">Paquete 1 &#8212; Aviso (Objetivo: 11/07/26)</h3>
+<table class="info-table">
+<thead><tr><th>Etapa / Actividad</th><th>Fechas</th><th>Duraci&#243;n / Condici&#243;n</th></tr></thead>
+<tbody>
+<tr style="background:rgba(76,175,80,.04)"><td>Etapa 1: Dise&#241;o Funcional</td><td></td><td><span style="color:#4caf50">&#10003; Completada</span></td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>Etapa 2: Dise&#241;o T&#233;cnico e Implementaci&#243;n</td><td>15/06 &#8212; 27/06</td><td>~9 d&#237;as</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: api-gesti&#243;n-reserva-creacion</td><td>12/06/26</td><td>Entregada (premisa)</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: api-motor-ia-indem</td><td>12/06/26</td><td>Definici&#243;n completada</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: api-o&#39;leary - validaci&#243;n</td><td>12/06/26</td><td>Validada</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Completar implementaci&#243;n PUs (24%)</td><td>27/06/26</td><td>Compresi&#243;n</td></tr>
+<tr><td>Etapa 3: Certificaci&#243;n GTK</td><td>27/06 &#8212; 04/07</td><td>5 d&#237;as | <span style="color:#ffa726">&#9888; 1 solo ciclo QA</span></td></tr>
+<tr><td>Etapa 4: Certificaci&#243;n Cliente</td><td>04/07 &#8212; 11/07</td><td>5 d&#237;as | Entrega unificada</td></tr>
+<tr style="background:rgba(255,167,38,.06)"><td style="font-weight:600;color:#ffa726">Aprobaci&#243;n Paquete 1</td><td style="font-weight:600;color:#ffa726">11/07/26</td><td></td></tr>
+</tbody>
+</table>
+
+<h3 style="color:#ff9800">Paquete 2 &#8212; An&#225;lisis (Objetivo: 25/07/26)</h3>
+<table class="info-table">
+<thead><tr><th>Etapa / Actividad</th><th>Fechas</th><th>Duraci&#243;n / Condici&#243;n</th></tr></thead>
+<tbody>
+<tr style="background:rgba(76,175,80,.04)"><td>Etapa 1: Dise&#241;o Funcional</td><td></td><td><span style="color:#4caf50">&#10003; Completada</span></td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>Etapa 2: Dise&#241;o T&#233;cnico e Implementaci&#243;n</td><td>15/06 &#8212; 11/07</td><td>~18 d&#237;as</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; API: Consulta p&#243;lizas ARL-PCL</td><td>12/06/26</td><td>Entregada (premisa)</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Dise&#241;o T&#233;cnico</td><td>15/06 &#8212; 20/06</td><td>4 d&#237;as comprimido</td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Implementaci&#243;n 7 PUs</td><td>23/06 &#8212; 11/07</td><td>14 d&#237;as | <span style="color:#ffa726">&#9888; Compresi&#243;n &#8722;36%, 3 devs</span></td></tr>
+<tr style="background:rgba(255,255,255,.02)"><td style="padding-left:28px;color:#90caf9">&#8627; Despliegue a QA</td><td>11/07/26</td><td></td></tr>
+<tr><td>Etapa 3: Certificaci&#243;n GTK</td><td>14/07 &#8212; 18/07</td><td>4 d&#237;as | <span style="color:#ffa726">&#9888; 1 ciclo QA</span></td></tr>
+<tr><td>Etapa 4: Certificaci&#243;n Cliente</td><td>21/07 &#8212; 25/07</td><td>4 d&#237;as | Entrega unificada</td></tr>
+<tr style="background:rgba(255,167,38,.06)"><td style="font-weight:600;color:#ffa726">Aprobaci&#243;n Paquete 2</td><td style="font-weight:600;color:#ffa726">25/07/26</td><td></td></tr>
+</tbody>
+</table>
+
 <h3 style="color:#f44336">Paquete 3 &#8212; Cierre (Objetivo: 01/08/26)</h3>
 <table class="info-table">
 <thead><tr><th>Etapa / Actividad</th><th>Fechas</th><th>Duraci&#243;n / Condici&#243;n</th></tr></thead>
@@ -616,7 +700,7 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
 </tbody>
 </table>
 
-<div style="display:flex;gap:16px;margin:20px 0 28px;flex-wrap:wrap">
+<div style="display:flex;gap:16px;margin:20px 0 12px;flex-wrap:wrap">
   <div style="background:rgba(100,181,246,.06);border:1px solid #1a3a70;border-radius:8px;padding:14px 20px;flex:1;min-width:200px">
     <div style="color:#64b5f6;font-weight:600;font-size:13px">Despliegue</div>
     <div style="color:#c0cce0;font-size:13px;margin-top:4px">04/08 &#8212; 13/08 (7 d&#237;as comprimido)</div>
@@ -636,8 +720,30 @@ body{background:#080c22;color:#e0e0e0;font-family:'Segoe UI',system-ui,-apple-sy
   &#8226; Requiere disponibilidad completa del equipo GTK + cliente durante julio.</p>
 </div>
 
+</div>
+</details>
+
 <h2>APIs Pendientes &#8212; Bloqueantes para Escenarios</h2>
 <p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Estas APIs deben resolverse para desbloquear la implementaci&#243;n. Sin ellas, ning&#250;n escenario es viable.</p>
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#4caf50">1/8</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Sin pendientes</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#ffa726">7/8</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Pendientes</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#ff9800">1</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Paquete 2</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#f44336">6</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Paquete 3</div>
+  </div>
+</div>
 
 <table class="info-table">
 <thead><tr><th>#</th><th>Paq.</th><th>API / Servicio</th><th>Estado</th><th>Observaciones de Refinamiento</th></tr></thead>
