@@ -724,16 +724,20 @@ details.scenario .scenario-body{padding:0 22px 22px}
 </details>
 
 <h2>APIs Pendientes &#8212; Bloqueantes para Escenarios</h2>
-<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Estas APIs deben resolverse para desbloquear la implementaci&#243;n. Sin ellas, ning&#250;n escenario es viable.</p>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Estas APIs deben resolverse para desbloquear la implementaci&#243;n. Sin ellas, ning&#250;n escenario es viable. Incluye P1 (en curso), P2 y P3.</p>
 
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
   <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#4caf50">1/8</div>
+    <div style="font-size:24px;font-weight:700;color:#4caf50">2/10</div>
     <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Sin pendientes</div>
   </div>
   <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#ffa726">7/8</div>
+    <div style="font-size:24px;font-weight:700;color:#ffa726">8/10</div>
     <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Pendientes</div>
+  </div>
+  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#42a5f5">2</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Paquete 1</div>
   </div>
   <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
     <div style="font-size:24px;font-weight:700;color:#ff9800">1</div>
@@ -748,6 +752,8 @@ details.scenario .scenario-body{padding:0 22px 22px}
 <table class="info-table">
 <thead><tr><th>#</th><th>Paq.</th><th>API / Servicio</th><th>Estado</th><th>Observaciones de Refinamiento</th></tr></thead>
 <tbody>
+<tr style="background:rgba(255,167,38,.04)"><td>4</td><td style="color:#42a5f5;font-weight:600">P1</td><td>api-gesti&#243;n-reserva-creacion</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">API existente. Pendiente entrega por Bol&#237;var. Fecha compromiso: 22/05/2026.</td></tr>
+<tr style="background:rgba(255,167,38,.04)"><td>7</td><td style="color:#42a5f5;font-weight:600">P1</td><td>api-motor-ia-indem (Desarrollo Bizagi)</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Pendiente definici&#243;n interna para exponer API. Desarrollo dentro de Bizagi.</td></tr>
 <tr><td>12</td><td style="color:#ff9800;font-weight:600">P2</td><td>Consulta p&#243;liza Salud</td><td><span style="background:rgba(76,175,80,.15);color:#4caf50;padding:2px 8px;border-radius:10px;font-size:11px">Sin pendientes</span></td><td style="font-size:12px">Se aumentaron registros en servicio v2 de p&#243;liza. Exclusiones ya no debe ir.</td></tr>
 <tr style="background:rgba(255,167,38,.04)"><td>13</td><td style="color:#ff9800;font-weight:600">P2</td><td>Consulta p&#243;lizas ARL-PCL</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Nuevo servicio actualmente no existe. Pendiente por entregar. Debe venir una Codificaci&#243;n y si tiene P&#243;liza.</td></tr>
 <tr style="background:rgba(255,167,38,.04)"><td>14</td><td style="color:#f44336;font-weight:600">P3</td><td>Control t&#233;cnico reserva</td><td><span style="background:rgba(255,167,38,.15);color:#ffa726;padding:2px 8px;border-radius:10px;font-size:11px">Pendiente</span></td><td style="font-size:12px">Despu&#233;s de creada la reserva, servicio existe pero no est&#225; entregado. Buscar por n&#250;m. reserva si hay control t&#233;cnico.</td></tr>
