@@ -80,6 +80,7 @@ details.scenario .scenario-body{padding:0 22px 22px}
   <button class="tab-btn" onclick="switchTab('rutacritica')">Ruta Cr&#237;tica</button>
   <button class="tab-btn" onclick="switchTab('cronograma')">Cronograma</button>
   <button class="tab-btn" onclick="switchTab('plantrabajo')">Plan de Trabajo</button>
+  <button class="tab-btn" onclick="switchTab('propuestas')">Propuestas Gattaca</button>
 </div>
 
 <!-- TAB 1: INFORME MAESTRO -->
@@ -724,28 +725,24 @@ details.scenario .scenario-body{padding:0 22px 22px}
 </details>
 
 <h2>APIs Pendientes &#8212; Bloqueantes para Escenarios</h2>
-<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Estas APIs deben resolverse para desbloquear la implementaci&#243;n. Sin ellas, ning&#250;n escenario es viable. Incluye P1 (en curso), P2 y P3.</p>
+<p style="color:#7a8bb5;font-size:13px;margin-bottom:14px">Estas APIs deben resolverse para desbloquear la implementaci&#243;n. Sin ellas, ning&#250;n escenario es viable. De 29 APIs identificadas, 19 resueltas, 1 en validaci&#243;n y 9 pendientes que bloquean los escenarios.</p>
 
-<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
-  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#4caf50">2/10</div>
-    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Sin pendientes</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+  <div style="background:#0d1230;border:1px solid #1a3a70;border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#64b5f6">29</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Total APIs identificadas</div>
   </div>
-  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#ffa726">8/10</div>
-    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Pendientes</div>
+  <div style="background:#0d1230;border:1px solid rgba(76,175,80,.4);border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#4caf50">19</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Solucionadas / Sin cambios</div>
   </div>
-  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#42a5f5">2</div>
-    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Paquete 1</div>
+  <div style="background:#0d1230;border:1px solid rgba(100,181,246,.4);border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#64b5f6">1</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">En validaci&#243;n</div>
   </div>
-  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#ff9800">1</div>
-    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Paquete 2</div>
-  </div>
-  <div style="background:#0d1230;border:1px solid #1a2550;border-radius:8px;padding:14px;text-align:center">
-    <div style="font-size:24px;font-weight:700;color:#f44336">6</div>
-    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Paquete 3</div>
+  <div style="background:#0d1230;border:1px solid rgba(239,83,80,.4);border-radius:8px;padding:14px;text-align:center">
+    <div style="font-size:24px;font-weight:700;color:#ef5350">9</div>
+    <div style="font-size:11px;color:#7a8bb5;margin-top:4px">Pendientes (2 P1 + 1 P2 + 6 P3)</div>
   </div>
 </div>
 
@@ -785,14 +782,116 @@ details.scenario .scenario-body{padding:0 22px 22px}
 </div>
 
 
+<!-- TAB 7: PROPUESTAS GATTACA -->
+<div id="tab-propuestas" class="tab-content">
+<div class="informe">
+<h1>AN&#193;LISIS DE PROPUESTAS &#8212; GATTACA</h1>
+<p class="subtitle">Escenarios de continuidad del proveedor | Condiciones contractuales actuales vs. nuevas propuestas</p>
+
+<h2>Contexto</h2>
+<p>Dado el retraso del proyecto (+45 d&#237;as m&#237;nimo) y la necesidad de completar la implementaci&#243;n de los 3 paquetes, Gattaca presenta dos propuestas para la continuidad del servicio.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 28px">
+<div style="background:#0d1230;border:2px solid #7e57c2;border-radius:10px;padding:20px 22px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <span style="background:#7e57c2;color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;font-size:12px">OPCI&#211;N 1</span>
+    <span style="color:#7e57c2;font-weight:600;font-size:14px">C&#233;lula &#193;gil</span>
+  </div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8;margin-bottom:12px">
+    <div><strong style="color:#fff">Objetivo:</strong> Dise&#241;o y automatizaci&#243;n directa por Gattaca</div>
+    <div><strong style="color:#fff">Modalidad:</strong> C&#233;lula dedicada interdisciplinaria</div>
+    <div><strong style="color:#fff">Valor:</strong> <span style="color:#ffa726;font-weight:700;font-size:16px">$95.750.000</span> + IVA / mes</div>
+    <div><strong style="color:#fff">Duraci&#243;n:</strong> Dise&#241;o 4 sem. + Implementaci&#243;n ~13 sem.</div>
+  </div>
+  <div style="font-size:11px;color:#7a8bb5;border-top:1px solid #1a2550;padding-top:10px">
+    Ejecuci&#243;n directa. Metodolog&#237;a &#225;gil por sprints. Garant&#237;a 2 meses post-producci&#243;n.
+  </div>
+</div>
+<div style="background:#0d1230;border:2px solid #26a69a;border-radius:10px;padding:20px 22px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <span style="background:#26a69a;color:#fff;padding:4px 12px;border-radius:6px;font-weight:700;font-size:12px">OPCI&#211;N 2</span>
+    <span style="color:#26a69a;font-weight:600;font-size:14px">Mentoring Bizagi</span>
+  </div>
+  <div style="font-size:13px;color:#c0cce0;line-height:1.8;margin-bottom:12px">
+    <div><strong style="color:#fff">Objetivo:</strong> Transferencia de conocimiento al equipo interno</div>
+    <div><strong style="color:#fff">Modalidad:</strong> Acompa&#241;amiento pr&#225;ctico (&#8220;haciendo&#8221;)</div>
+    <div><strong style="color:#fff">Valor:</strong> <span style="color:#4caf50;font-weight:700;font-size:16px">$19.800.000</span> + IVA / mes</div>
+    <div><strong style="color:#fff">Disponibilidad:</strong> 80h/mes (20h semanales)</div>
+  </div>
+  <div style="font-size:11px;color:#7a8bb5;border-top:1px solid #1a2550;padding-top:10px">
+    Equipo SB construye bajo gu&#237;a experta. Obligaci&#243;n de medio, no de resultado.
+  </div>
+</div>
+</div>
+
+<h2>Comparativa Detallada</h2>
+<table class="info-table">
+<thead><tr><th>Caracter&#237;stica</th><th style="color:#7e57c2">C&#233;lula &#193;gil (Dise&#241;o e Impl.)</th><th style="color:#26a69a">Servicio de Mentoring</th></tr></thead>
+<tbody>
+<tr><td>Objetivo Principal</td><td>Dise&#241;o y automatizaci&#243;n del proceso de indemnizaciones vida y desarrollo de nuevos requerimientos</td><td>Fortalecer capacidades internas de transformaci&#243;n digital mediante aprendizaje guiado</td></tr>
+<tr><td>Modalidad</td><td>C&#233;lula de trabajo dedicada (interdisciplinaria) con perfiles funcionales y t&#233;cnicos</td><td>Acompa&#241;amiento pr&#225;ctico y transferencia de conocimiento por consultores especializados</td></tr>
+<tr><td>Equipo Propuesto</td><td style="font-size:12px"><strong>Dise&#241;o:</strong> Analista de Negocio, Arq. Funcional (0.5), Arq. T&#233;cnico (0.5), GP (0.25)<br><strong>Impl:</strong> 2.5 Ingenieros (BA/Dev), Analista QA, Arq. Funcional (0.5), Arq. T&#233;cnico (0.5), GP (0.5)</td><td style="font-size:12px">1. Arquitecto Funcional y Arquitecto T&#233;cnico (80h/mes)<br>2. Gerente de Proyectos</td></tr>
+<tr><td>Fechas / Duraci&#243;n</td><td>Dise&#241;o: 4 semanas<br>Implementaci&#243;n: ~3 meses (13 semanas)</td><td>80h mensuales (20h semanales)</td></tr>
+<tr><td style="font-weight:600">Valor Mensual</td><td style="color:#ffa726;font-weight:700">$95.750.000 + IVA</td><td style="color:#4caf50;font-weight:700">$19.800.000 + IVA</td></tr>
+<tr><td>Forma de Pago</td><td>100% mes anticipado; pago a 30 d&#237;as</td><td>100% mes anticipado; pago a 30 d&#237;as</td></tr>
+<tr><td>Garant&#237;a</td><td>2 meses a partir de puesta en producci&#243;n</td><td>N/A (obligaci&#243;n de medio)</td></tr>
+<tr><td>Responsabilidad</td><td>Gattaca ejecuta y entrega</td><td style="color:#ffa726">100% en Seguros Bol&#237;var (c&#243;digo, autor&#237;a, paso a producci&#243;n)</td></tr>
+</tbody>
+</table>
+
+<h2>Dependencias y Premisas</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0">
+<div class="risk-card" style="border-color:#7e57c2">
+  <div class="risk-title" style="color:#7e57c2">C&#233;lula &#193;gil &#8212; Premisas</div>
+  <p>&#8226; Equipo contraparte SB con disponibilidad del 100%<br>
+  &#8226; Autonom&#237;a t&#233;cnica y funcional para validaciones inmediatas<br>
+  &#8226; Insumos t&#233;cnicos (servicios, accesos, mapeos) pre-validados<br>
+  &#8226; <strong style="color:#ffa726">Protocolo bloqueantes:</strong> si superan 24h sin definici&#243;n, el &#237;tem se bloquea</p>
+</div>
+<div class="risk-card" style="border-color:#26a69a">
+  <div class="risk-title" style="color:#26a69a">Mentoring &#8212; Premisas</div>
+  <p>&#8226; Equipo SB debe tener certificados e-learning Bizagi<br>
+  &#8226; Experiencia m&#237;nima de 2 a&#241;os en desarrollo<br>
+  &#8226; Responsabilidad c&#243;digo y producci&#243;n 100% en SB<br>
+  &#8226; <strong style="color:#ffa726">Obligaci&#243;n de medio, no de resultado</strong><br>
+  &#8226; Prestaci&#243;n virtual en d&#237;as h&#225;biles<br>
+  &#8226; M&#237;nimo 60h mensuales para este tipo de servicio</p>
+</div>
+</div>
+
+<h2>An&#225;lisis de Costo por Escenario</h2>
+<table class="info-table">
+<thead><tr><th>Escenario</th><th>Meses Estimados</th><th>Costo C&#233;lula &#193;gil</th><th>Costo Mentoring</th><th>Diferencia</th></tr></thead>
+<tbody>
+<tr><td>Escenario A (Optimista)</td><td>~3 meses (jun-ago)</td><td style="color:#ffa726">$287.250.000</td><td style="color:#4caf50">$59.400.000</td><td style="color:#4caf50">-$227.850.000</td></tr>
+<tr><td>Escenario B (Probable)</td><td>~2.5 meses (jun-ago)</td><td style="color:#ffa726">$239.375.000</td><td style="color:#4caf50">$49.500.000</td><td style="color:#4caf50">-$189.875.000</td></tr>
+</tbody>
+</table>
+
+<h2>Consideraciones para la Decisi&#243;n</h2>
+<ol class="rec-list">
+<li><span class="rec-num">1</span><div><strong style="color:#e0e8f0">C&#233;lula &#193;gil = Velocidad + Riesgo de dependencia:</strong> Gattaca ejecuta directamente, lo que acelera la entrega. Pero el protocolo de 24h para bloqueantes significa que si Bol&#237;var no resuelve APIs a tiempo, los &#237;tems se bloquean igualmente.</div></li>
+<li><span class="rec-num">2</span><div><strong style="color:#e0e8f0">Mentoring = Econom&#237;a + Riesgo de capacidad:</strong> 5x m&#225;s econ&#243;mico, pero requiere equipo interno con certificaciones Bizagi y 2+ a&#241;os de experiencia. Si el equipo no est&#225; listo, la velocidad cae dr&#225;sticamente.</div></li>
+<li><span class="rec-num">3</span><div><strong style="color:#e0e8f0">Garant&#237;a vs. Obligaci&#243;n de medio:</strong> La C&#233;lula ofrece 2 meses de garant&#237;a post-producci&#243;n. El Mentoring es obligaci&#243;n de medio &#8212; si algo falla en producci&#243;n, la responsabilidad es 100% de SB.</div></li>
+<li><span class="rec-num">4</span><div><strong style="color:#e0e8f0">Modelo h&#237;brido posible:</strong> C&#233;lula &#193;gil para P1 (cr&#237;tico, en retraso) + Mentoring para P2/P3 (m&#225;s tiempo disponible). Costo: ~$95.7M + $39.6M = $135.3M vs. $287M puro c&#233;lula.</div></li>
+</ol>
+
+<div class="alert-card yellow" style="margin-top:20px">
+  <div class="alert-title">&#9888; Nota sobre contrato actual</div>
+  <p>El contrato vigente con Gattaca cubre la fase actual (Dise&#241;o + Implementaci&#243;n original). Dado el retraso de +45 d&#237;as, se requiere extensi&#243;n contractual o nueva orden de servicio para cubrir el per&#237;odo adicional. Evaluar con jur&#237;dico las condiciones de extensi&#243;n vs. nueva contrataci&#243;n.</p>
+</div>
+
+</div>
+</div>
+
 <div class="svg-tooltip" id="tooltip"></div>
 
 <script>
 /* ── Tab switching ── */
-const tabInited = { informe: true, arquitectura: false, dependencias: false, rutacritica: true, cronograma: true, plantrabajo: true };
+const tabInited = { informe: true, arquitectura: false, dependencias: false, rutacritica: true, cronograma: true, plantrabajo: true, propuestas: true };
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    const tabs = ['informe','arquitectura','dependencias','rutacritica','cronograma','plantrabajo'];
+    const tabs = ['informe','arquitectura','dependencias','rutacritica','cronograma','plantrabajo','propuestas'];
     b.classList.toggle('active', tabs[i] === name);
   });
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
